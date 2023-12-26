@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('employee.login');
+});
+
+Route::get('/loginadmin', function () {
     return view('admin.login');
 });
 

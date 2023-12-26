@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login Admin</title>
+  <title>Login Employee</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -16,15 +16,15 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+  <div class="login-logo">
+    <a href="/"><b>Employee</b>POS</a>
+  </div>
   <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <a href="/loginadmin" class="h1"><b>Admin</b></a>
-    </div>
-    <div class="card-body">
+  <div class="card">
+    <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="../../index3.html" method="post">
+      <form action="/" method="post">
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -40,21 +40,23 @@
               <span class="fas fa-lock"></span>
             </div>
           </div>
+        </div>        
+        <div class="social-auth-links text-center mb-3">
+          <p>- OR -</p>
+          <a href="#" class="btn btn-block btn-primary">
+            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+          </a>
         </div>
-        <div class="social-auth-links text-center mt-2 mb-3">
-          <a href="#" class="btn btn-block btn-primary">Login</a>
-        </div>
-          <!-- /.col -->
       </form>
 
+      <!-- /.social-auth-links -->
 
       <p class="mb-0">
-        <a href="/" class="text-center">Sign in as employee</a>
+        <a href="/loginadmin" class="text-center">Sign in as admin</a>
       </p>
     </div>
-    <!-- /.card-body -->
+    <!-- /.login-card-body -->
   </div>
-  <!-- /.card -->
 </div>
 <!-- /.login-box -->
 
