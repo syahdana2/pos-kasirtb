@@ -16,8 +16,6 @@ use App\Http\Controllers\logoutController;
 |
 */
 
-//start route okan
-
 Route::get('/loginadmin', function () {
     return view('admin.login');
 });
@@ -26,7 +24,7 @@ Route::post('/loginadmin', [authController::class,'login_Admin'])->name('admin.l
 Route::get('/', function () {
     return view('employee.login');
 })->name('employee.login');
-Route::post('/', [authController::class, 'login_employee'])->name('employee.login');
+Route::post('/', [authController::class, 'login_employee'], {{ $title }})->name('employee.login');
 
 Route::middleware(['admin.auth'])->group(function () {
     Route::get('/logout', [authController::class,'logout'])->name('admin.logout');
@@ -39,5 +37,27 @@ Route::middleware(['admin.auth'])->group(function () {
 Route::middleware(['admin.auth'])->group(function () {
     Route::get('/logoutemployee', [authController::class,'logout_employee'])->name('employee.logout');
     // tambahakan route untuk akses halaman employee
+    Route::get('/dashboardemployee', function () {
+    return view('employee.dashboardemployee', [ "title" => "Dashboard Employee"]);
 });
-// end route okan
+
+Route::get('/transaksi', function () {
+    return view('employee.transaction' , [ "title" => "Transaksi"]);
+});
+
+Route::get('/pelanggan', function () {
+    return view('employee.customer' , [ "title" => "Pelanggan"]);
+});
+
+Route::get('/data-produk', function () {
+    return view('employee.data-product' , [ "title" => "Data Produk"]);
+});
+
+Route::get('/riwayat-penjualan', function () {
+    return view('employee.history-transaction.history-selling' , [ "title" => "Riwayat Penjualan"]);
+});
+
+Route::get('/member', function () {
+    return view('employee.crud-produk.create');
+});
+});

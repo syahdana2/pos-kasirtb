@@ -68,9 +68,7 @@
             </button>
           </div>
         </form>
-
         <!-- /.social-auth-links -->
-
         <p class="mb-0">
           <a href="/loginadmin" class="text-center">Sign in as admin</a>
         </p>
