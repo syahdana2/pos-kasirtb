@@ -349,13 +349,6 @@
                     <td><span class="tag tag-primary">Approved</span></td>
                     <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
                   </tr>
-                  <tr>
-                    <td>982</td>
-                    <td>Rocky Doe</td>
-                    <td>11-7-2014</td>
-                    <td><span class="tag tag-danger">Denied</span></td>
-                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
