@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\loginadminController;
+use App\Http\Controllers\authController;
+use App\Http\Controllers\logoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,19 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('employee.login' , [ "title" => "Login Employee"]);
-});
-
 Route::get('/loginadmin', function () {
     return view('admin.login');
 });
+Route::post('/loginadmin', [authController::class,'login_Admin'])->name('admin.login');
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
+Route::get('/', function () {
+    return view('employee.login');
+})->name('employee.login');
+Route::post('/', [authController::class, 'login_employee'], {{ $title }})->name('employee.login');
+
+Route::middleware(['admin.auth'])->group(function () {
+    Route::get('/logout', [authController::class,'logout'])->name('admin.logout');
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+    // tambahkan route untuk akses halaman admin
 });
 
-Route::get('/dashboardemployee', function () {
+Route::middleware(['admin.auth'])->group(function () {
+    Route::get('/logoutemployee', [authController::class,'logout_employee'])->name('employee.logout');
+    // tambahakan route untuk akses halaman employee
+    Route::get('/dashboardemployee', function () {
     return view('employee.dashboardemployee', [ "title" => "Dashboard Employee"]);
 });
 
@@ -47,4 +59,5 @@ Route::get('/riwayat-penjualan', function () {
 
 Route::get('/member', function () {
     return view('employee.crud-produk.create');
+});
 });
