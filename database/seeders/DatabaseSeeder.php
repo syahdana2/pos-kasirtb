@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\Admin;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -24,6 +25,13 @@ class DatabaseSeeder extends Seeder
 
         Admin::create([
             'username' => 'admin',
+            // pw default 12345678
+            'password' => Hash::make('12345678')
+        ]);
+
+        Employee::create([
+            'name' => 'kasir rejeni',
+            'username' => 'kasir',
             // pw default 12345678
             'password' => Hash::make('12345678')
         ]);
