@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
+class outlet extends Model
 {
     use HasFactory;
 
-    protected $table = 'employees';
+    protected $table = 'outlets';
 
     protected $guarded = ['id'];
-
-    public function outlet(){
-        return $this->belongsTo(outlet::class);
-    }
+    // protected $filable = ['name_outlet','phone','address']
 }
