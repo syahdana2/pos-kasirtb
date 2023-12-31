@@ -29,11 +29,5 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
 
-        Employee::create([
-            'name' => 'kasir rejeni',
-            'username' => 'kasir',
-            // pw default 12345678
-            'password' => Hash::make('12345678')
-        ]);
     }
 }

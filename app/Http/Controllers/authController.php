@@ -62,7 +62,7 @@ class authController extends Controller
         } 
         session()->put('auth_id', $user_employee->id);
         // dd($user_employee);
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('employee.dashboard');
     }
 
     public function logout_employee()
