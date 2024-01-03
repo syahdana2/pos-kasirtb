@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/summernote/summernote-bs4.min.css">
+  <!-- DataTables -->
+  @yield('head')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -117,7 +119,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item ">
-            <a href="dashboardemployee" class="nav-link {{ ( $title === "Dashboard Employee" ? 'active' : '' ) }}">
+            <a href="dashboard-employee" class="nav-link {{ ( $title === "Dashboard Employee" ? 'active' : '' ) }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -193,12 +195,12 @@
             </ul>
           </li> --}}
 
-          <li class="nav-item menu-open">
+          {{-- <li class="nav-item menu-open">
             <a href="https://adminlte.io/docs/3.1/" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>Documentation</p>
             </a>
-          </li>
+          </li> --}}
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -214,7 +216,7 @@
     <strong>O&O DEV &copy; 2023-2024.</strong>
     All rights reserved.
   </footer>
-
+  
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -254,8 +256,12 @@
 <!-- AdminLTE App -->
 <script src="{{asset('AdminLTE')}}/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('AdminLTE')}}/dist/js/demo.js"></script>
+{{-- <script src="{{asset('AdminLTE')}}/dist/js/demo.js"></script> --}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('AdminLTE')}}/dist/js/pages/dashboard.js"></script>
+{{-- font awesome for icon --}}
+<script src="https://kit.fontawesome.com/7c21a511e6.js" crossorigin="anonymous"></script>
+
+@yield('script')
 </body>
 </html>

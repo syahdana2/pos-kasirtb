@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
 use App\Models\Admin;
+use App\Models\customer;
 use App\Models\Employee;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -34,6 +34,12 @@ class DatabaseSeeder extends Seeder
             'username' => 'kasir',
             // pw default 12345678
             'password' => Hash::make('12345678')
+        ]);
+
+        customer::create([
+            'name' => "",
+            'phone' => "",
+            'address' => ""
         ]);
     }
 }

@@ -3,7 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\loginadminController;
 use App\Http\Controllers\authController;
+use App\Http\Controllers\CrudCustomerController;
+use App\Http\Controllers\CrudHistoryController;
+use App\Http\Controllers\CrudProductController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\logoutController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +25,15 @@ use App\Http\Controllers\logoutController;
 Route::get('/loginadmin', function () {
     return view('admin.login');
 });
-Route::post('/loginadmin', [authController::class,'login_Admin'])->name('admin.login');
+Route::post('/loginadmin', [authController::class, 'login_Admin'])->name('admin.login');
 
 Route::get('/', function () {
     return view('employee.login');
 })->name('employee.login');
-Route::post('/', [authController::class, 'login_employee'], {{ $title }})->name('employee.login');
+Route::post('/', [authController::class, 'login_employee'])->name('employee.login');
 
 Route::middleware(['admin.auth'])->group(function () {
-    Route::get('/logout', [authController::class,'logout'])->name('admin.logout');
+    Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
@@ -35,29 +41,23 @@ Route::middleware(['admin.auth'])->group(function () {
 });
 
 Route::middleware(['admin.auth'])->group(function () {
-    Route::get('/logoutemployee', [authController::class,'logout_employee'])->name('employee.logout');
+    Route::get('/logoutemployee', [authController::class, 'logout_employee'])->name('employee.logout');
     // tambahakan route untuk akses halaman employee
-    Route::get('/dashboardemployee', function () {
-    return view('employee.dashboardemployee', [ "title" => "Dashboard Employee"]);
-});
 
-Route::get('/transaksi', function () {
-    return view('employee.transaction' , [ "title" => "Transaksi"]);
-});
+    Route::get('/dashboard-employee', [DashboardController::class, 'dashboard'])->name('employee.dashboard');
 
-Route::get('/pelanggan', function () {
-    return view('employee.customer' , [ "title" => "Pelanggan"]);
-});
+    Route::get('/transaksi', [TransactionController::class, 'transaction']);
 
-Route::get('/data-produk', function () {
-    return view('employee.data-product' , [ "title" => "Data Produk"]);
-});
+    // Route pelanggan
+    Route::get('/pelanggan', [CrudCustomerController::class, 'customer'])->name('customer_page');
+    Route::get('/tambah-pelanggan', [CrudCustomerController::class, 'addcustomer'])->name('add_customer');
+    Route::post('/buat-pelanggan-baru', [CrudCustomerController::class, 'newcustomer']);
+    Route::get('/edit-pelanggan/{id}', [CrudCustomerController::class, 'datacustomer'])->name('data_customer');
+    Route::post('/update-pelanggan/{id}', [CrudCustomerController::class, 'updatecustomer'])->name('update_customer');
+    Route::get('/hapus-pelanggan/{id}', [CrudCustomerController::class, 'deletecustomer'])->name('delete_customer');
 
-Route::get('/riwayat-penjualan', function () {
-    return view('employee.history-transaction.history-selling' , [ "title" => "Riwayat Penjualan"]);
-});
+    //Route Product
+    Route::get('/data-produk', [CrudProductController::class, 'product']);
 
-Route::get('/member', function () {
-    return view('employee.crud-produk.create');
-});
+    Route::get('/riwayat-penjualan', [HistoryController::class, 'history']);
 });
