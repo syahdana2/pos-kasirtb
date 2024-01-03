@@ -7,6 +7,9 @@ use Illuminate\Database\Seeder;
 
 use App\Models\Admin;
 use App\Models\Employee;
+use App\Models\outlet;
+use App\Models\product;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +30,66 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin',
             // pw default 12345678
             'password' => Hash::make('12345678')
+        ]);
+
+        outlet::create([
+            'name_outlet' => 'Surya Kencana Enak',
+            'phone' => '082278459821',
+            'address' => 'Malang',
+        ]);
+
+        outlet::create([
+            'name_outlet' => 'Bagong',
+            'phone' => '082178562984',
+            'address' => 'Malang',
+        ]);
+
+        Employee::create([
+            'outlet_id' => 1,
+            'name_employee' => 'nako',
+            'username' => 'kasir',
+            // pw default 12345678
+            'password' => Hash::make('12345678')
+        ]);
+
+        Employee::create([
+            'outlet_id' => 2,
+            'name_employee' => 'nado',
+            'username' => 'kasir1',
+            // pw default 12345678
+            'password' => Hash::make('12345678')
+        ]);
+
+        Product::create([
+            'employee_id' => 1,
+            'unit_id' => 1,
+            'name_product' => 'Semen',
+            'barcode' => 'S_001',
+            'stock' => '4',
+            'selling_price' => 50000,
+            'buy_price' => 55000,
+            'image' => 'profile2.jpg',
+            'desc' => 'semen gresik 50 kg'
+        ]);
+
+        Product::create([
+            'employee_id' => 2,
+            'unit_id' => 1,
+            'name_product' => 'Semen',
+            'barcode' => 'S_002',
+            'stock' => '10',
+            'selling_price' => 50000,
+            'buy_price' => 55000,
+            'image' => 'profile2.jpg',
+            'desc' => 'semen gresik 50 kg'
+        ]);
+
+        Unit::create([
+            'satuan' => 'kg'
+        ]);
+
+        Unit::create([
+            'satuan' => 'liter'
         ]);
 
     }

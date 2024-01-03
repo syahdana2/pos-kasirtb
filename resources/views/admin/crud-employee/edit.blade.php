@@ -21,17 +21,12 @@
                                 <div class="form-group row mb-3 mx-1">
                                     <label for="outlet_id" class="col-sm-2 col-form-label">Toko</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select @error('outlet_id') is-invalid @enderror" id="outlet_id" name="outlet_id">
-                                            <option selected>{{ $employee->outlet->name_outlet }}</option>
+                                        <select class="form-select" id="outlet_id" name="outlet_id">
+                                            <option selected>--- Pilih Toko ---</option>
                                             @foreach ($outlet as $dt_outlet)
                                             <option value="{{ $dt_outlet->id }}">{{ $dt_outlet->name_outlet }}</option>
                                             @endforeach
                                         </select>
-                                        @error('outlet_id')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3 mx-1">

@@ -64,6 +64,7 @@ class employeeController extends Controller
     public function update(Request $request, $id)
     {   
         $validated = $request->validate([
+            'outlet_id' => 'required',
             'name_employee' => 'required',
             'username' => 'required',
             'password' => 'required|min:8',

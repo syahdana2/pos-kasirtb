@@ -21,7 +21,7 @@
                                     <label for="outlet_id" class="col-sm-2 col-form-label">Toko</label>
                                     <div class="col-sm-10">
                                         <select class="form-select @error('outlet_id') is-invalid @enderror" id="outlet_id" name="outlet_id">
-                                            <!-- <option selected>--- Pilih ---</option> -->
+                                            <option selected>--- Pilih Toko ---</option>
                                             @foreach ($outlet as $dt_outlet)
                                             <option value="{{ $dt_outlet->id }}" placeholder="--- pilih ---">{{ $dt_outlet->name_outlet }}</option>
                                             @endforeach

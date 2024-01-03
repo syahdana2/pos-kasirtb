@@ -116,6 +116,16 @@
                   </div>
                 </a>
             </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.logout') }}" class="nav-link">
+                  <div class="my-1">
+                  <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                    <p>
+                      Logout
+                    </p>
+                  </div>
+                </a>
+            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
