@@ -25,6 +25,12 @@
   <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/summernote/summernote-bs4.min.css">
+  <!-- bootsrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="../plugins/ekko-lightbox/ekko-lightbox.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -73,7 +79,7 @@
       <!-- Sidebar user panel (profile employee) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <div class="d-block text-white">{{ $emp->name_employee ?? 'Guest' }}</div>
         </div>
       </div>
 
@@ -114,14 +120,19 @@
           </li>
 
           <li class="nav-item">
-            <a href="data-produk" class="nav-link {{ ( $title === "Data Produk" ? 'active' : '' ) }}">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Data Produk
-                <span class="badge badge-info right">6</span>
-              </p>
+            <a href="{{ route('product') }}" class="nav-link {{ $title === "Data Produk" ? 'active' : '' }}">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                    Data Produk
+                    <!-- @if(isset($lowStockProducts) && $lowStockProducts->count() > 0)
+                        <span class="badge badge-info right">{{ $lowStockProducts->count() }}</span>
+                    @endif -->
+                    @if(isset($totalLowStock) && $totalLowStock > 0)
+                        <span class="badge badge-info right">{{ $totalLowStock }}</span>
+                    @endif
+                </p>
             </a>
-          </li>
+        </li>
 
           <li class="nav-item">
             <a href="pelanggan" class="nav-link {{ ( $title === "Pelanggan" ? 'active' : '' ) }}">
@@ -140,43 +151,16 @@
               </p>
             </a>
           </li>
-
-          {{-- <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Tables
-                <i class="fas fa-angle-left right"></i>
-              </p>
+          <li class="nav-item">
+            <a href="{{ route('employee.logout') }}" class="nav-link">
+              <div class="my-1">
+              <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                <p>
+                  Logout
+                </p>
+              </div>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/tables/jsgrid.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
-                </a>
-              </li>
-            </ul>
-          </li> --}}
-
-          <li class="nav-item menu-open">
-            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
-              <p>Documentation</p>
-            </a>
-          </li>
+        </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -235,5 +219,11 @@
 <script src="{{asset('AdminLTE')}}/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('AdminLTE')}}/dist/js/pages/dashboard.js"></script>
+<!-- bootsrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/61b05592ac.js" crossorigin="anonymous"></script>
+<!-- Ekko Lightbox -->
+<script src="../plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 </body>
 </html>

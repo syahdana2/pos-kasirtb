@@ -1,442 +1,131 @@
 @extends('employee.layouts.main')
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-      <h3 class="card-title">DataTable with default features</h3>
+<div class="content-wrapper">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 mt-4">
+          <!-- Horizontal Form -->
+          <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title">Tambah Produk</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form action="{{ route('product.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+              @csrf
+              <div class="card-body">
+                <div class="form-group row mb-3 mx-1">
+                  <label for="name_product" class="col-sm-2 col-form-label">Nama Produk</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control @error('name_product') is-invalid @enderror" id="name_product" name="name_product" placeholder="Masukkan nama produk" required value="{{ old('name_product') }}">
+                    @error('name_product')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="barcode" class="col-sm-2 col-form-label">Kode</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control @error('barcode') is-invalid @enderror" id="barcode" name="barcode" placeholder="Masukkan barcode produk" required value="{{ old('barcode') }}">
+                    @error('barcode')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="unit_id" class="col-sm-2 col-form-label">Kasir</label>
+                  <div class="col-sm-10">
+                    <select class="form-select @error('unit_id') is-invalid @enderror" id="unit_id" name="unit_id">
+                      <option selected>--- Pilih Satuan Unit ---</option>
+                      @foreach ($unit as $dt_unit)
+                      <option value="{{ $dt_unit->id }}" placeholder="--- pilih unit---">{{ $dt_unit->satuan }}</option>
+                      @endforeach
+                    </select>
+                    @error('unit_id')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="stock" class="col-sm-2 col-form-label">Stok</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" placeholder="Masukkan stok produk" required value="{{ old('stock') }}">
+                    @error('stock')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="buy_price" class="col-sm-2 col-form-label">Harga Beli</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control @error('buy_price') is-invalid @enderror" id="buy_price" name="buy_price" placeholder="Masukkan harga beli produk" required value="{{ old('buy_price') }}">
+                    @error('buy_price')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="purchase_price" class="col-sm-2 col-form-label">Harga Jual</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control @error('purchase_price') is-invalid @enderror" id="purchase_price" name="purchase_price" placeholder="Masukkan harga jual produk" required value="{{ old('purchase_price') }}">
+                    @error('purchase_price')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="desc" class="col-sm-2 col-form-label">Deskripsi</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" placeholder="Masukkan deskripsi produk" required value="{{ old('desc') }}">
+                    @error('desc')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                  <div class="form-group row mb-3 mx-1">
+                    <label for="image" class="col-sm-2 col-form-label">Image</label>
+                    <div class="custom-file col-sm-10">
+                    <div class="form-group">
+                      <div class="custom-file">
+                        <label class="custom-file-label" for="image">Pilih Gambar</label>
+                        <input type="file" class="custom-file-input" id="image" name="image">
+                      </div>
+                    </div>
+                    <!-- <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}"> -->
+                    @error('image')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button type="submit" class="btn btn-info text-white">Tambah</button>
+                  <a href="javascript:window. history. back();" type="submit" class="btn btn-danger">Batal</a>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
     </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-      <table id="example1" class="table table-bordered table-striped">
-        <thead>
-        <tr>
-          <th>Rendering engine</th>
-          <th>Browser</th>
-          <th>Platform(s)</th>
-          <th>Engine version</th>
-          <th>CSS grade</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Trident</td>
-          <td>Internet
-            Explorer 4.0
-          </td>
-          <td>Win 95+</td>
-          <td> 4</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>Trident</td>
-          <td>Internet
-            Explorer 5.0
-          </td>
-          <td>Win 95+</td>
-          <td>5</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>Trident</td>
-          <td>Internet
-            Explorer 5.5
-          </td>
-          <td>Win 95+</td>
-          <td>5.5</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Trident</td>
-          <td>Internet
-            Explorer 6
-          </td>
-          <td>Win 98+</td>
-          <td>6</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Trident</td>
-          <td>Internet Explorer 7</td>
-          <td>Win XP SP2+</td>
-          <td>7</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Trident</td>
-          <td>AOL browser (AOL desktop)</td>
-          <td>Win XP</td>
-          <td>6</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Firefox 1.0</td>
-          <td>Win 98+ / OSX.2+</td>
-          <td>1.7</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Firefox 1.5</td>
-          <td>Win 98+ / OSX.2+</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Firefox 2.0</td>
-          <td>Win 98+ / OSX.2+</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Firefox 3.0</td>
-          <td>Win 2k+ / OSX.3+</td>
-          <td>1.9</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Camino 1.0</td>
-          <td>OSX.2+</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Camino 1.5</td>
-          <td>OSX.3+</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Netscape 7.2</td>
-          <td>Win 95+ / Mac OS 8.6-9.2</td>
-          <td>1.7</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Netscape Browser 8</td>
-          <td>Win 98SE+</td>
-          <td>1.7</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Netscape Navigator 9</td>
-          <td>Win 98+ / OSX.2+</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.0</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>1</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.1</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>1.1</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.2</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>1.2</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.3</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>1.3</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.4</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>1.4</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.5</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>1.5</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.6</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>1.6</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.7</td>
-          <td>Win 98+ / OSX.1+</td>
-          <td>1.7</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Mozilla 1.8</td>
-          <td>Win 98+ / OSX.1+</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Seamonkey 1.1</td>
-          <td>Win 98+ / OSX.2+</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Gecko</td>
-          <td>Epiphany 2.20</td>
-          <td>Gnome</td>
-          <td>1.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Webkit</td>
-          <td>Safari 1.2</td>
-          <td>OSX.3</td>
-          <td>125.5</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Webkit</td>
-          <td>Safari 1.3</td>
-          <td>OSX.3</td>
-          <td>312.8</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Webkit</td>
-          <td>Safari 2.0</td>
-          <td>OSX.4+</td>
-          <td>419.3</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Webkit</td>
-          <td>Safari 3.0</td>
-          <td>OSX.4+</td>
-          <td>522.1</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Webkit</td>
-          <td>OmniWeb 5.5</td>
-          <td>OSX.4+</td>
-          <td>420</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Webkit</td>
-          <td>iPod Touch / iPhone</td>
-          <td>iPod</td>
-          <td>420.1</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Webkit</td>
-          <td>S60</td>
-          <td>S60</td>
-          <td>413</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera 7.0</td>
-          <td>Win 95+ / OSX.1+</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera 7.5</td>
-          <td>Win 95+ / OSX.2+</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera 8.0</td>
-          <td>Win 95+ / OSX.2+</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera 8.5</td>
-          <td>Win 95+ / OSX.2+</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera 9.0</td>
-          <td>Win 95+ / OSX.3+</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera 9.2</td>
-          <td>Win 88+ / OSX.3+</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera 9.5</td>
-          <td>Win 88+ / OSX.3+</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Opera for Wii</td>
-          <td>Wii</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Nokia N800</td>
-          <td>N800</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Presto</td>
-          <td>Nintendo DS browser</td>
-          <td>Nintendo DS</td>
-          <td>8.5</td>
-          <td>C/A<sup>1</sup></td>
-        </tr>
-        <tr>
-          <td>KHTML</td>
-          <td>Konqureror 3.1</td>
-          <td>KDE 3.1</td>
-          <td>3.1</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>KHTML</td>
-          <td>Konqureror 3.3</td>
-          <td>KDE 3.3</td>
-          <td>3.3</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>KHTML</td>
-          <td>Konqureror 3.5</td>
-          <td>KDE 3.5</td>
-          <td>3.5</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Tasman</td>
-          <td>Internet Explorer 4.5</td>
-          <td>Mac OS 8-9</td>
-          <td>-</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>Tasman</td>
-          <td>Internet Explorer 5.1</td>
-          <td>Mac OS 7.6-9</td>
-          <td>1</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>Tasman</td>
-          <td>Internet Explorer 5.2</td>
-          <td>Mac OS 8-X</td>
-          <td>1</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>Misc</td>
-          <td>NetFront 3.1</td>
-          <td>Embedded devices</td>
-          <td>-</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>Misc</td>
-          <td>NetFront 3.4</td>
-          <td>Embedded devices</td>
-          <td>-</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>Misc</td>
-          <td>Dillo 0.8</td>
-          <td>Embedded devices</td>
-          <td>-</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>Misc</td>
-          <td>Links</td>
-          <td>Text only</td>
-          <td>-</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>Misc</td>
-          <td>Lynx</td>
-          <td>Text only</td>
-          <td>-</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>Misc</td>
-          <td>IE Mobile</td>
-          <td>Windows Mobile 6</td>
-          <td>-</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>Misc</td>
-          <td>PSP browser</td>
-          <td>PSP</td>
-          <td>-</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>Other browsers</td>
-          <td>All others</td>
-          <td>-</td>
-          <td>-</td>
-          <td>U</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-          <th>Rendering engine</th>
-          <th>Browser</th>
-          <th>Platform(s)</th>
-          <th>Engine version</th>
-          <th>CSS grade</th>
-        </tr>
-        </tfoot>
-      </table>
-    </div>
-    <!-- /.card-body -->
-  </div>
+  </section>
+</div>
 @endsection

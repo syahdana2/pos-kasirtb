@@ -61,6 +61,7 @@ class authController extends Controller
             return redirect()->route('employee.login')->with('error', 'username or password failed');
         } 
         session()->put('auth_id', $user_employee->id);
+        session()->put('outlet_id', $user_employee->outlet_id);
         // dd($user_employee);
         return redirect()->route('employee.dashboard');
     }

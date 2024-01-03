@@ -46,8 +46,6 @@
                                         <th>Toko</th>
                                         <th>Nama Kasir</th>
                                         <th>Username</th>
-                                        <th>Dibuat Tanggal</th>
-                                        <th>Diedit Tanggal</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -59,8 +57,6 @@
                                         <td>{{ $data_employee->outlet->name_outlet }}</td>
                                         <td>{{ $data_employee->name_employee }}</td>
                                         <td>{{ $data_employee->username }}</td>
-                                        <td>{{ $data_employee->created_at->format('Y-m-d') }}</td>
-                                        <td>{{ $data_employee->updated_at->format('Y-m-d') }}</td>
                                         <td>
                                             <div class="d-flex gap-1">
                                                 <a href="{{ route('employee.edit', $data_employee->id) }}" class="btn btn-warning text-white"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
