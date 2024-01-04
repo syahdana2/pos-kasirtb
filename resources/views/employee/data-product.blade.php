@@ -26,10 +26,27 @@
               <!-- /.card-header -->
               <!-- /.card-body -->
               <div class="card-body">
-                <a class="border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info text-dark shadow-md"><i 
+                @if(isset($totalLowStock) && $totalLowStock > 0)
+                                <div class="alert alert-warning mt-2" role="alert">
+                                    Ada <a href="#" class="alert-link">{{ $totalLowStock }} produk</a> memiliki stok kurang dari 5 atau perlu restock.
+                                </div>
+                            @endif
+                            @if(session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            @if(session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                            </div>
+                            @endif
+                <a href="{{ route('product') }}" 
+                  class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i 
                   class="fa-solid fa-arrows-rotate mr-2 "></i> refresh</a>
                {{-- <a href="{{ route('member_page') }}" --}}
-               <a class=" border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success text-dark shadow-md"><i
+               <a href="{{ route('product.create') }}" 
+                  class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i
                   class="fa-solid fa-plus mr-2"></i> Tambah</a>
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                   <div class="row">
@@ -41,42 +58,49 @@
                   <thead>
                   <tr class="bg-navy">
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="20px">No</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Image</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="150px">Kode Produk</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" width="150px">Produk</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Produk</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="150px">Barcode</th>
                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Unit</th>
                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Stok</th>
                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Harga Beli</th>
                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Harga Jual</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Deskripsi</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Dibuat</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="100px">aksi</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr class="odd">
-                    <td class="dtr-control sorting_1" tabindex="0">1</td>
-                    <td>Firefox 1.0</td>
-                    <td>Win 98+ / OSX.2+</td>
-                    <td>1.7</td>
-                    <td>A</td>
-                    <td>1.7</td>
-                    <td>A</td>
-                  </tr><tr class="even">
-                    <td class="dtr-control sorting_1" tabindex="0">2</td>
-                    <td>Firefox 1.5</td>
-                    <td>Win 98+ / OSX.2+</td>
-                    <td>1.8</td>
-                    <td>A</td>
-                    <td>1.7</td>
-                    <td>A</td>
-                  </tr><tr class="odd">
-                    <td class="dtr-control sorting_1" tabindex="0">3</td>
-                    <td>Firefox 2.0</td>
-                    <td>Win 98+ / OSX.2+</td>
-                    <td>1.8</td>
-                    <td>A</td>
-                    <td>1.7</td>
-                    <td>A</td>
-                  </tr></tbody>
+                    @if($product->count() > 0)
+                    @foreach($product as $data_product)
+                      <tr class="odd">
+                          <td class="dtr-control sorting_1" tabindex="0">{{ $loop->iteration }}</td>
+                          <td>{{ $data_product->barcode }}</td>
+                          <td>{{ $data_product->name_product }}</td>
+                          <td>{{ $data_product->satuan_product }}</td>
+                          <td>{{ $data_product->stock }}</td>
+                          <td>Rp. {{ number_format($data_product->selling_price) }}</td>
+                          <td>Rp. {{ number_format($data_product->buy_price) }}</td>
+                          <td>{{ $data_product->employee_name }}</td>
+                          <td>
+                            <div class="d-flex gap-1">
+                                <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
+                                <a href="{{ route('product.edit', $data_product->id) }}" class="btn btn-warning text-white" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <form action="{{ route('product.destroy', $data_product->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin menghapus data ini')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" title="Hapus">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                      </tr>
+                    @endforeach
+                    @else
+                      <tr>
+                        <td class="text-center" colspan="10">Data produk kosong</td>
+                      </tr>
+                    @endif
+                  </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -124,3 +148,108 @@
   });
 </script>
 @endsection
+
+{{-- @extends('employee.layouts.main')
+
+@section('content')
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Data Produk</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Data produk yang dimiliki saat ini</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="my-2">
+                                <a href="{{ route('product.create') }}" class="btn btn-success">
+                                    <i class="fa-solid fa-plus"></i> Tambah Produk
+                                </a>
+                            </div>
+                            @if(isset($totalLowStock) && $totalLowStock > 0)
+                                <div class="alert alert-warning mt-2" role="alert">
+                                    Ada <a href="#" class="alert-link">{{ $totalLowStock }} produk</a> memiliki stok kurang dari 5 atau perlu restock.
+                                </div>
+                            @endif
+                            @if(session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            @if(session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                            </div>
+                            @endif
+                            <table class="table table-hover table-bordered text-nowrap">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Barcode</th>
+                                        <th>Produk</th>
+                                        <th>Unit</th>
+                                        <th>Stok</th>
+                                        <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
+                                        <th>Dibuat</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($product->count() > 0)
+                                    @foreach($product as $data_product)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $data_product->barcode }}</td>
+                                        <td>{{ $data_product->name_product }}</td>
+                                        <td>{{ $data_product->satuan_product }}</td>
+                                        <td>{{ $data_product->stock }}</td>
+                                        <td>Rp. {{ number_format($data_product->selling_price) }}</td>
+                                        <td>Rp. {{ number_format($data_product->buy_price) }}</td>
+                                        <td>{{ $data_product->employee_name }}</td>
+                                        <td width="100px">
+                                            <div class="d-flex gap-1">
+                                                <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
+                                                <a href="{{ route('product.edit', $data_product->id) }}" class="btn btn-warning text-white" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <form action="{{ route('product.destroy', $data_product->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin menghapus data ini')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" title="Hapus">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="text-center" colspan="10">Data produk kosong</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@endsection --}}

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\product;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -11,7 +14,22 @@ class DashboardController extends Controller
      */
     public function dashboard()
     {
-        return view('employee.dashboard', ["title" => "Dashboard Employee"]);
+        $emp = Employee::find(session()->get('auth_id'));
+
+        $outletId = session('outlet_id');
+
+        $lowStockSum = DB::table('products as P')
+            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+            ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
+            ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
+            ->where('O.id', $outletId)
+            ->where('P.stock', '<', 5)
+            ->first();
+
+        // Mengakses hasil query
+        $totalLowStock = $lowStockSum->totalLowStock;
+
+        return view('employee.dashboard', compact('emp', 'totalLowStock'), ["title" => "Dashboard Employee"]);
     }
 
     /**

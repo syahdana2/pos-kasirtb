@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HistoryController extends Controller
 {
@@ -11,7 +13,21 @@ class HistoryController extends Controller
      */
     public function history()
     {
-        return view('employee.history-transaction.history-selling', ["title" => "Riwayat Penjualan"]);
+        $emp = Employee::find(session()->get('auth_id'));
+
+        $outletId = session('outlet_id');
+
+        $lowStockSum = DB::table('products as P')
+            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+            ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
+            ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
+            ->where('O.id', $outletId)
+            ->where('P.stock', '<', 5)
+            ->first();
+
+        // Mengakses hasil query
+        $totalLowStock = $lowStockSum->totalLowStock;
+        return view('employee.history-transaction.history-selling', compact('emp', 'totalLowStock'), ["title" => "Riwayat Penjualan"]);
     }
 
     /**

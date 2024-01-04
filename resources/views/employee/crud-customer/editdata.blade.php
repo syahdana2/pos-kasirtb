@@ -36,7 +36,7 @@
                       <div class="col-sm-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                              <h3 class="card-title">Edit data pelanggan</h3>
+                              <h3 class="card-title">Data Pelanggan</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
