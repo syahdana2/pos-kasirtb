@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
 use App\Models\Admin;
+use App\Models\customer;
 use App\Models\Employee;
+use Illuminate\Database\Seeder;
 use App\Models\outlet;
 use App\Models\product;
 use App\Models\Unit;
@@ -52,6 +52,13 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
 
+        customer::create([
+            'name' => "agus setiawan",
+            'code' => "PTB_0101_01",
+            'phone' => "082567472356",
+            'address' => "jl.panglima sudirman turen gg.pahlawan.01"
+        ]);
+
         Employee::create([
             'outlet_id' => 2,
             'name_employee' => 'nado',
@@ -91,6 +98,5 @@ class DatabaseSeeder extends Seeder
         Unit::create([
             'satuan' => 'liter'
         ]);
-
     }
 }

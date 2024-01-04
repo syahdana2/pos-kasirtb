@@ -13,7 +13,7 @@ class outletController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $admin = Admin::find(session()->get('auth_id'));
         // dd($admin);
         $dt_outlet = Outlet::orderBy('created_at', 'DESC')->get();
@@ -24,7 +24,7 @@ class outletController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
-    {   
+    {
         $admin = Admin::find(session()->get('auth_id'));
         return view('admin.crud-outlet.create', compact('admin'));
     }
@@ -39,9 +39,9 @@ class outletController extends Controller
             'phone' => 'required|min:10',
             'address' => 'required|max:225',
         ]);
-    
+
         Outlet::create($validated);
-        
+
         return redirect()->route('outlet')->with('success', 'Berhasil menambahkan data toko baru');
     }
 
@@ -49,7 +49,7 @@ class outletController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-    {   
+    {
         $admin = Admin::find(session()->get('auth_id'));
         $outlet = Outlet::findOrFail($id);
         return view('admin.crud-outlet.edit', compact('outlet', 'admin'));
@@ -59,11 +59,11 @@ class outletController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {   
+    {
         $validated = $request->validate([
-            'name_outlet' => 'required',
-            'phone' => 'required|min:10',
-            'address' => 'required|max:225'
+            'name_outlet' => 'max:100',
+            'phone' => 'min:10',
+            'address' => 'max:225'
         ]);
 
         // Outlet::whereId($id)->update($validated);
@@ -72,15 +72,15 @@ class outletController extends Controller
 
         return redirect()->route('outlet')->with('success', 'Toko berhasil diedit');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $outlets = Outlet::findOrFail($id); 
+        $outlets = Outlet::findOrFail($id);
         $outlets->delete();
-        
+
         return redirect()->route('outlet')->with('success', 'Toko berhasil dihapus');
     }
 }

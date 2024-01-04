@@ -4,6 +4,13 @@ use App\Http\Controllers\admin\dashboardadminController;
 use App\Http\Controllers\admin\outletController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authController;
+use App\Http\Controllers\CrudCustomerController;
+use App\Http\Controllers\CrudHistoryController;
+use App\Http\Controllers\CrudProductController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\logoutController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\employee\dashboardemployeeController;
 use App\Http\Controllers\employee\productController;
@@ -28,9 +35,13 @@ Route::post('/loginadmin', [authController::class, 'login_Admin'])->name('admin.
 Route::get('/', function () {
     return view('employee.login');
 })->name('employee.login');
-Route::post('/', [authController::class, 'login_employee'],)->name('employee.login');
+Route::post('/', [authController::class, 'login_employee'])->name('employee.login');
 
 Route::middleware(['admin.auth'])->group(function () {
+    Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
     // tambahkan route untuk akses halaman admin
     Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
     Route::prefix('/admin')->group(function () {
@@ -57,34 +68,35 @@ Route::middleware(['admin.auth'])->group(function () {
     });
 });
 
-Route::middleware(['employee.auth'])->group(function () {
+Route::middleware(['admin.auth'])->group(function () {
     Route::get('/logoutemployee', [authController::class, 'logout_employee'])->name('employee.logout');
     // tambahakan route untuk akses halaman employee
-    Route::get('/dashboardemployee', [dashboardemployeeController::class, 'index'])->name('employee.dashboard');
 
-    Route::get('/transaksi', function () {
-        return view('employee.transaction', ["title" => "Transaksi"]);
-    });
+    Route::get('/dashboard-employee', [DashboardController::class, 'dashboard'])->name('employee.dashboard');
 
-    Route::get('/pelanggan', function () {
-        return view('employee.customer', ["title" => "Pelanggan"]);
-    });
+    Route::get('/transaksi', [TransactionController::class, 'transaction']);
+
+    // Route pelanggan
+    Route::get('/pelanggan', [CrudCustomerController::class, 'customer'])->name('customer_page');
+    Route::get('/tambah-pelanggan', [CrudCustomerController::class, 'addcustomer'])->name('add_customer');
+    Route::post('/buat-pelanggan-baru', [CrudCustomerController::class, 'newcustomer']);
+    Route::get('/edit-pelanggan/{id}', [CrudCustomerController::class, 'datacustomer'])->name('data_customer');
+    Route::post('/update-pelanggan/{id}', [CrudCustomerController::class, 'updatecustomer'])->name('update_customer');
+    Route::get('/hapus-pelanggan/{id}', [CrudCustomerController::class, 'deletecustomer'])->name('delete_customer');
+
     // Route product
     Route::prefix('/data-produk')->group(function () {
-        Route::get('/', [productController::class, 'index'])->name('product');              
-        Route::get('/create', [productController::class, 'create'])->name('product.create');              
-        Route::post('/store', [productController::class, 'store'])->name('product.store');        
-        Route::get('/show/{id}', [productController::class, 'show'])->name('product.show');              
+        Route::get('/', [productController::class, 'index'])->name('product');
+        Route::get('/create', [productController::class, 'create'])->name('product.create');
+        Route::post('/store', [productController::class, 'store'])->name('product.store');
+        Route::get('/show/{id}', [productController::class, 'show'])->name('product.show');
         Route::get('/edit/{id}', [productController::class, 'edit'])->name('product.edit');
         Route::put('/update/{id}', [productController::class, 'update'])->name('product.update');
-        Route::delete('/delete/{id}', [productController::class, 'destroy'])->name('product.destroy'); 
+        Route::delete('/delete/{id}', [productController::class, 'destroy'])->name('product.destroy');
     });
 
-    Route::get('/riwayat-penjualan', function () {
-        return view('employee.history-transaction.history-selling', ["title" => "Riwayat Penjualan"]);
-    });
+    //Route Product
+    // Route::get('/data-produk', [CrudProductController::class, 'product']);
 
-    Route::get('/member', function () {
-        return view('employee.crud-produk.create');
-    });
+    Route::get('/riwayat-penjualan', [HistoryController::class, 'history']);
 });
