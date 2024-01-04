@@ -1,0 +1,3 @@
+push odan dev
+- membuat kode otomatis pada pelanggan
+- memgatur tanpila pada data product
