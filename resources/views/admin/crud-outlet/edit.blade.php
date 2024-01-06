@@ -52,8 +52,8 @@
                                     </div>
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="submit" class="btn btn-info text-white">Update</button>
-                                    <a href="javascript:window. history. back();" type="submit" class="btn btn-danger">Batal</a>
+                                    <a href="javascript:window. history. back();" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
+                                    <button type="submit" class="btn btn-info text-white"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                                 </div>
                             </div>
                         </form>

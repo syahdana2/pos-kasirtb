@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Admin;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +17,11 @@ class AdminAuthMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
-        if ((session()->has('auth_id'))==true) {
+    {   
+        $cek_admin = session()->get('roles');
+        if ($cek_admin == 'admin') {
             return $next($request);
         }
-
         return redirect()->route('admin.login')->with('error', 'you are not logged in');
     }
 }

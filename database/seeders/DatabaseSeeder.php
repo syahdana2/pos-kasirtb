@@ -67,30 +67,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
 
-        Product::create([
-            'employee_id' => 1,
-            'unit_id' => 1,
-            'name_product' => 'Semen',
-            'barcode' => 'S_001',
-            'stock' => '4',
-            'selling_price' => 50000,
-            'buy_price' => 55000,
-            'image' => 'profile2.jpg',
-            'desc' => 'semen gresik 50 kg'
-        ]);
-
-        Product::create([
-            'employee_id' => 2,
-            'unit_id' => 1,
-            'name_product' => 'Semen',
-            'barcode' => 'S_002',
-            'stock' => '10',
-            'selling_price' => 50000,
-            'buy_price' => 55000,
-            'image' => 'profile2.jpg',
-            'desc' => 'semen gresik 50 kg'
-        ]);
-
         Unit::create([
             'satuan' => 'kg'
         ]);

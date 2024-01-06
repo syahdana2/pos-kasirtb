@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\product;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -26,10 +27,18 @@ class DashboardController extends Controller
             ->where('P.stock', '<', 5)
             ->first();
 
-        // Mengakses hasil query
         $totalLowStock = $lowStockSum->totalLowStock;
+        // Mengakses hasil query
 
-        return view('employee.dashboard', compact('emp', 'totalLowStock'), ["title" => "Dashboard Employee"]);
+        $customerCount = Customer::count();
+
+        $productCount = DB::table('products as P')
+        ->join('employees as E', 'P.employee_id', '=', 'E.id')
+        ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
+        ->where('O.id', $outletId)
+        ->count('P.name_product');
+
+        return view('employee.dashboard', compact('emp', 'totalLowStock', 'customerCount', 'productCount'), ["title" => "Dashboard Employee"]);
     }
 
     /**

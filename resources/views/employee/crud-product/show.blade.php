@@ -18,7 +18,13 @@
               <div class="card-body">
                 <div class="d-flex justify-content-center mb-3 mx-1">
                   <div class="filtr-item col-sm-4" data-category="2, 4" data-sort="black sample">
-                    <img src="/img/{{ $product->image }}" class="img-fluid shadow mb-3 bg-body-tertiary rounded" alt="No Image">
+                    @if($product->image)
+                    <img src="{{ asset('storage/' .$product->image) }}" class="img-fluid shadow mb-3 bg-body-tertiary rounded" alt="{{ $product->image }}">
+                    @else
+                    <div class="alert alert-warning text-center" role="alert">
+                      Produk ini tidak menginputkan gambar
+                    </div>
+                    @endif
                   </div>
                 </div>
                 <div class="form-group row mb-3 mx-1">
@@ -71,7 +77,6 @@
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mr-3">
                   <a href="javascript:window. history. back();" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
-                  <button type="submit" class="btn btn-info text-white"><i class="fa-solid fa-plus"></i> Tambah</button>
                 </div>
               </div>
             </form>
