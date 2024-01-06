@@ -27,6 +27,7 @@ class CrudCustomerController extends Controller
 
         // Mengakses hasil query
         $totalLowStock = $lowStockSum->totalLowStock;
+
         $data = customer::all();
         // dd($data);
         return view('employee.customer', compact('data', 'emp', 'totalLowStock'), ["title" => "Pelanggan"]);
@@ -49,9 +50,22 @@ class CrudCustomerController extends Controller
 
         ]);
 
+        // Membuat kode nama toko dari huruf awalnya
+        function getAbbreviation($string)
+        {
+            $words = explode(' ', $string);
+            $abbreviation = '';
+
+            foreach ($words as $word) {
+                $abbreviation .= strtoupper(substr($word, 0, 1));
+            }
+
+            return $abbreviation;
+        }
+
         // Mendapatkan data untuk pembuatan kode member
         $dtout = outlet::find(session('outlet_id'));
-        $kodetokoName = $dtout->name_outlet;
+        $kodetokoName = getAbbreviation($dtout->name_outlet, 0, 3);
 
         $bulanTahun = now()->format('dm');
 
@@ -98,11 +112,5 @@ class CrudCustomerController extends Controller
         $data = customer::find($id);
         $data->delete();
         return redirect()->route('customer_page')->with('success', 'Data Berhasil Di Hapus');
-    }
-
-
-    public function destroy(string $id)
-    {
-        //
     }
 }

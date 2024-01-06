@@ -31,7 +31,7 @@
                 <div class="card-body">
                     {{-- alert --}}
                     @if ($message = Session::get('success'))
-                        <div id=".alert" class="alert alert-success col-sm-9 border 0" role="alert" style="background-color: rgba(35, 184, 35, 0.5);">
+                        <div id=".alert" class="alert alert-success col-sm-12 border 0" role="alert" style="background-color: rgba(35, 184, 35, 0.5);">
                           <i class="fa-regular fa-circle-check mr-2"></i>
                           {{ $message }}
                         </div>
@@ -56,14 +56,14 @@
                     <div class="row">
                       <div class="col-sm-12">
                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
-                          <thead class="table-grey">
+                          <thead class="">
                           <tr>
                             <th class="sorting sorting_asc " tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="20px">No</th>
                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Nama Pelanggan</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="130px">Kode Pelanggan</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" width="150px">No telepon</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Alamat</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" width="100px">Dibuat</th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="100px">ID. Pel</th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" width="100px">No telepon</th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="300px" >Alamat</th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" width="80px">Dibuat</th>
                             <th class="text-center sorting"  tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="108px">Aksi</th>
                           </tr>
                           </thead>
