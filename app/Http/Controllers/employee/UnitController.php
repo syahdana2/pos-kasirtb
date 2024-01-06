@@ -6,13 +6,14 @@ use App\Models\unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 
 class UnitController extends Controller
 {
     //halaman unit
     public function unit()
     {
-        $emp = unit::find(session()->get('auth_id'));
+        $emp = Employee::find(session()->get('auth_id'));
 
         $outletId = session('outlet_id');
 
@@ -29,13 +30,14 @@ class UnitController extends Controller
 
         $data = unit::all();
         //dd('$data');
-        return view('employee.unit', compact('data'), ["title" => "satuan"]);
+        return view('employee.unit', compact('data', 'emp', 'totalLowStock'), ["title" => "satuan"]);
     }
 
     //tambah unit
     public function addunit()
     {
-        return view('employee.crud-unit.add', ["title" => "Tambah Unit"]);
+        $emp = Employee::find(session()->get('auth_id'));
+        return view('employee.crud-unit.add', compact('emp'), ["title" => "Tambah Unit"]);
     }
 
 
@@ -53,9 +55,10 @@ class UnitController extends Controller
     //edit unit
     public function dataunit($id)
     {
+        $emp = Employee::find(session()->get('auth_id'));
         $data = unit::find($id);
         //dd($data);
-        return view('employee.crud-unit.edit', compact('data'), ["title" => "Edit Data Satuan"]);
+        return view('employee.crud-unit.edit', compact('data', 'emp'), ["title" => "Edit Data Satuan"]);
     }
 
 
