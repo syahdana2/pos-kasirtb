@@ -38,7 +38,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="/riwayat-penjualan" class="small-box-footer">detail info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('history') }}" class="small-box-footer">detail info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -47,30 +47,44 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{ $customerCount }}</h3>
 
-                <p>pelanggan baru</p>
+                <p>Pelanggan Baru</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="/pelanggan" class="small-box-footer">detail info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('customer_page') }}" class="small-box-footer">detail info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
 
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ $productCount }}</h3>
+
+                <p>Total Produk</p>
+              </div>
+              <div class="icon">
+              <i class="ion fa-solid fa-boxes-stacked"></i>
+              </div>
+              <a href="{{ route('product') }}" class="small-box-footer">detail info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3>{{ $totalLowStock }}</h3>
 
-                <p>Stok sedikit</p>
+                <p>Stok Sedikit</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="data-produk" class="small-box-footer">detail info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('product') }}" class="small-box-footer">detail info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

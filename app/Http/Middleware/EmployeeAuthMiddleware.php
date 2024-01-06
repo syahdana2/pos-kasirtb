@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Employee;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,10 @@ class EmployeeAuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ((session()->has('auth_id'))==true) {
+        $cek_emp = session()->get('roles');
+        if ($cek_emp == 'employee') {
             return $next($request);
         }
-        
         return redirect()->route('employee.login')->with('error', 'You are not logged in');
     }
 }

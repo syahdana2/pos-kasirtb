@@ -22,9 +22,10 @@
                                     <label for="outlet_id" class="col-sm-2 col-form-label">Toko</label>
                                     <div class="col-sm-10">
                                         <select class="form-select" id="outlet_id" name="outlet_id">
-                                            <option selected>--- Pilih Toko ---</option>
                                             @foreach ($outlet as $dt_outlet)
-                                            <option value="{{ $dt_outlet->id }}">{{ $dt_outlet->name_outlet }}</option>
+                                            <option value="{{ $dt_outlet->id }}" {{ $employee->id == $dt_outlet->id ? 'selected' : '' }}>
+                                                {{ $dt_outlet->name_outlet }}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -64,8 +65,8 @@
                                     </div>
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="submit" class="btn btn-info text-white">Tambah</button>
-                                    <a href="javascript:window. history. back();" type="submit" class="btn btn-danger">Batal</a>
+                                    <a href="javascript:window. history. back();" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
+                                    <button type="submit" class="btn btn-info text-white"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                                 </div>
                             </div>
                         </form>
