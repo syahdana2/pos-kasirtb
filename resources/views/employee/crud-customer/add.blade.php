@@ -40,7 +40,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="/buat-pelanggan-baru" method="POST" enctype="multipart/form-data">
+                            <form action="/pelanggan/buat-pelanggan-baru" method="POST" enctype="multipart/form-data">
                               @csrf
                               <div class="card-body">
                                 <div class="form-group">
@@ -55,18 +55,6 @@
                                   <label for="exampleInputPassword1">Alamat</label>
                                   <input type="text" name="address" class="form-control" id="exampleInputPassword1" placeholder="Masukan alamat">
                                 </div>
-                                {{-- <div class="form-group">
-                                  <label for="exampleInputFile">File input</label>
-                                  <div class="input-group">
-                                    <div class="custom-file">
-                                      <input type="file" class="custom-file-input" id="exampleInputFile">
-                                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                    </div>
-                                    <div class="input-group-append">
-                                      <span class="input-group-text">Upload</span>
-                                    </div>
-                                  </div>
-                                </div> --}}
                                 <div class="form-check">
                                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                   <label class="form-check-label" for="exampleCheck1">pelanggan reseller</label>

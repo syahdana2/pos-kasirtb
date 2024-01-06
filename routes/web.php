@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\admin\dashboardadminController;
-use App\Http\Controllers\admin\outletController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authController;
-use App\Http\Controllers\CrudCustomerController;
+use App\Http\Controllers\logoutController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CrudHistoryController;
 use App\Http\Controllers\CrudProductController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HistoryController;
-use App\Http\Controllers\logoutController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\admin\outletController;
+use App\Http\Controllers\CrudCustomerController;
+use App\Http\Controllers\employee\UnitController;
 use App\Http\Controllers\admin\EmployeeController;
-use App\Http\Controllers\employee\dashboardemployeeController;
+use SebastianBergmann\CodeCoverage\Report\Xml\Unit;
 use App\Http\Controllers\employee\productController;
+use App\Http\Controllers\admin\dashboardadminController;
+use App\Http\Controllers\employee\dashboardemployeeController;
 use App\Http\Controllers\outletController as ControllersOutletController;
 
 /*
@@ -77,12 +79,14 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/transaksi', [TransactionController::class, 'transaction']);
 
     // Route pelanggan
-    Route::get('/pelanggan', [CrudCustomerController::class, 'customer'])->name('customer_page');
-    Route::get('/tambah-pelanggan', [CrudCustomerController::class, 'addcustomer'])->name('add_customer');
-    Route::post('/buat-pelanggan-baru', [CrudCustomerController::class, 'newcustomer']);
-    Route::get('/edit-pelanggan/{id}', [CrudCustomerController::class, 'datacustomer'])->name('data_customer');
-    Route::post('/update-pelanggan/{id}', [CrudCustomerController::class, 'updatecustomer'])->name('update_customer');
-    Route::get('/hapus-pelanggan/{id}', [CrudCustomerController::class, 'deletecustomer'])->name('delete_customer');
+    Route::prefix('/pelanggan')->group(function () {
+        Route::get('/', [CrudCustomerController::class, 'customer'])->name('customer_page');
+        Route::get('/tambah-pelanggan', [CrudCustomerController::class, 'addcustomer'])->name('add_customer');
+        Route::post('/buat-pelanggan-baru', [CrudCustomerController::class, 'newcustomer'])->name('new_pelanggan');
+        Route::get('/edit-pelanggan/{id}', [CrudCustomerController::class, 'datacustomer'])->name('data_customer');
+        Route::post('/update-pelanggan/{id}', [CrudCustomerController::class, 'updatecustomer'])->name('update_customer');
+        Route::get('/hapus-pelanggan/{id}', [CrudCustomerController::class, 'deletecustomer'])->name('delete_customer');
+    });
 
     // Route product
     Route::prefix('/data-produk')->group(function () {
@@ -95,8 +99,15 @@ Route::middleware(['admin.auth'])->group(function () {
         Route::delete('/delete/{id}', [productController::class, 'destroy'])->name('product.destroy');
     });
 
-    //Route Product
-    // Route::get('/data-produk', [CrudProductController::class, 'product']);
+    //Route Satuan 
+    Route::prefix('/satuan')->group(function () {
+        Route::get('/', [UnitController::class, 'unit'])->name('unit_page');
+        Route::get('/tambah-unit', [UnitController::class, 'addunit'])->name('add_unit');
+        Route::post('/buat-unit-baru', [UnitController::class, 'newunit'])->name('new_unit');
+        Route::get('/edit-unit/{id}', [UnitController::class, 'dataunit'])->name('data_unit');
+        Route::post('/update-unit/{id}', [UnitController::class, 'updateunit'])->name('update_unit');
+        Route::get('/hapus-unit/{id}', [UnitController::class, 'deleteunit'])->name('delete_unit');
+    });
 
     Route::get('/riwayat-penjualan', [HistoryController::class, 'history']);
 });

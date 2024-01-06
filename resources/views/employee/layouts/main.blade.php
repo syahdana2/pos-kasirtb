@@ -114,7 +114,7 @@
 
           <li class="nav-item">
             <a href="transaksi" class="nav-link {{ ( $title === "Transaksi" ? 'active' : '' ) }}">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="ml-1 mr-2 fa-solid fa-cart-shopping"></i>
               <p>
                 Transaksi
               </p>
@@ -123,7 +123,7 @@
 
           <li class="nav-item">
             <a href="/data-produk" class="nav-link {{ $title === "Data Produk" ? 'active' : '' }}">
-                <i class="nav-icon fas fa-copy"></i>
+              <i class="ml-2 mr-2 fa-solid fa-database"></i>
                 <p>
                     Data Produk
                     @if(isset($totalLowStock) && $totalLowStock > 0)
@@ -135,7 +135,7 @@
 
           <li class="nav-item">
             <a href="pelanggan" class="nav-link {{ ( $title === "Pelanggan" ? 'active' : '' ) }}">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="ml-2 mr-2 fa-solid fa-user"></i>
               <p>
                 Pelanggan
               </p>
@@ -151,9 +151,16 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('unit_page') }}" class="nav-link {{ ( $title === "satuan" ? 'active' : '' ) }}">
+              <i class="ml-2 fa-solid fa-tag mr-2"></i>
+              <p>
+                Unit
+              </p>
+            </a>
+          <li class="nav-item">
             <a href="{{ route('employee.logout') }}" class="nav-link">
               <div class="my-1">
-              <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+              <i class="ml-1 nav-icon fa-solid fa-right-from-bracket"></i>
                 <p>
                   Logout
                 </p>

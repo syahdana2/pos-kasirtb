@@ -36,35 +36,23 @@
                       <div class="col-sm-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                              <h3 class="card-title">Data Pelanggan</h3>
+                              <h3 class="card-title">Data Satuan</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="/pelanggan/update-pelanggan/{{ $data->id }}" method="post">
+                            <form action="/satuan/update-unit/{{ $data->id }}" method="post">
                               @csrf
                               <div class="card-body">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1">Nama Pelanggan</label>
-                                  <input type="text" name="name" value="{{ $data->name }}" class="form-control" id="exampleInputEmail1" placeholder="Masukan nama">
-                                </div>
-                                <div class="form-group">
-                                  <label for="exampleInputPassword1">Nomer telepon</label>
-                                  <input type="number" name="phone" value="{{ $data->phone }}" class="form-control" id="exampleInputPassword1" placeholder="Masukan nomer telepon">
-                                </div>
-                                <div class="form-group">
-                                  <label for="exampleInputPassword1">Alamat</label>
-                                  <input type="text" name="address" value="{{ $data->address }}" class="form-control" id="exampleInputPassword1" placeholder="Masukan alamat">
-                                </div>
-                                <div class="form-check">
-                                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                  <label class="form-check-label" for="exampleCheck1">pelanggan reseller</label>
+                                  <label for="exampleInputEmail1">Jenis Satuan </label>
+                                  <input type="text" name="satuan" value="{{ $data->satuan }}" class="form-control" id="exampleInputEmail1" placeholder="Masukan nama">
                                 </div>
                               </div>
                               <!-- /.card-body -->
               
                               <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a href={{ route('customer_page') }} type="submit" class="btn bg-danger">Batal</a>
+                                <a href={{ route('unit_page') }} type="submit" class="btn bg-danger">Batal</a>
                               </div>
                             </form>
                           </div>
@@ -118,6 +106,6 @@
         "autoWidth": false,
         "responsive": true,
       });
-    });
-  </script>
+  });
+</script>
 @endsection
