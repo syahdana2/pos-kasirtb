@@ -13,7 +13,15 @@ class Employee extends Model
 
     protected $guarded = ['id'];
 
-    public function outlet(){
-        return $this->belongsTo(outlet::class);
+    public function outlet () {
+        return $this->belongsTo(outlet::class, 'outlet_id', 'id');
+    }
+
+    public function product () {
+        return $this->hasMany(Transaction::class, 'employee_id', 'id');
+    }
+
+    public function transaction () {
+        return $this->hasMany(Transaction::class, 'employee_id', 'id');
     }
 }

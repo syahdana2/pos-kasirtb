@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
 
         Admin::create([
             'username' => 'admin',
-            // pw default 12345678
             'password' => Hash::make('12345678')
         ]);
 
@@ -46,9 +45,15 @@ class DatabaseSeeder extends Seeder
 
         Employee::create([
             'outlet_id' => 1,
-            'name_employee' => 'nako',
-            'username' => 'kasir',
-            // pw default 12345678
+            'name_employee' => 'kano',
+            'username' => 'kasir1',
+            'password' => Hash::make('12345678')
+        ]);
+
+        Employee::create([
+            'outlet_id' => 2,
+            'name_employee' => 'dano',
+            'username' => 'kasir2',
             'password' => Hash::make('12345678')
         ]);
 
@@ -73,6 +78,26 @@ class DatabaseSeeder extends Seeder
 
         Unit::create([
             'satuan' => 'liter'
+        ]);
+
+        product::create([
+            'employee_id' => 1,
+            'name_product' => 'semen putih',
+            'barcode' => 'SP0457SEK2846',
+            'unit_id' => 1,
+            'stock' => '30',
+            'buy_price' => '45000',
+            'selling_price' => '50000',
+        ]);
+
+        product::create([
+            'employee_id' => 1,
+            'name_product' => 'Cat Decolith Putih',
+            'barcode' => 'CDP0627SEK7632',
+            'unit_id' => 1,
+            'stock' => '25',
+            'buy_price' => '60000',
+            'selling_price' => '70000',
         ]);
     }
 }

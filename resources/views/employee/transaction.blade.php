@@ -1,9 +1,9 @@
 @extends('employee.layouts.main')
 
 @section('head')
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 @endsection
 
 @section('content')
@@ -23,183 +23,181 @@
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-          <div class="col-12">
-              <!-- /.card-header -->
-              <div class="card">
-                <!-- /.card-body -->
-                <div class="card-body">
-                  <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <div class="row">
+        <div class="col-12">
+          <!-- /.card-header -->
+          <div class="card">
+            <!-- /.card-body -->
+            <div class="card-body">
+              @if(isset($totalLowStock) && $totalLowStock > 0)
+              <div class="alert alert-warning mt-2" role="alert">
+                Ada <a href="{{ route('product.restock') }}" class="alert-link">{{ $totalLowStock }} produk</a> memiliki stok kurang dari 5 atau perlu restock.
+              </div>
+              @endif
+              @if(session('success'))
+              <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+              </div>
+              @endif
+              @if(session('error'))
+              <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+              </div>
+              @endif
+              <a href="javascript:window.location.reload();" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2"></i>Refresh</a>
+              <a href="{{ route('history') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i class="fa-solid fa-clock-rotate-left mr-2"></i>History</a>
+              @if(session('cart'))
+              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping mr-2"></i>Keranjang <span class="badge text-bg-secondary">{{ count((array) session('cart')) }}</span></button>
+              @endif
+              <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                      <thead>
+                        <tr class="bg-navy">
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="60px">Kode</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="200px">Produk</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Unit</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="30px">Stok</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="70px">Harga Beli</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="70px">Harga Jual</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="70px">Harga Grosir</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="120px">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @if($product->count() > 0)
+                        @foreach($product as $data_product)
+                        <tr class="odd">
+                          <td>{{ $data_product->barcode }}</td>
+                          <td>{{ $data_product->name_product }}</td>
+                          <td>{{ $data_product->satuan_product }}</td>
+                          <td>
+                            @if ($data_product->stock == 0)
+                            <span class="badge text-bg-danger">Habis</span>
+                            @elseif ($data_product->stock < 5) <span class="badge text-bg-danger">{{ $data_product->stock }}</span>
+                              @else
+                              <span class="badge text-bg-success">{{ $data_product->stock }}</span>
+                              @endif
+                          </td>
+                          <td>Rp. {{ number_format($data_product->buy_price) }}</td>
+                          <td>Rp. {{ number_format($data_product->selling_price) }}</td>
+                          <td>
+                            <form action="{{ route('cart.add', $data_product->id) }}" method="post">
+                              @csrf
+                              <input type="number" class="form-control" name="grosir" id="grosir" value="0">
+                          </td>
+                          <td>
+                            <div class="d-flex gap-1">
+                              <div class="d-flex">
+                                <input type="number" class="form-control" name="quantity" id="quantity" value="1" min="1">
+                                <button type="submit" class="btn btn-success text-white" title="Pilih"><i class="fa-solid fa-check"></i></button>
+                                <!-- <a href="{{ route('cart.add', $data_product->id) }}" class="btn btn-success text-white" title="Pilih"><i class="fa-solid fa-check"></i></a> -->
+                              </div>
+                              </form>
+                              <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
+                            </div>
+                          </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                          <td class="text-center" colspan="10">Data produk kosong</td>
+                        </tr>
+                        @endif
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">List Pesanan</h5>
+            <a href="{{ route('reset.cart') }}" class="btn btn-primary ml-4"><i class="fa-solid fa-rotate-right mr-2"></i>Reset Keranjang</a>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            @php $total = 0 @endphp
+            @if(session('cart'))
+            @foreach (session('cart') as $productId => $cart)
+            @php $total += $cart['selling_price_disc'] * $cart['qty'] @endphp
+            <div class="d-flex">
+              <div class=" col-lg-3">
+                @if($cart['image'])
+                <img src="{{ asset('storage/' .$cart['image']) }}" alt="User Avatar" class="img-fluid shadow mb-3 bg-body-tertiary rounded">
+                @else
+                <img src="https://cdn-icons-png.flaticon.com/128/5762/5762943.png" alt="User Avatar" class="img-fluid shadow mb-3 bg-body-tertiary rounded">
+                @endif
+              </div>
+              <div class="col-lg-9">
+                <div class="d-flex">
+                  <div class="row">
+                    <p class="mb-2"><b>{{ $cart['name_product'] }}</b></p>
+                    <div class="d-flex">
+                      <div class="col-md-5">
+                        <span class="">Rp.{{ number_format($cart['selling_price_disc']) }}</span>
+                      </div>
+                      <div class="d-flex col-md-7">
+                        <form action="{{ route('cart.update', $productId) }}" method="POST">
+                          @csrf
+                          @method('PATCH')
+                          <div class="d-flex">
+                            <input type="number" class="form-control" name="qty" value="{{ $cart['qty'] }}" min="1">
+                            <button type="submit" class="btn btn-sm btn-outline-success p-2"><i class="fa-solid fa-check"></i></button>
+                          </div>
+                        </form>
+                        <form action="{{ route('cart.remove', $productId) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-sm btn-outline-danger ml-1 p-2"><i class="fa-solid fa-trash-can"></i></button>
+                        </form>
+                      </div>
                     </div>
-                    <div class="row">
-                      <button type="button" class="btn btn-outline-success mr-20">Success</button>
-                      <div class="col-sm-12">
-                        <table id="example1" class="table table-bordered table-striped">
-                          <thead class="bg-navy">
-                          <tr>
-                            <th class="" width="30px">Pilih</th>
-                            <th>Nama Produk</th>
-                            <th class="" width="120px">Kode Produk</th>
-                            <th class="" width="20px">Stok</th>
-                            <th class="" width="80px">Harga Beli</th>
-                            <th class="" width="80px">Harga Jual</th>
-                            <th class="" width="250px">Catatan</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <tr>
-                            <td>11</td>
-                            <td>Internet
-                              Explorer 4.0
-                            </td>
-                            <td>Win 95+</td>
-                            <td> 4</td>
-                            <td>X</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>12</td>
-                            <td>Internet Explorer 5.0</td>
-                            <td>Win 95+</td>
-                            <td>5</td>
-                            <td>C</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Internet
-                              Explorer 5.5
-                            </td>
-                            <td>Win 95+</td>
-                            <td>5.5</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Internet
-                              Explorer 6
-                            </td>
-                            <td>3</td>
-                            <td>6</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td>Internet Explorer 7</td>
-                            <td>Win XP SP2+</td>
-                            <td>7</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>AOL browser (AOL desktop)</td>
-                            <td>Win XP</td>
-                            <td>6</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>6</td>
-                            <td>Firefox 1.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.7</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>7</td>
-                            <td>Firefox 1.5</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>8</td>
-                            <td>Firefox 2.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>9</td>
-                            <td>Firefox 3.0</td>
-                            <td>Win 2k+ / OSX.3+</td>
-                            <td>1.9</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>10</td>
-                            <td>Camino 1.0</td>
-                            <td>OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          </tbody>
-                        </table>
+                  </div>
                 </div>
               </div>
             </div>
+            @endforeach
+            @endif
           </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
+          <div class="offcanvas-footer mb-3">
+            <hr>
+            <form action="{{ route('checkout') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+              @csrf
+              <div class="form-group row">
+                <label for="additional_cost" class="col-md-5 col-form-label">Biaya Tambahan</label>
+                <div class="col-md-7">
+                  <input type="number" class="form-control" id="additional_cost" name="additional_cost" value="0">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <textarea type="text" class="form-control" id="note" name="note" cols="3" rows="2" placeholder="masukkan catatan, alamat, atau pesan pelanggan kosongi saja jika tidak ingin menambah catatan"></textarea>
+                </div>
+              </div>
+              <div class="d-flex">
+                <div class="col-md-7">
+                  <h5>Total :<b> Rp. {{ number_format($total) }}</b></h5>
+                </div>
+                <div class="col-md-5">
+                  <!-- <a href="{{ route('checkout') }}" class="btn btn-primary">Lanjut</a> -->
+                  <button type="submit" class="btn btn-success">Checkout<i class="fa-solid fa-right-long ml-2"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
   </section>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
-@endsection
-
-@section('script')
-<!-- DataTables  & Plugins -->
-<script src="{{asset('AdminLTE')}}/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/jszip/jszip.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-{{-- table search --}}
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": []
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 @endsection
