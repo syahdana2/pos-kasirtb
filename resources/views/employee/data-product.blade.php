@@ -21,21 +21,21 @@
             <div class="card-body">
               @if(isset($totalLowStock) && $totalLowStock > 0)
               <div class="alert alert-warning mt-2" role="alert">
-                Ada <a href="#" class="alert-link">{{ $totalLowStock }} produk</a> memiliki stok kurang dari 5 atau perlu restock.
+              <i class="fa-solid fa-exclamation mr-2"></i> Ada <a href="{{ route('product.restock') }}" class="alert-link">{{ $totalLowStock }} produk</a> memiliki stok kurang dari 5 atau perlu restock.
               </div>
               @endif
               @if(session('success'))
               <div class="alert alert-success" role="alert">
-                {{ session('success') }}
+                <i class="fa-regular fa-circle-check mr-2"></i> {{ session('success') }}
               </div>
               @endif
               @if(session('error'))
               <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
+                <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
               </div>
               @endif
-              <a href="{{ route('product') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2 "></i> refresh</a>
-              <a href="{{ route('product.create') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i class="fa-solid fa-plus mr-2"></i> Tambah</a>
+              <a href="{{ route('product') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2 "></i>Refresh</a>
+              <a href="{{ route('product.create') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i class="fa-solid fa-plus mr-2"></i>Tambah</a>
               <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                   <div class="col-sm-12">
@@ -47,9 +47,9 @@
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="200px">Produk</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Unit</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Stok</th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Harga Beli</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Harga Beli</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="90px">Harga Jual</th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="100px">aksi</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="120px">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -61,10 +61,13 @@
                           <td>{{ $data_product->name_product }}</td>
                           <td>{{ $data_product->satuan_product }}</td>
                           <td>
-                            @if ($data_product->stock < 5) <span class="badge text-bg-danger">{{ $data_product->stock }}</span>
-                              @else
-                              <span class="badge text-bg-success">{{ $data_product->stock }}</span>
-                              @endif
+                            @if ($data_product->stock == 0)
+                                <span class="badge text-bg-danger">Habis</span>
+                            @elseif ($data_product->stock < 5)
+                                <span class="badge text-bg-danger">{{ $data_product->stock }}</span>
+                            @else
+                                <span class="badge text-bg-success">{{ $data_product->stock }}</span>
+                            @endif
                           </td>
                           <td>Rp. {{ number_format($data_product->buy_price) }}</td>
                           <td>Rp. {{ number_format($data_product->selling_price) }}</td>
@@ -72,6 +75,7 @@
                             <div class="d-flex gap-1">
                               <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
                               <a href="{{ route('product.edit', $data_product->id) }}" class="btn btn-warning text-white" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                              <a href="{{ route('product.updatestock', $data_product->id) }}" class="btn btn-success text-white" title="Restock"><i class="fa-solid fa-square-plus"></i></a>
                               <form action="{{ route('product.destroy', $data_product->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin menghapus data ini')">
                                 @csrf
                                 @method('DELETE')

@@ -12,5 +12,8 @@ class outlet extends Model
     protected $table = 'outlets';
 
     protected $guarded = ['id'];
-    // protected $filable = ['name_outlet','phone','address']
+    
+    function employee () {
+        return $this->hasMany(Employee::class, 'outlet_id', 'id');
+    }
 }

@@ -160,19 +160,31 @@ class productController extends Controller
             'selling_price' => 'required',
             'desc' => 'nullable',
             'image' => 'nullable|image|file|max:2500',
-
         ]);
 
+        $product = [
+            'name_product' => ucwords($validate['name_product']),
+            'unit_id' => $validate['unit_id'],
+            'stock' => $validate['stock'],
+            'buy_price' => $validate['buy_price'],
+            'selling_price' => $validate['selling_price'],
+            'desc' => $validate['desc'],
+        ];
+
+        // Cek apakah file gambar diunggah
         if ($request->file('image')) {
+            // Hapus gambar lama jika ada
             if ($request->oldImage) {
                 Storage::delete($request->oldImage);
             }
-            $validate['image'] = $request->file('image')->store('product_images');
+            // Simpan gambar yang baru diunggah
+            $product['image'] = $request->file('image')->store('product_images');
         }
 
-        Product::findOrFail($id)->update($validate);
+        Product::findOrFail($id)->update($product);
         return redirect()->route('product')->with('success', 'Produk berhasil diedit');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -187,4 +199,51 @@ class productController extends Controller
         
         return redirect()->route('product')->with('success', 'Produk berhasil dihapus');
     }
+
+    public function restock()
+    {   
+        $emp = Employee::find(session()->get('auth_id'));
+
+        $outletId = session('outlet_id');
+
+        $product = DB::table('products as P')
+            ->join('units as U', 'P.unit_id', '=', 'U.id')
+            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+            ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
+            ->select('P.id', 'P.barcode', 'P.name_product', 'P.stock', 'U.satuan as satuan_product' , 'P.buy_price', 'P.selling_price')
+            ->where('O.id', $outletId)
+            ->where('P.stock', '<', 5)
+            ->orderBy('P.stock', 'desc')
+            ->get();
+
+        return view('employee.crud-product.restock', compact('emp', 'product'), ["title" => "Restok Produk"]);
+    }
+
+    public function restockproduct(Request $request, string $id)
+    {
+        $product = Product::find($id);
+        $additionalStock = $request->restock;
+        $product->stock += $additionalStock;
+        $product->save();
+
+        return redirect()->route('product.restock')->with('success', 'Stok produk berhasil ditambahkan'); 
+    }
+
+    public function updatestock(string $id)
+    {   
+        $product = Product::findOrFail($id);
+        $emp = Employee::find(session()->get('auth_id'));
+        return view('employee.crud-product.updatestock', compact('emp','product'), ["title" => "Restok Produk"]);
+    }
+
+    public function editstock(Request $request, string $id)
+    {   
+        $product = Product::find($id);
+        $additionalStock = $request->restock;
+        $product->stock += $additionalStock;
+        $product->save();
+
+        return redirect()->route('product')->with('success', 'Stok produk berhasil ditambahkan');
+    }
+
 }
