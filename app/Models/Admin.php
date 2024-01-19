@@ -11,4 +11,9 @@ class Admin extends Model implements Authenticatable
 {
     use AuthenticableTrait ,HasFactory;
 
+    protected $table = 'admins';
+
+    protected $guarded = ['id'];
+
+
 }

@@ -12,4 +12,8 @@ class unit extends Model
     protected $table = 'units';
 
     protected $guarded = ['id'] ;
+
+    function product () {
+        return $this->hasMany(Product::class, 'unit_id', 'id');
+    }
 }

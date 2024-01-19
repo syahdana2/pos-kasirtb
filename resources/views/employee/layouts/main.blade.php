@@ -69,9 +69,11 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/" class="brand-link">
+    <a href="{{ route('employee.dashboard') }}" class="brand-link">
       <img src="{{asset('AdminLTE')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">POS KASIR</span>
+      <span class="brand-text font-weight-light">
+        {{ \App\Models\Outlet::find(session('outlet_id'))->name_outlet ?? 'Default Outlet Name' }}
+      </span>
     </a>
 
     <!-- Sidebar -->
@@ -79,7 +81,7 @@
       <!-- Sidebar user panel (profile employee) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <div class="d-block text-white">{{ $emp->name_employee ?? 'Guest' }}</div>
+          <div class="d-block text-white"><span>Kasir </span> {{ $emp->name_employee ?? 'Guest' }}</div>
         </div>
       </div>
 
@@ -101,7 +103,7 @@
           <!-- Add icons to the links using the .nav-icon class
           with font-awesome or any other icon font library -->
           <li class="nav-item ">
-            <a href="dashboard-employee" class="nav-link {{ ( $title === "Dashboard Employee" ? 'active' : '' ) }}">
+            <a href="{{ route('employee.dashboard') }}" class="nav-link  ( $title === "Dashboard Employee" ? 'active' : '' )  }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -110,7 +112,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="transaksi" class="nav-link {{ ( $title === "Transaksi" ? 'active' : '' ) }}">
+            <a href="{{ route('transaction') }}" class="nav-link  ( $title === "Transaksi" ? 'active' : '' )  }}">
               <i class="ml-1 mr-2 fa-solid fa-cart-shopping"></i>
               <p>
                 Transaksi
@@ -119,19 +121,19 @@
           </li>
 
           <li class="nav-item">
-            <a href="/data-produk" class="nav-link {{ $title === "Data Produk" ? 'active' : '' }}">
+            <a href="{{ route('product') }}" class="nav-link {{ $title === "Data Produk" ? 'active' : '' }}">
               <i class="ml-2 mr-2 fa-solid fa-database"></i>
                 <p>
                     Data Produk
                     @if(isset($totalLowStock) && $totalLowStock > 0)
-                        <span class="badge badge-info right">{{ $totalLowStock }}</span>
+                        <span class="badge badge-warning right">{{ $totalLowStock }}</span>
                     @endif
                 </p>
             </a>
         </li>
 
           <li class="nav-item">
-            <a href="pelanggan" class="nav-link {{ ( $title === "Pelanggan" ? 'active' : '' ) }}">
+            <a href="{{ route('customer_page') }}" class="nav-link {{ ( $title === "Pelanggan" ? 'active' : '' ) }}">
               <i class="ml-2 mr-2 fa-solid fa-user"></i>
               <p>
                 Pelanggan
@@ -140,7 +142,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="riwayat-penjualan" class="nav-link {{ ( $title === "Riwayat Penjualan" ? 'active' : '' ) }}">
+            <a href="{{ route('history') }}" class="nav-link {{ ( $title === "Riwayat Penjualan" ? 'active' : '' ) }}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Riwayat Penjualan
@@ -274,6 +276,18 @@
       imgPreview.src = oFREvent.target.result;
     }
   }
+</script>
+<script>
+    $(document).ready(function () {
+        // Ambil url saat ini
+        var currentUrl = window.location.href;
+
+        // Periksa apakah URL mengandung kata 'transaksi'
+        if (currentUrl.includes('transaksi')) {
+            // Menutup sidebar
+            $('body').addClass('sidebar-collapse');
+        }
+    });
 </script>
 </body>
 </html>
