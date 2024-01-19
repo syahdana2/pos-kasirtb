@@ -35,12 +35,12 @@
               @endif
               @if(session('success'))
               <div class="alert alert-success" role="alert">
-                {{ session('success') }}
+                <i class="fa-regular fa-circle-check mr-2"></i> {{ session('success') }}
               </div>
               @endif
               @if(session('error'))
               <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
+                <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
               </div>
               @endif
               <a href="javascript:window.location.reload();" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2"></i>Refresh</a>

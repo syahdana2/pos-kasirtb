@@ -64,14 +64,6 @@ class DatabaseSeeder extends Seeder
             'address' => "jl.panglima sudirman turen gg.pahlawan.01"
         ]);
 
-        Employee::create([
-            'outlet_id' => 2,
-            'name_employee' => 'nado',
-            'username' => 'kasir1',
-            // pw default 12345678
-            'password' => Hash::make('12345678')
-        ]);
-
         Unit::create([
             'satuan' => 'kg'
         ]);

@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
                                     <span>Kasir : {{ $emp->name_employee }}</span>
-                                    <span>18/01/2024</span>
+                                    <span>{{ $today }}</span>
                                 </div>
                                 <p class="text-center">-------------------------------------------------------</p>
                                 @php
@@ -153,7 +153,7 @@
 <script>
     function totalPrice(val) {
         var input_bayar = val;
-        var total_price = Number($('#total_price').html()); // Replace this with the actual total amount
+        var total_price = 1000000
 
         // Update form input
         document.getElementById('kembali').value = total_price - input_bayar;

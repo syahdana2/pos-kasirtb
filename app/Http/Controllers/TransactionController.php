@@ -142,12 +142,12 @@ class TransactionController extends Controller
         Session::put('additional_cost', $add);
         Session::put('notes', $note);
 
-        // $get_milisecond = Carbon::now()->valueOf();
+        // $get_milisecond = Carbon::now('d m y');
         // $no_ref = intval($get_milisecond.rand(1,9999));
-
-        // dd($get_milisecond);
+        $today = Carbon::now();
+        // dd($today);
         
-        return view('employee.checkout',compact('emp', 'outlet'), ["title" => "Transaksi Checkout"]);
+        return view('employee.checkout',compact('emp', 'outlet', 'today'), ["title" => "Transaksi Checkout"]);
     }
 
     public function addCost(Request $request)

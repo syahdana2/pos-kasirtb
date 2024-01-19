@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Models\Employee;
 use App\Models\outlet;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class employeeController extends Controller
 {
@@ -66,7 +67,7 @@ class employeeController extends Controller
         $validated = $request->validate([
             'outlet_id' => 'required',
             'name_employee' => 'required',
-            'username' => 'required',
+            'username' => 'required|unique:employees,username,'.$id,
             'password' => 'required|min:8',
         ]);
         $validated['password'] = Hash::make($validated['password']);
