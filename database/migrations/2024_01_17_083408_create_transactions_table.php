@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('subtotal');
             // $table->string('status_transaction');
             $table->string('note');
+            $table->string('pay');
+            $table->string('change');
             $table->timestamps();
         });
     }

@@ -34,18 +34,22 @@
                                     <div class="d-flex justify-content-center mb-2">
                                         <h2 class="card-title text-center"><b>Tambahan </b></h2>
                                     </div>
+                                    @if(session::get('additional_cost'))
                                     <div class="form-group row mb-3 mx-1">
                                         <label for="additional_cost" class="col-md-4 col-form-label">Biaya Tambahan</label>
                                         <div class="col-md-8">
                                             <input type="number" class="form-control" id="additional_cost" name="additional_cost" value="{{ Session::get('additional_cost', 0) }}" readonly>
                                         </div>
                                     </div>
+                                    @endif
+                                    @if(session::get('notes'))
                                     <div class="form-group row mb-3 mx-1">
                                         <label for="note" class="col-md-4 col-form-label">Catatan</label>
                                         <div class="col-md-8">
                                             <textarea type="text" class="form-control" id="note" name="note" readonly>{{ Session::get('notes') }}</textarea>
                                         </div>
                                     </div>
+                                    @endif
                                     <hr>
                                 @endif
                                 <div class="d-flex justify-content-center mb-2">
@@ -53,9 +57,9 @@
                                 </div>
                                 <form action="#" method="post" class="form-horizontal" enctype="multipart/form-data">
                                     <div class="form-group row mb-3 mx-1">
-                                        <label for="total" class="col-md-4 col-form-label">Total</label>
+                                        <label for="total_price" class="col-md-4 col-form-label">Total</label>
                                         <div class="col-md-8">
-                                            <input type="number" class="form-control" id="total" name="total" readonly>
+                                            <input type="number" class="form-control" id="total_price" name="total_price" value="{{ Session::get('subtotal') }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row mb-3 mx-1">
@@ -110,7 +114,7 @@
                                         $totalCart += $cartItem['qty'] * $cartItem['selling_price_disc'];
                                     @endphp
                                 @endforeach
-                                @if(session::get('notes'))
+                                @if(session::get('additional_cost'))
                                 <div class="row my-1">
                                     <div class="d-flex justify-content-between">
                                         <span>Biaya Tambahan :</span>
@@ -122,7 +126,7 @@
                                 <div class="row mb-2">
                                     <div class="d-flex justify-content-between">
                                         <span><b>Total :</b></span>
-                                        <span id="total_price"><b>Rp {{ number_format($totalCart, 2) }}</b></span>
+                                        <span id="total_price"><b>Rp {{ number_format(Session::get('subtotal'), 2) }}</b></span>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span>Bayar :</span>
@@ -153,7 +157,7 @@
 <script>
     function totalPrice(val) {
         var input_bayar = val;
-        var total_price = 1000000
+        var total_price = val;
 
         // Update form input
         document.getElementById('kembali').value = total_price - input_bayar;
@@ -162,11 +166,4 @@
         document.getElementById('spanBayar').innerText = 'Rp ' + input_bayar;
         document.getElementById('spanKembali').innerText = 'Rp ' + (total_price - input_bayar);
     }
-</script>
-<script>
-    // Assuming $totalCart is available in the PHP section
-    var totalCartValue = Number($('#total_price').html());
-
-    // Set the total_cart value in the "Total" input
-    document.getElementById('total').value = totalCartValue;
 </script>

@@ -82,11 +82,15 @@ class TransactionController extends Controller
             "stock" => $product->stock,
             "qty" => $request->quantity,
             "discount" => $discount,
+            "total_price" => $selling_price * $request->quantity,
         ];
-        
-        session()->put('cart', $cart);
 
-        // dd($cart);
+        $subtotal = array_sum(array_column($cart, 'total_price'));
+
+        session()->put('cart', $cart);
+        session()->put('subtotal', $subtotal);
+
+        // dd(session('subtotal'));
 
         return redirect()->back()->with('success', 'berhasil menambah produk ke keranjang');
     }
@@ -142,10 +146,28 @@ class TransactionController extends Controller
         Session::put('additional_cost', $add);
         Session::put('notes', $note);
 
-        // $get_milisecond = Carbon::now('d m y');
-        // $no_ref = intval($get_milisecond.rand(1,9999));
+        // kode outlet
+        $outlet = outlet::find(session('outlet_id'));
+        $outletName = $outlet->name_outlet;
+        $words = explode(' ', $outletName);
+        $firstLetters = array_map(function ($word) {
+            return strtoupper(substr($word, 0, 1));
+        }, $words);
+        $cdoutlet = implode('', $firstLetters);
+        // kode mmilisecond
+        $get_milisecond = Carbon::now()->valueOf();
+        $random = intval($get_milisecond.rand(1,9999));
+        $no_ref = $cdoutlet . $random;
+
         $today = Carbon::now();
-        // dd($today);
+
+        $cart = session()->get('cart');
+
+        foreach ($cart as $prodcut){
+
+        }
+
+        // dd($prodcut['name_product']);
         
         return view('employee.checkout',compact('emp', 'outlet', 'today'), ["title" => "Transaksi Checkout"]);
     }
