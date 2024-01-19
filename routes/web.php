@@ -36,10 +36,14 @@ Route::post('/loginadmin', [authController::class, 'login_Admin'])->name('admin.
 
 Route::get('/', function () {
     return view('employee.login');
-});
+})->name('employee.login');
 Route::post('/', [authController::class, 'login_employee'])->name('employee.login');
 
 Route::middleware(['admin.auth'])->group(function () {
+    Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
     // tambahkan route untuk akses halaman admin
     Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
     Route::prefix('/admin')->group(function () {
@@ -66,7 +70,7 @@ Route::middleware(['admin.auth'])->group(function () {
     });
 });
 
-Route::middleware(['employee.auth'])->group(function () {
+Route::middleware(['admin.auth'])->group(function () {
     Route::get('/logoutemployee', [authController::class, 'logout_employee'])->name('employee.logout');
     // tambahakan route untuk akses halaman employee
 
@@ -105,5 +109,5 @@ Route::middleware(['employee.auth'])->group(function () {
         Route::get('/hapus-unit/{id}', [UnitController::class, 'deleteunit'])->name('delete_unit');
     });
 
-    Route::get('/riwayat-penjualan', [HistoryController::class, 'history'])->name('history');
+    Route::get('/riwayat-penjualan', [HistoryController::class, 'history']);
 });

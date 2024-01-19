@@ -1,10 +1,5 @@
 @extends('employee.layouts.main')
 
-@section('head')
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-@endsection
 
 @section('content')
 <div class="content-wrapper">
@@ -58,100 +53,6 @@
                             <td>X</td>
                             <td>X</td>
                           </tr>
-                          <tr>
-                            <td>12</td>
-                            <td>Internet Explorer 5.0</td>
-                            <td>Win 95+</td>
-                            <td>5</td>
-                            <td>C</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Internet
-                              Explorer 5.5
-                            </td>
-                            <td>Win 95+</td>
-                            <td>5.5</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Internet
-                              Explorer 6
-                            </td>
-                            <td>3</td>
-                            <td>6</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td>Internet Explorer 7</td>
-                            <td>Win XP SP2+</td>
-                            <td>7</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>AOL browser (AOL desktop)</td>
-                            <td>Win XP</td>
-                            <td>6</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>6</td>
-                            <td>Firefox 1.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.7</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>7</td>
-                            <td>Firefox 1.5</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>8</td>
-                            <td>Firefox 2.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>9</td>
-                            <td>Firefox 3.0</td>
-                            <td>Win 2k+ / OSX.3+</td>
-                            <td>1.9</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
-                          <tr>
-                            <td>10</td>
-                            <td>Camino 1.0</td>
-                            <td>OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
-                            <td>X</td>
-                            <td>X</td>
-                          </tr>
                           </tbody>
                         </table>
                 </div>
@@ -168,38 +69,4 @@
 </div>
 <!-- /.content-wrapper -->
 
-@endsection
-
-@section('script')
-<!-- DataTables  & Plugins -->
-<script src="{{asset('AdminLTE')}}/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/jszip/jszip.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-{{-- table search --}}
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": []
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 @endsection
