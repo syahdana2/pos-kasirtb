@@ -1,11 +1,5 @@
 @extends('employee.layouts.main')
 
-@section('head')
-<link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-@endsection
-
 @section('content')
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -125,10 +119,8 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
-            @php $total = 0 @endphp
             @if(session('cart'))
             @foreach (session('cart') as $productId => $cart)
-            @php $total += $cart['selling_price_disc'] * $cart['qty'] @endphp
             <div class="d-flex">
               <div class=" col-lg-3">
                 @if($cart['image'])
@@ -185,7 +177,7 @@
               </div>
               <div class="d-flex">
                 <div class="col-md-7">
-                  <h5>Total :<b> Rp. {{ number_format($total) }}</b></h5>
+                  <h5>Total :<b> Rp. {{ Session::get('subtotal') }}</b></h5>
                 </div>
                 <div class="col-md-5">
                   <!-- <a href="{{ route('checkout') }}" class="btn btn-primary">Lanjut</a> -->
