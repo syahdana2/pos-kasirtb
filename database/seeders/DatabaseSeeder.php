@@ -64,8 +64,6 @@ class DatabaseSeeder extends Seeder
             'address' => "jl.panglima sudirman turen gg.pahlawan.01"
         ]);
 
-        
-
         Unit::create([
             'satuan' => 'kg'
         ]);
