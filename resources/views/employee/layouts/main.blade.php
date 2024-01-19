@@ -232,7 +232,7 @@
 <script src="https://kit.fontawesome.com/7c21a511e6.js" crossorigin="anonymous"></script>
 <!-- Ekko Lightbox -->
 <script src="../plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
-<!-- DataTables  & Plugins -->
+{{-- <!-- DataTables  & Plugins -->
 <script src="{{asset('AdminLTE')}}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="{{asset('AdminLTE')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{asset('AdminLTE')}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -244,7 +244,7 @@
 <script src="{{asset('AdminLTE')}}/plugins/pdfmake/vfs_fonts.js"></script>
 <script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script> --}}
 <script>
   $(function () {
     $("#example1").DataTable({
