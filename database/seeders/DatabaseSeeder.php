@@ -56,6 +56,13 @@ class DatabaseSeeder extends Seeder
             'username' => 'kasir2',
             'password' => Hash::make('12345678')
         ]);
+        
+        Employee::create([
+            'outlet_id' => 1,
+            'name_employee' => 'yanto',
+            'username' => 'kasir',
+            'password' => Hash::make('12345678')
+        ]);
 
         customer::create([
             'name' => "agus setiawan",

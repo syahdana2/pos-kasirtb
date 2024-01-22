@@ -40,6 +40,16 @@
   <!-- Ekko Lightbox -->
   <link rel="stylesheet" href="../plugins/ekko-lightbox/ekko-lightbox.css">
 </head>
+<style>
+  #reader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; /* Sesuaikan lebar div sesuai kebutuhan Anda */
+    margin-top: 10rem;
+  }
+</style>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -226,6 +236,7 @@
 {{-- <script src="{{asset('AdminLTE')}}/dist/js/demo.js"></script> --}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('AdminLTE')}}/dist/js/pages/dashboard.js"></script>
+
 
 <!-- bootsrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

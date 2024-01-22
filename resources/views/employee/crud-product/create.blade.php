@@ -47,7 +47,7 @@
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
-                    @enderror
+                    @enderror  
                   </div>
                 </div>
                 <div class="form-group row mb-3 mx-1">
@@ -111,12 +111,36 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="name_product" class="col-sm-2 col-form-label">QR Produk</label>
+                  <div class="col-sm-10">
+                    <input type="text" id="productId" class="form-control">
+                  </div>
+                </div>
+                <div id="reader"></div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   <a href="javascript:window. history. back();" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
                   <button type="submit" class="btn btn-info text-white"><i class="fa-solid fa-plus mr-2"></i> Tambah</button>
                 </div>
               </div>
             </form>
+             <!-- scan code qr (library html5-qrcode)) -->
+            <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+            <script>
+              function onScanSuccess(decodedText, decodedResult) {
+                  console.log(`Scan result: ${decodedText}`, decodedResult);
+                  document.getElementById('productId').value = decodedText;
+              }
+
+              function onScanError(errorMessage) {
+              }
+
+              var html5QrcodeScanner = new Html5QrcodeScanner(
+                  "reader", { fps: 10, qrbox: 250 }
+              );
+              html5QrcodeScanner.render(onScanSuccess, onScanError);
+            </script>
+            <script src="js/scripts.js"></script>
           </div>
           <!-- /.card -->
         </div>
@@ -124,4 +148,5 @@
     </div>
   </section>
 </div>
+
 @endsection
