@@ -37,11 +37,8 @@
                 <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
               </div>
               @endif
-              <a href="javascript:window.location.reload();" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2"></i>Refresh</a>
               <a href="{{ route('history') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i class="fa-solid fa-clock-rotate-left mr-2"></i>History</a>
-              @if(session('cart'))
               <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping mr-2"></i>Keranjang <span class="badge text-bg-secondary">{{ count((array) session('cart')) }}</span></button>
-              @endif
               <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                   <div class="col-sm-12">
@@ -54,7 +51,7 @@
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="30px">Stok</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="70px">Harga Beli</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="70px">Harga Jual</th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="70px">Harga Grosir</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Harga Grosir</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="120px">Aksi</th>
                         </tr>
                       </thead>
@@ -85,7 +82,6 @@
                               <div class="d-flex">
                                 <input type="number" class="form-control" name="quantity" id="quantity" value="1" min="1">
                                 <button type="submit" class="btn btn-success text-white" title="Pilih"><i class="fa-solid fa-check"></i></button>
-                                <!-- <a href="{{ route('cart.add', $data_product->id) }}" class="btn btn-success text-white" title="Pilih"><i class="fa-solid fa-check"></i></a> -->
                               </div>
                               </form>
                               <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
@@ -158,33 +154,32 @@
               </div>
             </div>
             @endforeach
+            @else
+            <div class="d-flex justify-content-center">
+              <div class="alert alert-warning" role="alert">
+                <i class="fa-solid fa-basket-shopping mr-2"></i>Kosong, Tidak ada produk yang dipilih
+              </div>
+            </div>
             @endif
           </div>
           <div class="offcanvas-footer mb-3">
             <hr>
-            <form action="{{ route('checkout') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
-              @csrf
-              <div class="form-group row">
-                <label for="additional_cost" class="col-md-5 col-form-label">Biaya Tambahan</label>
-                <div class="col-md-7">
-                  <input type="number" class="form-control" id="additional_cost" name="additional_cost" value="0">
-                </div>
+            @if(session('additional_cost'))
+            <div class="form-group row">
+              <label for="additional_cost" class="col-md-5 col-form-label">Biaya Tambahan</label>
+              <div class="col-md-7">
+                <input type="number" class="form-control" id="additional_cost" name="additional_cost" value="{{ Session::get('additional_cost') }}" readonly>
               </div>
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <textarea type="text" class="form-control" id="note" name="note" cols="3" rows="2" placeholder="masukkan catatan, alamat, atau pesan pelanggan kosongi saja jika tidak ingin menambah catatan"></textarea>
-                </div>
+            </div>
+            @endif
+            <div class="d-flex">
+              <div class="col-md-7">
+                <h5>Total :<b> Rp. {{ Session::get('subtotal') }}</b></h5>
               </div>
-              <div class="d-flex">
-                <div class="col-md-7">
-                  <h5>Total :<b> Rp. {{ Session::get('subtotal') }}</b></h5>
-                </div>
-                <div class="col-md-5">
-                  <!-- <a href="{{ route('checkout') }}" class="btn btn-primary">Lanjut</a> -->
-                  <button type="submit" class="btn btn-success">Checkout<i class="fa-solid fa-right-long ml-2"></i></button>
-                </div>
+              <div class="col-md-5">
+                <a href="{{ route('checkout') }}" class="btn btn-success">Checkout<i class="fa-solid fa-right-long ml-2"></i></a>
               </div>
-            </form>
+            </div>
           </div>
         </div>
   </section>

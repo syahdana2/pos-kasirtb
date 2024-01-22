@@ -155,7 +155,7 @@
 
           <li class="nav-item">
             <a href="{{ route('history') }}" class="nav-link {{ ( $title === "Riwayat Penjualan" ? 'active' : '' ) }}">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="ml-2 fa-solid fa-clock-rotate-left mr-2"></i>
               <p>
                 Riwayat Penjualan
               </p>

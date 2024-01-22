@@ -30,7 +30,7 @@ class UnitController extends Controller
 
         $data = unit::all();
         //dd('$data');
-        return view('employee.unit', compact('data', 'emp', 'totalLowStock'), ["title" => "satuan"]);
+        return view('employee.unit', compact('data', 'emp', 'totalLowStock'), ["title" => "Satuan"]);
     }
 
     //tambah unit
