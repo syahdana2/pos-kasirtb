@@ -32,10 +32,14 @@ Route::post('/loginadmin', [authController::class, 'login_Admin'])->name('admin.
 
 Route::get('/', function () {
     return view('employee.login');
-});
+})->name('employee.login');
 Route::post('/', [authController::class, 'login_employee'])->name('employee.login');
 
 Route::middleware(['admin.auth'])->group(function () {
+    Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
     // tambahkan route untuk akses halaman admin
     Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
     Route::prefix('/admin')->group(function () {
