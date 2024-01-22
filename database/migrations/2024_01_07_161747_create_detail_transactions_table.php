@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('transaction_id');
             $table->string('product_id');
             $table->string('qty');
+            $table->string('price_sales');
             $table->string('discount');
             $table->string('total_price');
             $table->timestamps();

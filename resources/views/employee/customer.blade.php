@@ -37,7 +37,6 @@
               </script>
               @endif
               <div class="mb-3">
-                <a href="{{ route('customer_page') }}" class="btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info text-light shadow-md"><i class="fa-solid fa-arrows-rotate mr-2 "></i> refresh</>
                   <a href="{{ route('add_customer') }}" class="btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success text-light shadow-md"><i class="fa-solid fa-plus mr-2"></i> Tambah</a>
               </div>
               <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -49,12 +48,12 @@
                       <thead class="">
                         <tr>
                           <th class="sorting sorting_asc " tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="20px">No</th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Nama Pelanggan</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="150px">Nama Pelanggan</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="100px">ID. Pel</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" width="100px">No telepon</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="300px">Alamat</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" width="80px">Dibuat</th>
-                          <th class="text-center sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="108px">Aksi</th>
+                          <th class="text-center sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -67,10 +66,9 @@
                           <td>{{ $pelanggan->address }}</td>
                           <td>{{ $pelanggan->created_at->format('D M Y') }}</td>
                           <td>
-                            {{-- <a href="{{ route('tampildata', $pelanggan->id) }}" class="btn btn-danger">Edit</a> --}}
-                            <a href="{{ route('data_customer', $pelanggan->id) }}" class="btn btn-danger">Edit</a>
-                            <a href="{{ route('delete_customer', $pelanggan->id) }}" type="button" class="btn btn-warning" onclick="return confirm('Apkahah anda yakin ingin menghapus {{ $pelanggan->name }}?')">
-                              Hapus
+                            <a href="{{ route('data_customer', $pelanggan->id) }}" class="btn btn-warning text-white" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="{{ route('delete_customer', $pelanggan->id) }}" type="button" class="btn btn-danger" onclick="return confirm('Apkahah anda yakin ingin menghapus {{ $pelanggan->name }}?')" title="Hapus">
+                              <i class="fa-solid fa-trash"></i>
                             </a>
                           </td>
                         </tr>

@@ -12,6 +12,7 @@ use App\Http\Controllers\employee\UnitController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\employee\productController;
 use App\Http\Controllers\admin\dashboardadminController;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,9 +74,17 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::post('cart/add/{id}', [TransactionController::class, 'cart'])->name('cart.add');
             Route::delete('cart/remove/{id}', [TransactionController::class, 'removeFromCart'])->name('cart.remove');
             Route::patch('cart/update/{id}', [TransactionController::class, 'updateQty'])->name('cart.update');
-            Route::post('/checkout', [TransactionController::class, 'checkout'])->name('checkout');
-            Route::post('/addcost', [TransactionController::class, 'addCost'])->name('add.cost');
             Route::get('/reset-keranjang', [TransactionController::class, 'reset'])->name('reset.cart');
+            Route::middleware(['transaction.auth'])->group(function () {
+                Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+                Route::post('/biaya-tambahan', [CheckoutController::class, 'addCost'])->name('addCost');
+                Route::get('/hapus-biaya-tambahan', [CheckoutController::class, 'deleteAddCost'])->name('delete.addCost');
+                Route::post('/catatan', [CheckoutController::class, 'notes'])->name('notes');
+                Route::get('/hapus-catatan', [CheckoutController::class, 'deleteNotes'])->name('delete.notes');
+                Route::get('/batal-pembelian', [CheckoutController::class, 'cancelTransaction'])->name('cancel.transaction');
+                Route::post('/bayar', [CheckoutController::class, 'pay'])->name('pay.transaction');
+                Route::get('/selesai', [CheckoutController::class, 'finish'])->name('finish.transaction');
+            });
         });
 
         // Route Pelanggan
@@ -111,7 +120,10 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::get('/hapus-unit/{id}', [UnitController::class, 'deleteunit'])->name('delete_unit');
         });
         // Route History
-        Route::get('/riwayat-penjualan', [HistoryController::class, 'history'])->name('history');
+        Route::prefix('/riwayat-penjualan')->group(function () {
+            Route::get('/', [HistoryController::class, 'history'])->name('history');
+            Route::get('/show/{id}', [HistoryController::class, 'show'])->name('history.show');
+        });
     });
 
 });

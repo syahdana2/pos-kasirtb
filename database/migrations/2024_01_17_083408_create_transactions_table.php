@@ -16,10 +16,10 @@ return new class extends Migration
             // $table->string('customer_id');
             $table->string('employee_id');
             $table->string('kode_invoice');
-            $table->string('additional_cost');
+            $table->string('additional_cost')->nullable();
             $table->string('subtotal');
             // $table->string('status_transaction');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->string('pay');
             $table->string('change');
             $table->timestamps();

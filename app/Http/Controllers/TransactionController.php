@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\outlet;
 use App\Models\Product;
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use App\Models\detail_transaction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -62,8 +59,10 @@ class TransactionController extends Controller
 
         if ($grosir > 0){
             $discount = $product->selling_price - $grosir;
+            $price_sales = $request->grosir;
         } else {
             $discount = 0;
+            $price_sales = 0;
         }
 
         if($qty > $product->stock) {
@@ -76,9 +75,9 @@ class TransactionController extends Controller
             "id" =>$product->id,
             "name_product" => $product->name_product, 
             "image" => $product->image,
-            // "harga_asli" => $product->selling_price,
             "selling_price" => $product->selling_price,
             "selling_price_disc" => $selling_price,
+            "price_sales" => $price_sales,
             "stock" => $product->stock,
             "qty" => $request->quantity,
             "discount" => $discount,
@@ -86,6 +85,14 @@ class TransactionController extends Controller
         ];
 
         $subtotal = array_sum(array_column($cart, 'total_price'));
+
+        $additional_cost = Session::get('additional_cost');
+
+        if( session('additional_cost') || $additional_cost > 0){
+            $subtotal += $additional_cost;
+        }
+
+        // dd($additional_cost);
 
         session()->put('cart', $cart);
         session()->put('subtotal', $subtotal);
@@ -99,9 +106,19 @@ class TransactionController extends Controller
     {
         $cart = session()->get('cart', []);
 
+        
         if (isset($cart[$id])) {
             unset($cart[$id]);
+            $subtotal = array_sum(array_column($cart, 'total_price'));
+
+            $additional_cost = Session::get('additional_cost');
+
+            if( session('additional_cost') || $additional_cost > 0){
+                $subtotal += $additional_cost;
+            }
+    
             session()->put('cart', $cart);
+            session()->put('subtotal', $subtotal);
         }
 
         return redirect()->route('transaction')->with('success', 'Item berhasil dihapus dari keranjang');
@@ -116,12 +133,23 @@ class TransactionController extends Controller
             $qty = max(1, $request->input('qty'));
 
             $cart[$id]['qty'] = $qty;
+            $cart[$id]['total_price'] = $cart[$id]['selling_price_disc'] * $qty;
 
-            // dd( $cart[$id]['stock']);
+            // dd( $cart[$id]['total_price']);
             if ($qty > $cart[$id]['stock']) {
                 return redirect()->back()->with('error', 'Jumlah pembelian produk melebihi stok');
             }
+
+            $subtotal = array_sum(array_column($cart, 'total_price'));
+
+            $additional_cost = Session::get('additional_cost');
+
+            if( session('additional_cost') || $additional_cost > 0){
+                $subtotal += $additional_cost;
+            }
+
             session()->put('cart', $cart);
+            session()->put('subtotal', $subtotal);
         }
 
         return redirect()->back()->with('success', 'Berhasil memperbarui kuantitas produk');
@@ -130,123 +158,13 @@ class TransactionController extends Controller
     public function reset()
     {
         session()->forget('cart');
+        session()->forget('subtotal');
+        session()->forget('no_ref');
+        session()->forget('additional_cost');
+        session()->forget('notes');
+        session()->forget('pay');
+        session()->forget('change');
 
         return redirect()->route('transaction')->with('success', 'Berhasil reset list pembelian produk');
-    }
-
-    public function checkout(Request $request)
-    {   
-        $emp = Employee::find(session()->get('auth_id'));
-
-        $outlet = outlet::find(session('outlet_id'));
-        
-        $add = $request->additional_cost;
-        $note = $request->note;
-
-        Session::put('additional_cost', $add);
-        Session::put('notes', $note);
-
-        // kode outlet
-        $outlet = outlet::find(session('outlet_id'));
-        $outletName = $outlet->name_outlet;
-        $words = explode(' ', $outletName);
-        $firstLetters = array_map(function ($word) {
-            return strtoupper(substr($word, 0, 1));
-        }, $words);
-        $cdoutlet = implode('', $firstLetters);
-        // kode mmilisecond
-        $get_milisecond = Carbon::now()->valueOf();
-        $random = intval($get_milisecond.rand(1,9999));
-        $no_ref = $cdoutlet . $random;
-
-        $today = Carbon::now();
-
-        $cart = session()->get('cart');
-
-        foreach ($cart as $prodcut){
-
-        }
-
-        // dd($prodcut['name_product']);
-        
-        return view('employee.checkout',compact('emp', 'outlet', 'today'), ["title" => "Transaksi Checkout"]);
-    }
-
-    public function addCost(Request $request)
-    {
-        $cutPrice = $request->input('cut_price');
-        $additionalCost = $request->input('additional_cost');
-        $notes = $request->input('note');
-
-        // Dapatkan session cart
-        $cart = Session::get('cart', []);
-
-        // Hitung total baru
-        $totalCart = 0;
-        foreach ($cart as $item) {
-            $totalCart += $item['qty'] * $item['selling_price'];
-        }
-
-        // Tambahkan biaya potongan dan biaya tambahan
-        $totalCart -= $cutPrice;
-        $totalCart += $additionalCost;
-
-        // Simpan biaya potongan, biaya tambahan, dan catatan ke dalam session
-        Session::put('cut_price', $cutPrice);
-        Session::put('additional_cost', $additionalCost);
-        Session::put('notes', $notes);
-
-        // Redirect kembali ke halaman checkout
-        return redirect()->route('checkout')->with('success', 'Biaya potongan dan biaya tambahan berhasil ditambahkan');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        detail_transaction::create([
-            
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

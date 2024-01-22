@@ -48,7 +48,7 @@
                         <tr>
                           <th class="sorting sorting_asc " tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="20px">No</th>
                           <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Satuan</th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="120px">Aksi</th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="180px">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -57,10 +57,9 @@
                           <td class="dtr-control sorting_1 text-center" tabindex="0">{{ $loop->iteration }}</td>
                           <td>{{ $satuan->satuan }}</td>
                           <td>
-                            {{-- <a href="{{ route('tampildata', $pelanggan->id) }}" class="btn btn-danger">Edit</a> --}}
-                            <a href="{{ route('data_unit', $satuan->id) }}" class="btn btn-danger">Edit</a>
-                            <a href="{{ route('delete_unit', $satuan->id) }}" type="button" class="btn btn-warning" onclick="return confirm('Apkahah anda yakin ingin menghapus {{ $satuan->name }}?')">
-                              Hapus
+                            <a href="{{ route('data_unit', $satuan->id) }}" class="btn btn-warning text-white" title="Edit"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                            <a href="{{ route('delete_unit', $satuan->id) }}" type="button" class="btn btn-danger" onclick="return confirm('Apkahah anda yakin ingin menghapus satuan {{ $satuan->satuan }}?')" title="Hapus">
+                              <i class="fa-solid fa-trash mr-2"></i>Hapus
                             </a>
                           </td>
                         </tr>

@@ -7,11 +7,6 @@
         <div class="col-sm-6">
           <h1 class="m-0">{{ $title }}</h1>
         </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/dashboardemployee">Home</a></li>
-          </ol>
-        </div><!-- /.col -->
       </div><!-- /.row -->
       <div class="row">
         <div class="col-12">
@@ -34,7 +29,6 @@
                 <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
               </div>
               @endif
-              <a href="{{ route('product') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2 "></i>Refresh</a>
               <a href="{{ route('product.create') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i class="fa-solid fa-plus mr-2"></i>Tambah</a>
               <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
@@ -75,8 +69,8 @@
                             <div class="d-flex gap-1">
                               <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
                               <a href="{{ route('product.edit', $data_product->id) }}" class="btn btn-warning text-white" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                              <a href="{{ route('product.updatestock', $data_product->id) }}" class="btn btn-success text-white" title="Restock"><i class="fa-solid fa-square-plus"></i></a>
-                              <form action="{{ route('product.destroy', $data_product->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin menghapus data ini')">
+                              <a href="{{ route('product.updatestock', $data_product->id) }}" class="btn btn-success text-white" title="Restock / Return"><i class="fa-solid fa-square-plus"></i></a>
+                              <form action="{{ route('product.destroy', $data_product->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin menghapus produk {{ $data_product->name_product }}?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" title="Hapus">

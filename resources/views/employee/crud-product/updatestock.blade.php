@@ -7,11 +7,6 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">{{ $title }}</h1>
                 </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('employee.dashboard') }}">Home</a></li>
-                    </ol>
-                </div><!-- /.col -->
             </div><!-- /.row -->
             <div class="row">
                 <div class="col-12">
@@ -19,6 +14,9 @@
                         <!-- /.card-header -->
                         <!-- /.card-body -->
                         <div class="card-body">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa-solid fa-circle-info mr-2"></i> Selain untuk restok, halaman ini juga bisa untuk return jika ada pengembalian produk
+                            </div>
                             @if(session('success'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
