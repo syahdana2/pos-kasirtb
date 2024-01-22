@@ -40,7 +40,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="/satuan/buat-unit-baru" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('new_unit') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                               <div class="card-body">
                                 <div class="form-group">

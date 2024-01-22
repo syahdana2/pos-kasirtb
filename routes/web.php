@@ -1,6 +1,8 @@
 <?php
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\DashboardController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\employee\UnitController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\employee\productController;
 use App\Http\Controllers\admin\dashboardadminController;
+use App\Models\product;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +30,7 @@ use App\Http\Controllers\admin\dashboardadminController;
 Route::get('/loginadmin', function () {
     return view('admin.login');
 });
+
 Route::post('/loginadmin', [authController::class, 'login_Admin'])->name('admin.login');
 
 Route::get('/', function () {
@@ -35,10 +39,6 @@ Route::get('/', function () {
 Route::post('/', [authController::class, 'login_employee'])->name('employee.login');
 
 Route::middleware(['admin.auth'])->group(function () {
-    Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
     // tambahkan route untuk akses halaman admin
     Route::get('/logout', [authController::class, 'logout'])->name('admin.logout');
     Route::prefix('/admin')->group(function () {
@@ -65,7 +65,7 @@ Route::middleware(['admin.auth'])->group(function () {
     });
 });
 
-Route::middleware(['admin.auth'])->group(function () {
+Route::middleware(['employee.auth'])->group(function () {
     Route::get('/logoutemployee', [authController::class, 'logout_employee'])->name('employee.logout');
     // tambahakan route untuk akses halaman employee
     Route::prefix('/employee')->group(function () {
@@ -104,6 +104,10 @@ Route::middleware(['admin.auth'])->group(function () {
             Route::get('/updatestock/{id}', [productController::class, 'updatestock'])->name('product.updatestock');
             Route::post('/editstock/{id}', [productController::class, 'editstock'])->name('product.editstock');
             Route::delete('/delete/{id}', [productController::class, 'destroy'])->name('product.destroy');
+            Route::get('/export-pdf', [productController::class, 'exportPDF'])->name('exportPDF-produk');
+            Route::get('/export-excel', [productController::class, 'exportEXCEL'])->name('exportEXCEL-produk');
+            Route::post('/import-excel', [ProductController::class, 'importData'])->name('import.products');
+            // Route::post('/import-products', [ProductController::class, 'importData'])->name('import.products');
         });
         //Route Satuan 
         Route::prefix('/satuan')->group(function () {
@@ -119,3 +123,4 @@ Route::middleware(['admin.auth'])->group(function () {
     });
 
 });
+

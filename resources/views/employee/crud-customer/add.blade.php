@@ -40,8 +40,8 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="/pelanggan/buat-pelanggan-baru" method="POST" enctype="multipart/form-data">
-                              @csrf
+                            <form action="{{ route('new_pelanggan') }}" method="POST" enctype="multipart/form-data">
+                              @csrf 
                               <div class="card-body">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Nama Pelanggan</label>

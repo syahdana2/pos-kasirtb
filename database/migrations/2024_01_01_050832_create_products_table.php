@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('employee_id');
             $table->string('name_product');
-            $table->string('barcode');
+            $table->string('barcode')->nullable();
             $table->string('unit_id');
             $table->string('stock');
             $table->string('selling_price');

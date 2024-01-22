@@ -40,7 +40,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="/pelanggan/update-pelanggan/{{ $data->id }}" method="post">
+                            <form action="/employee/pelanggan/update-pelanggan/{{ $data->id }}" method="post">
                               @csrf
                               <div class="card-body">
                                 <div class="form-group">

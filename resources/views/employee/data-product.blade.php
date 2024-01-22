@@ -34,8 +34,36 @@
                 <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
               </div>
               @endif
-              <a href="{{ route('product') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2 "></i>Refresh</a>
+              <a href="{{ route('exportPDF-produk') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-secondary shadow-md text-light"><i class="fa-solid fa-file-pdf mr-2 "></i>PDF</a>
+              <a href="{{ route('exportEXCEL-produk') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-secondary shadow-md text-light"><i class="fa-solid fa-file-excel mr-2 "></i>Excel</a>
               <a href="{{ route('product.create') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i class="fa-solid fa-plus mr-2"></i>Tambah</a>
+              <button type="button" class="btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light" data-toggle="modal" data-target="#importExcel"><i class="fa-solid fa-file-excel mr-2"></i>Import Excel</button>
+
+              <!-- Import Excel -->
+              <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <form method="post" action="{{ route('import.products') }}" enctype="multipart/form-data">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                      </div>
+                      <div class="modal-body">
+                        {{ csrf_field() }}
+                        <label>Pilih file excel</label>
+                        <div class="form-group">
+                          <input type="file" name="file" required="required">
+                        </div>
+          
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
               <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                   <div class="col-sm-12">
@@ -73,7 +101,7 @@
                           <td>Rp. {{ number_format($data_product->selling_price) }}</td>
                           <td>
                             <div class="d-flex gap-1">
-                              <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
+                              <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></fa-solid></a>
                               <a href="{{ route('product.edit', $data_product->id) }}" class="btn btn-warning text-white" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
                               <a href="{{ route('product.updatestock', $data_product->id) }}" class="btn btn-success text-white" title="Restock"><i class="fa-solid fa-square-plus"></i></a>
                               <form action="{{ route('product.destroy', $data_product->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin menghapus data ini')">

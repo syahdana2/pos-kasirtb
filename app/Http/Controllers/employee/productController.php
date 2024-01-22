@@ -8,10 +8,15 @@ use App\Models\Admin;
 use App\Models\outlet;
 use App\Models\Product;
 use App\Models\Employee;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
+use App\Exports\productExport;
+use App\Imports\ProductImport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class productController extends Controller
 {
@@ -245,5 +250,52 @@ class productController extends Controller
 
         return redirect()->route('product')->with('success', 'Stok produk berhasil ditambahkan');
     }
+
+    public function exportPDF() {
+        $product = Product::all();
+        $details = ['title' => 'printPDF'];
+
+        //return view('employee.export.export-pdf', compact('product'), $details);
+        view()->share('product', $product);
+        $pdf = PDF::loadview('employee.export.export-pdf', $details);
+        return $pdf->download('data produk toko bangunan.pdf');
+        PDF::loadView($pdf)->setPaper('a4', 'landscape')->setWarnings(false)->save('data produk toko bangunan.pdf');
+    }
+
+    public function exportEXCEL(){
+        return Excel::download(new productExport, 'data produk toko bangunan.xlsx');
+    }
+
+    public function importData(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+        // menangkap file excel
+        $data = $request->file('file');
+        // membuat nama file unik
+	    $nama_file = rand().$data->getClientOriginalName();
+        // upload ke folder file_siswa di dalam folder public
+	    $data->move('file_produk',$nama_file);
+        // import data
+        Excel::import(new ProductImport, \public_path('/file_produk/' .$nama_file));
+
+        return redirect()->back()->with('success', 'Data berhasil diImport');
+    }
+
+    public function model(array $row)
+{
+    $validator = Validator::make(['image' => $row[8]], [
+        'image' => 'nullable|image|max:2048', // Maksimal 2MB
+    ]);
+
+    if ($validator->fails()) {
+        // Handle validasi gagal, misalnya lempar exception atau lakukan sesuatu yang sesuai
+        // ...
+
+        // Jangan lanjutkan proses pembuatan model jika validasi gagal
+        return null;
+    }
+}
 
 }
