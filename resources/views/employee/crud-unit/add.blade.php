@@ -1,77 +1,37 @@
 @extends('employee.layouts.main')
 
-@section('head')
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="{{asset('AdminLTE')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-@endsection
-
 @section('content')
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>{{ $title }}</h1>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-          <div class="col-6">
-              <!-- /.card-header -->
-              <div class="card">
-
-                <!-- /.card-body -->
-                <div class="card-body">
-                  <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <div class="row">
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="card card-info">
-                            <div class="card-header">
-                              <h3 class="card-title">Data Satuan</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                            <form action="{{ route('new_unit') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                              <div class="card-body">
-                                <div class="form-group">
-                                  <label for="exampleInputEmail1">Jenis Satuan</label>
-                                  <input type="text" name="satuan" class="form-control" id="exampleInputEmail1" placeholder="Masukan jenis satuan yang akan ditambahkan">
-                                </div>
-                              </div>
-                              <!-- /.card-body -->
-              
-                              <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a href={{ route('unit_page') }} type="submit" class="btn bg-danger">Batal</a>
-                              </div>
-                            </form>
-                          </div>
-                      </div>
-                    </div>
+        <div class="col-md-6 mt-4">
+          <!-- Horizontal Form -->
+          <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title">Tambah Satuan Unit</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <form action="{{ route('new_unit') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group row mb-3 mx-1">
+                  <label for="satuan" class="col-sm-3 col-form-label">Jenis Satuan</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="satuan" name="satuan" placeholder="Masukan jenis satuan" required>
                   </div>
                 </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card-body -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mr-3">
+                  <a href="{{ route('unit_page') }}" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left mr-2"></i>Batal</a>
+                  <button type="submit" class="btn btn-info text-white"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                </div>
+              </form>
+            </div>
           </div>
-        <!-- /.col -->
+          <!-- /.card -->
+        </div>
       </div>
-      <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
   </section>
-  <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-
 @endsection

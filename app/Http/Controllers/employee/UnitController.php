@@ -5,6 +5,7 @@ namespace App\Http\Controllers\employee;
 use Carbon\Carbon;
 use App\Models\unit;
 use App\Models\outlet;
+use App\Models\Product;
 use App\Models\Employee;
 use App\Exports\UnitExport;
 use App\Imports\UnitImport;
@@ -25,19 +26,13 @@ class UnitController extends Controller
 
         $outletId = session('outlet_id');
 
-        $lowStockSum = DB::table('products as P')
-            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+        $totalLowStock = Product::join('employees as E', 'products.employee_id', '=', 'E.id')
             ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
-            ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
             ->where('O.id', $outletId)
-            ->where('P.stock', '<', 5)
-            ->first();
-
-        // Mengakses hasil query
-        $totalLowStock = $lowStockSum->totalLowStock;
+            ->whereBetween('products.stock', [0, DB::raw('products.minimal_stock')])
+            ->count();
 
         $data = unit::all();
-        //dd('$data');
         return view('employee.unit', compact('data', 'emp', 'totalLowStock'), ["title" => "Satuan"]);
     }
 

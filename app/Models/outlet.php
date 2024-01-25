@@ -16,4 +16,8 @@ class outlet extends Model
     function employee () {
         return $this->hasMany(Employee::class, 'outlet_id', 'id');
     }
+
+    function customer () {
+        return $this->hasMany(Customer::class, 'outlet_id', 'id');
+    }
 }

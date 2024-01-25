@@ -65,10 +65,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         customer::create([
+            'outlet_id' => 1,
             'name' => "agus setiawan",
             'code' => "PTB_0101_01",
             'phone' => "082567472356",
-            'address' => "jl.panglima sudirman turen gg.pahlawan.01"
+            'address' => "jl.panglima sudirman turen gg.pahlawan.01",
+            'note' => "p",
         ]);
 
         Unit::create([
@@ -82,9 +84,10 @@ class DatabaseSeeder extends Seeder
         product::create([
             'employee_id' => 1,
             'name_product' => 'semen putih',
-            'barcode' => 'SP0457SEK2846',
+            'barcode' => 'SP0457SKE2846',
             'unit_id' => 1,
             'stock' => '30',
+            'minimal_stock' => '5',
             'buy_price' => '45000',
             'selling_price' => '50000',
         ]);
@@ -92,9 +95,10 @@ class DatabaseSeeder extends Seeder
         product::create([
             'employee_id' => 1,
             'name_product' => 'Cat Decolith Putih',
-            'barcode' => 'CDP0627SEK7632',
+            'barcode' => 'CDP0627SKE7632',
             'unit_id' => 1,
             'stock' => '25',
+            'minimal_stock' => '5',
             'buy_price' => '60000',
             'selling_price' => '70000',
         ]);

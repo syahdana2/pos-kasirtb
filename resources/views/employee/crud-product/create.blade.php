@@ -12,9 +12,9 @@
               <h3 class="card-title">Tambah Produk</h3>
             </div>
             @if ($errors->any())
-              @foreach ($errors->all() as $error)
-                <div class="alert alert-danger mx-4 my-2">{{ $error }}</div>
-              @endforeach
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-danger mx-4 my-2">{{ $error }}</div>
+            @endforeach
             @endif
             <!-- /.card-header -->
             <!-- form start -->
@@ -47,7 +47,7 @@
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
-                    @enderror  
+                    @enderror
                   </div>
                 </div>
                 <div class="form-group row mb-3 mx-1">
@@ -55,6 +55,17 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" placeholder="Masukkan stok produk" required value="{{ old('stock') }}">
                     @error('stock')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row mb-3 mx-1">
+                  <label for="minimal_stock" class="col-sm-2 col-form-label">Minimal Stok</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control @error('minimal_stock') is-invalid @enderror" id="minimal_stock" name="minimal_stock" placeholder="Masukkan minimal stok produk" required value="{{ old('minimal_stock') }}">
+                    @error('minimal_stock')
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
@@ -86,7 +97,7 @@
                 <div class="form-group row mb-3 mx-1">
                   <label for="desc" class="col-sm-2 col-form-label">Deskripsi</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" placeholder="Masukkan deskripsi produk" value="{{ old('desc') }}">
+                    <textarea class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" placeholder="Masukkan deskripsi produk" value="{{ old('desc') }}"></textarea>
                     @error('desc')
                     <div class="invalid-feedback">
                       {{ $message }}
@@ -119,24 +130,26 @@
                 </div>
                 <div id="reader"></div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <a href="javascript:window. history. back();" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
+                  <a href="{{ route('product') }}" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
                   <button type="submit" class="btn btn-info text-white"><i class="fa-solid fa-plus mr-2"></i> Tambah</button>
                 </div>
               </div>
             </form>
-             <!-- scan code qr (library html5-qrcode)) -->
+            <!-- scan code qr (library html5-qrcode)) -->
             <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
             <script>
               function onScanSuccess(decodedText, decodedResult) {
-                  console.log(`Scan result: ${decodedText}`, decodedResult);
-                  document.getElementById('productId').value = decodedText;
+                console.log(`Scan result: ${decodedText}`, decodedResult);
+                document.getElementById('productId').value = decodedText;
               }
 
-              function onScanError(errorMessage) {
-              }
+              function onScanError(errorMessage) {}
 
               var html5QrcodeScanner = new Html5QrcodeScanner(
-                  "reader", { fps: 10, qrbox: 250 }
+                "reader", {
+                  fps: 10,
+                  qrbox: 250
+                }
               );
               html5QrcodeScanner.render(onScanSuccess, onScanError);
             </script>

@@ -27,7 +27,7 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-center p-4">
-                            <a href="javascript:window. history. back();" type="submit" class="btn btn-warning"><i class="fa-solid fa-arrow-left mr-2"></i>Kembali</a>
+                            <a href="{{ route('history') }}" type="submit" class="btn btn-warning"><i class="fa-solid fa-arrow-left mr-2"></i>Kembali</a>
                             <a href="#" class="btn btn-primary"><i class="fa-solid fa-print mr-2"></i>Cetak Nota</a>
                         </div>
                         <div class="d-flex card-body">
@@ -47,6 +47,7 @@
                                 <div class="line2 my-2"></div>
                                 @foreach($detailTransactionData as $detail)
                                 <div class="row">
+                                    @if($detail->product)
                                     <span><b>{{ $detail->product->name_product }}</b></span>
                                     <div class="d-flex justify-content-between">
                                         <div class="d-flex">
@@ -59,6 +60,9 @@
                                         @endif
                                         <span>Rp {{ number_format($detail->total_price) }}</span>
                                     </div>
+                                    @else
+                                    <span><b>Ada produk yang dihapus</b></span>
+                                    @endif
                                 </div>
                                 @endforeach
                                 @if($transactionData->additional_cost)

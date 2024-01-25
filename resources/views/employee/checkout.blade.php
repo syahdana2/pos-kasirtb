@@ -39,6 +39,11 @@
                                     <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
                                 </div>
                                 @endif
+                                @if(session('pay'))
+                                <div class="alert alert-warning m-2" role="alert">
+                                    <i class="fa-solid fa-circle-exclamation mr-2"></i><b>Note :</b> Tekan tombol selesai jika ingin keluar dari halaman ini!
+                                </div>
+                                @endif
                                 @if(!session('pay'))
                                 <div class="d-flex justify-content-center mb-2">
                                     <h2 class="card-title text-center"><b>Tambahan </b></h2>
@@ -117,7 +122,7 @@
                                     </div>
                                 </div>
                                 @if(!session('pay'))
-                                <form action="{{ route('pay.transaction') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                <form action="{{ route('pay.transaction') }}" method="post" class="form-horizontal" enctype="multipart/form-data" onsubmit="return confirmPayment()">
                                     @csrf
                                     <div class="form-group d-flex mb-3 mx-1">
                                         <label for="bayar" class="col-md-3 col-form-label">Bayar</label>
@@ -133,13 +138,13 @@
                                 </form>
                                 @else
                                 <div class="form-group d-flex mb-3 mx-1">
-                                        <label for="bayar" class="col-md-3 col-form-label">Bayar</label>
-                                        <div class="d-flex col-md-9 gap-2">
-                                            <div class="col-md-9">
-                                                <input type="number" class="form-control" id="bayar" name="bayar" value="{{ Session::get('pay', 0) }}" readonly required>
-                                            </div>
+                                    <label for="bayar" class="col-md-3 col-form-label">Bayar</label>
+                                    <div class="d-flex col-md-9 gap-2">
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" id="bayar" name="bayar" value="{{ Session::get('pay', 0) }}" readonly required>
                                         </div>
                                     </div>
+                                </div>
                                 @endif
                                 @if(Session::get('change'))
                                 <div class="form-group d-flex mb-3 mx-1">
@@ -172,7 +177,11 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span>Kasir : {{ $emp->name_employee }}</span>
+                                    @if(!session('today'))
                                     <span>{{ $today }}</span>
+                                    @else
+                                    <span>{{ session('today') }}</span>
+                                    @endif
                                 </div>
                                 <div class="line2 my-2"></div>
                                 @if(session('cart'))
@@ -231,4 +240,17 @@
         </div>
     </section>
 </div>
+<script>
+    function confirmPayment() {
+        var bayar = document.getElementById('bayar').value;
+        var formattedBayar = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(bayar);
+        return confirm('Apakah Anda yakin ingin membayar ' + formattedBayar + '?');
+    }
+</script>
+
 @endsection

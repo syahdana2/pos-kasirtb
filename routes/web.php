@@ -99,6 +99,7 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::get('/edit-pelanggan/{id}', [CrudCustomerController::class, 'datacustomer'])->name('data_customer');
             Route::post('/update-pelanggan/{id}', [CrudCustomerController::class, 'updatecustomer'])->name('update_customer');
             Route::get('/hapus-pelanggan/{id}', [CrudCustomerController::class, 'deletecustomer'])->name('delete_customer');
+            Route::get('/pelanggan-detail/{id}', [CrudCustomerController::class, 'show'])->name('customer.show');
         });
         // Route Product
         Route::prefix('/data-produk')->group(function () {
@@ -136,6 +137,4 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::get('/show/{id}', [HistoryController::class, 'show'])->name('history.show');
         });
     });
-
 });
-

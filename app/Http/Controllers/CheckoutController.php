@@ -19,6 +19,7 @@ class CheckoutController extends Controller
     {
         $emp = Employee::find(session()->get('auth_id'));
         $outlet = outlet::find(session('outlet_id'));
+        
         $today = Carbon::now();
 
         if (!session()->has('no_ref')) {
@@ -95,6 +96,7 @@ class CheckoutController extends Controller
         session()->forget('notes');
         session()->forget('pay');
         session()->forget('change');
+        session()->forget('today');
 
         return redirect()->route('transaction')->with('success', 'Berhasil membatalkan pembelian');
     }
@@ -110,6 +112,14 @@ class CheckoutController extends Controller
             
         $pay = $validatedData['bayar'];
         $change = $request->kembali;
+
+        if (!session()->has('today')) {
+            $today = Carbon::now();
+
+            Session::put('today', $today);
+        } else {
+            $today = session('today');
+        }
 
         $emp = Employee::find(session()->get('auth_id'));
         
@@ -129,6 +139,7 @@ class CheckoutController extends Controller
         $note = session('notes');
         $pay = session('pay');
         $change = session('change');
+        $today = session('today');
 
         $data_transaction = [
             'employee_id' => $emp->id,
@@ -138,6 +149,7 @@ class CheckoutController extends Controller
             'note' => $note,
             'pay' => $pay,
             'change' => $change,
+            'created_at' => $today,
         ];
 
         $transaction = Transaction::create($data_transaction);
@@ -208,6 +220,7 @@ class CheckoutController extends Controller
         session()->forget('notes');
         session()->forget('pay');
         session()->forget('change');
+        session()->forget('today');
 
         return redirect()->route('transaction');
     }
