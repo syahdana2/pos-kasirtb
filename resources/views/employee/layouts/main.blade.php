@@ -115,7 +115,7 @@
           <!-- Add icons to the links using the .nav-icon class
           with font-awesome or any other icon font library -->
           <li class="nav-item ">
-            <a href="{{ route('employee.dashboard') }}" class="nav-link  ( $title === "Dashboard Employee" ? 'active' : '' )  }}">
+            <a href="{{ route('employee.dashboard') }}" class="nav-link {{  ( $title === "Dashboard Employee" ? 'active' : '' )   }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -124,7 +124,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('transaction') }}" class="nav-link  ( $title === "Transaksi" ? 'active' : '' )  }}">
+            <a href="{{ route('transaction') }}" class="nav-link  {{ ( $title === "Transaksi" ? 'active' : '' )   }}">
               <i class="ml-1 mr-2 fa-solid fa-cart-shopping"></i>
               <p>
                 Transaksi
