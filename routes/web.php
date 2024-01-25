@@ -80,6 +80,7 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::get('/reset-keranjang', [TransactionController::class, 'reset'])->name('reset.cart');
             Route::middleware(['transaction.auth'])->group(function () {
                 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+                Route::get('/export-pdf', [CheckoutController::class, 'cetak_pdf'])->name('checkoutpdf');
                 Route::post('/biaya-tambahan', [CheckoutController::class, 'addCost'])->name('addCost');
                 Route::get('/hapus-biaya-tambahan', [CheckoutController::class, 'deleteAddCost'])->name('delete.addCost');
                 Route::post('/catatan', [CheckoutController::class, 'notes'])->name('notes');
@@ -115,7 +116,7 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::get('/export-pdf', [productController::class, 'exportPDF'])->name('exportPDF-produk');
             Route::get('/export-excel', [productController::class, 'exportEXCEL'])->name('exportEXCEL-produk');
             Route::post('/import-excel', [ProductController::class, 'importData'])->name('import.products');
-            // Route::post('/import-products', [ProductController::class, 'importData'])->name('import.products');
+            Route::get('/export-checkout', [ProductController::class, 'exportcheckout'])->name('exportPDF-checkout');
         });
         //Route Satuan 
         Route::prefix('/satuan')->group(function () {
@@ -125,6 +126,9 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::get('/edit-unit/{id}', [UnitController::class, 'dataunit'])->name('data_unit');
             Route::post('/update-unit/{id}', [UnitController::class, 'updateunit'])->name('update_unit');
             Route::get('/hapus-unit/{id}', [UnitController::class, 'deleteunit'])->name('delete_unit');
+            Route::get('/export-pdf', [UnitController::class, 'exportPDF'])->name('exportPDF-unit');
+            Route::get('/export-excel', [UnitController::class, 'exportEXCEL'])->name('exportEXCEL-unit');
+            Route::post('/import-excel', [UnitController::class, 'importData'])->name('import.unit');
         });
         // Route History
         Route::prefix('/riwayat-penjualan')->group(function () {

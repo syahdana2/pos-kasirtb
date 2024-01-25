@@ -2,6 +2,8 @@
 
 namespace App\Exports;
 
+use Carbon\Carbon;
+use App\Models\outlet;
 use App\Models\product;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
@@ -13,5 +15,7 @@ class productExport implements FromCollection
     public function collection()
     {
         return product::all();
+        outlet::find(session('outlet_id'));
+        Carbon::now()->format('d M Y');
     }
 }

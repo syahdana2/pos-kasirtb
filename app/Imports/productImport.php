@@ -16,13 +16,16 @@ class productImport implements ToModel
     */
     public function model(array $row)
     {
-        $validator = Validator::make(['image' => $row[8] ?? null], [
+        $validator = Validator::make([
+            'name_product' => $row[2],
+        ], [
+            'name_product' => 'required',
             'image' => 'nullable|image|max:2048', // Maksimal 2MB
         ]);
     
         if ($validator->fails()) {
             // Handle validasi gagal, misalnya lempar exception atau lakukan sesuatu yang sesuai
-            // ...
+            session()->flash('import_error', 'Ada kesalahan pada file Excel Anda: ' . $validator->errors()->first());
     
             // Jangan lanjutkan proses pembuatan model jika validasi gagal
             return null;

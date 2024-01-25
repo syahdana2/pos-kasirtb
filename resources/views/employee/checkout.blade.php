@@ -30,12 +30,12 @@
                         <div class="d-flex card-body mt-4">
                             <div class="col-md-8">
                                 @if(session('success'))
-                                <div class="alert alert-success m-2" role="alert">
+                                <div id="hide" class="alert alert-success m-2" role="alert">
                                     <i class="fa-regular fa-circle-check mr-2"></i> {{ session('success') }}
                                 </div>
                                 @endif
                                 @if(session('error'))
-                                <div class="alert alert-danger m-2" role="alert">
+                                <div id="hide" class="alert alert-danger m-2" role="alert">
                                     <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
                                 </div>
                                 @endif
@@ -156,7 +156,7 @@
                                     <a href="{{ route('cancel.transaction') }}" class="btn btn-danger" onclick="return confirm('apakah anda yakin ingin membatalkan transaksi pembelian ini?')"><i class="fa-solid fa-rectangle-xmark mr-2"></i></i></i>Batal Pembelian</a>
                                     <a href="{{ route('transaction') }}" class="btn btn-success"><i class="fa-solid fa-circle-plus mr-2"></i>Tambah Produk</a>
                                     @else
-                                    <a href="#" class="btn btn-primary"><i class="fa-solid fa-print mr-2"></i>Cetak Nota</a>
+                                    <a href="{{ route('checkoutpdf') }}" class="btn btn-primary"><i class="fa-solid fa-print mr-2"></i>Cetak Nota</a>
                                     <a href="{{ route('finish.transaction') }}" class="btn btn-success"><i class="fa-solid fa-check-to-slot mr-2"></i>Selesai</a>
                                     @endif
                                 </div>
