@@ -27,12 +27,12 @@
         <p class="login-box-msg">Sign in to start your session</p>
 
         @if ($message = Session::get('success'))
-        <div class="alert alert-success d-flex align-items-center" role="alert">
+        <div id="hide" class="alert alert-success d-flex align-items-center" role="alert">
           {{ $message }}
         </div>
         @endif
         @if ($message = Session::get('error'))
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <div id="hide" class="alert alert-danger d-flex align-items-center" role="alert">
           {{ $message }}
         </div>
         @endif

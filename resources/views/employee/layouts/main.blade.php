@@ -282,9 +282,17 @@
     }
   </script>
   <script>
-    $(document).ready(function() {
-      // Ambil url saat ini
-      var currentUrl = window.location.href;
+    function hideAlert(alertId) {
+      $(alertId).fadeOut('fast');
+    }
+    setTimeout(function() {
+      hideAlert("#hide")
+    }, 10000);
+  </script>
+  <script>
+    $(document).ready(function () {
+        // Ambil url saat ini
+        var currentUrl = window.location.href;
 
       // Periksa apakah URL mengandung kata 'transaksi'
       if (currentUrl.includes('transaksi')) {

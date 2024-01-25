@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\outlet;
 use App\Models\Product;
 use App\Models\Employee;
+use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\detail_transaction;
@@ -187,6 +188,27 @@ class CheckoutController extends Controller
 
         return redirect()->back()->with('error', 'Pembelian gagal: ' . $e->getMessage());
     }
+    }
+
+    public function cetak_pdf()
+    {
+        $outlet = outlet::find(session('outlet_id'));
+        $today = Carbon::now();
+    	$emp = Employee::find(session()->get('auth_id'));
+        $details = ['title' => 'checkoutPDF'];
+
+        $data = [
+            'outlet' => $outlet,
+            'emp' => $emp,
+            'today' => $today,
+        ];
+        
+        //return view ('employee.transaction.export-pdf', compact('data'));
+        //dd($data['emp']['name_employee']);
+        view()->share(['data'=>$data]);
+        $pdf = PDF::loadview('employee.transaction.export-pdf', $details);
+        return $pdf->download('checkout.pdf');
+        PDF::loadView($pdf)->setPaper([0, 0, 75, 65], 'mm')->setWarnings(false)->save('checkout.pdf');
     }
 
     public function finish()

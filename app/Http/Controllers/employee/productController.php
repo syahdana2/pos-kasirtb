@@ -65,7 +65,7 @@ class productController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'name_product' => 'required',
+            'name_product' => 'required|unique:products',
             'unit_id' => 'required',
             'stock' => 'required|numeric',
             'minimal_stock' => 'required|numeric',
@@ -278,9 +278,11 @@ class productController extends Controller
         PDF::loadView($pdf)->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
     }
 
-    public function exportEXCEL()
-    {
-        return Excel::download(new productExport, 'data produk toko bangunan.xlsx');
+    public function exportEXCEL(){
+        $outlet = outlet::find(session('outlet_id'));
+        $today = Carbon::now()->format('d M Y');
+        $fileName = 'Data produk toko ' . Str::slug($outlet->name_outlet) . ' ' . $today . '.xlsx';
+        return Excel::download(new productExport, $fileName);
     }
 
     public function importData(Request $request)
@@ -300,18 +302,40 @@ class productController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diImport');
     }
 
-    public function model(array $row)
+    public function exportcheckout()
     {
-        $validator = Validator::make(['image' => $row[8]], [
-            'image' => 'nullable|image|max:2048', // Maksimal 2MB
-        ]);
+        $outlet = outlet::find(session('outlet_id'));
 
-        if ($validator->fails()) {
-            // Handle validasi gagal, misalnya lempar exception atau lakukan sesuatu yang sesuai
-            // ...
+        $product = DB::table('products as P')
+            ->join('units as U', 'P.unit_id', '=', 'U.id')
+            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+            ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
+            ->select('P.id', 'P.barcode', 'P.name_product', 'P.stock', 'U.satuan as satuan_product' , 'P.buy_price', 'P.selling_price')
+            ->where('O.id', $outlet->id)
+            ->where('P.stock', '<', 5)
+            ->orderBy('P.stock', 'desc')
+            ->get();
 
-            // Jangan lanjutkan proses pembuatan model jika validasi gagal
-            return null;
-        }
+            $lowStockSum = DB::table('products as P')
+            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+            ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
+            ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
+            ->where('O.id', $outlet->id)
+            ->where('P.stock', '<', 5)
+            ->first();
+
+        // Mengakses hasil query
+        $total = $lowStockSum->totalLowStock;
+
+        $today = Carbon::now()->format('d M Y');
+        view()->share('product', $product);
+        view()->share('outlet', $outlet);
+        view()->share('today', $today);
+        view()->share('total', $total);
+        //return view ('employee.crud-product.restock-pdf');
+         $pdf = PDF::loadview('employee.crud-product.restock-pdf', ['title' => 'printPDF']);
+         $fileName = 'Data restock produk ' . Str::slug($outlet->name_outlet) . ' ' . $today . '.pdf';
+         return $pdf->download($fileName);
+         PDF::loadView($pdf)->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
     }
 }

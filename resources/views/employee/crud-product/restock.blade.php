@@ -30,6 +30,7 @@
                             </div>
                             @endif
                             <a href="{{ route('product') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-warning shadow-md text-light"><i class="fa-solid fa-arrow-left mr-2"></i></i>Kembali</a>
+                            <a href="{{ route('exportPDF-checkout') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-primary shadow-md text-light"><i class="fa-solid fa-file-pdf mr-2 "></i></i>Cetak PDF</a>
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">

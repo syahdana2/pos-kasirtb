@@ -20,12 +20,12 @@
               </div>
               @endif
               @if(session('success'))
-              <div class="alert alert-success" role="alert">
+              <div id="hide" class="alert alert-success" role="alert">
                 <i class="fa-regular fa-circle-check mr-2"></i> {{ session('success') }}
               </div>
               @endif
               @if(session('error'))
-              <div class="alert alert-danger" role="alert">
+              <div id="hide" class="alert alert-danger" role="alert">
                 <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
               </div>
               @endif
@@ -33,6 +33,8 @@
               <a href="{{ route('exportEXCEL-produk') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-secondary shadow-md text-light"><i class="fa-solid fa-file-excel mr-2 "></i>Excel</a>
               <a href="{{ route('product.create') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light"><i class="fa-solid fa-plus mr-2"></i>Tambah Produk</a>
               <button type="button" class="btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success shadow-md text-light" data-toggle="modal" data-target="#importExcel"><i class="fa-solid fa-file-excel mr-2"></i>Import Excel</button>
+              <a href="{{ route('exportPDF-produk') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-primary shadow-md text-light"><i class="fa-solid fa-file-pdf mr-2 "></i>PDF</a>
+              <a href="{{ route('exportEXCEL-produk') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-primary shadow-md text-light"><i class="fa-solid fa-file-excel mr-2 "></i>Excel</a>
 
               <!-- Import Excel -->
               <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
