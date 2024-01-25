@@ -29,8 +29,7 @@
                                 <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
                             </div>
                             @endif
-                            <a href="javascript:window. history. back();" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-warning shadow-md text-light"><i class="fa-solid fa-arrow-left mr-2"></i></i>Kembali</a>
-                            <a href="javascript: window.location.reload();" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-info shadow-md text-light"><i class="fa-solid fa-arrows-rotate mr-2 "></i>Refresh</a>
+                            <a href="{{ route('product') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-warning shadow-md text-light"><i class="fa-solid fa-arrow-left mr-2"></i></i>Kembali</a>
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -42,9 +41,10 @@
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="200px">Produk</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Unit</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Stok</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Min Stok</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Harga Beli</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Harga Jual</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="140px">Restok</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="150px">Restok</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -57,19 +57,20 @@
                                                     <td>{{ $data_product->satuan_product }}</td>
                                                     <td>
                                                         @if ($data_product->stock == 0)
-                                                            <span class="badge text-bg-danger">Habis</span>
-                                                        @elseif ($data_product->stock < 5)
+                                                        <span class="badge text-bg-danger">Habis</span>
+                                                        @elseif ($data_product->stock > 0 && $data_product->stock <= $data_product->minimal_stock)
                                                             <span class="badge text-bg-danger">{{ $data_product->stock }}</span>
-                                                        @else
+                                                            @else
                                                             <span class="badge text-bg-success">{{ $data_product->stock }}</span>
-                                                        @endif
+                                                            @endif
                                                     </td>
+                                                    <td>{{ $data_product->minimal_stock }}</td>
                                                     <td>Rp. {{ number_format($data_product->buy_price) }}</td>
                                                     <td>Rp. {{ number_format($data_product->selling_price) }}</td>
                                                     <td>
                                                         <form action="{{ route('product.restockproduct', $data_product->id) }}" method="post">
                                                             @csrf
-                                                            <div class="d-flex gap-1">
+                                                            <div class="d-flex">
                                                                 <div class="col-md-6">
                                                                     <input type="number" class="form-control" name="restock" id="restock" value="0" min="0">
                                                                 </div>
@@ -81,7 +82,7 @@
                                                 @endforeach
                                                 @else
                                                 <tr>
-                                                    <td class="text-center" colspan="8">Tidak ada data produk yang memiliki stock sedikit atau perlu restok</td>
+                                                    <td class="text-center" colspan="9">Tidak ada data produk yang memiliki stock sedikit atau perlu restok</td>
                                                 </tr>
                                                 @endif
                                             </tbody>

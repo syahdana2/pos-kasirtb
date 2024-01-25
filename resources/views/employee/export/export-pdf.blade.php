@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <!-- bootsrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
     <style>
     #dataproduk {
@@ -41,20 +43,15 @@
     </style>
     </head>
     <body>
-        <div class="">
-            <center>
-                <h1>Data Produk Toko Bangunan</h1>
-                <span id="tanggalContainer"></span>
-            </center>
+        <div class="text-center">
+            <h1>Data Produk Toko {{ $outlet->name_outlet }}</h1>
+            <p>Data ini dicetak pertanggal : {{ $today->format('d/m/Y') }}</p>
         </div>
         <hr>
         <div class="keterangan">
-            <p>Total Produk: 2</p>
-            <p>Total Harga Jual: Rp 170.000</p>
-            <p>Total Harga Beli: Rp 140.000</p>
-            <p>Status Stok: Semua produk masih tersedia.</p>
+            <p>Total Produk: {{ $total }}</p>
+            <p>Status Stok: Semua produk masih tersedia, tidak ada produk yang memiliki produk minim.</p>
         </div>
-        <hr>
         <table id="dataproduk">
                 <tr>
                     <th class="column100 column1" data-column="column1">NO</th>
@@ -65,37 +62,25 @@
                     <th class="column100 column6" data-column="column6">Harga Beli</th>
                     <th class="column100 column7" data-column="column7">Harga Jual</th>
                 </tr>
-            @foreach($product as $data_product)
-                <tr class="row100">
-                    <td class="column100 column1" data-column="column1">{{ $loop->iteration }}</td>
-                    <td class="column100 column2" data-column="column2">{{ $data_product->barcode }}</td>
-                    <td class="column100 column3" data-column="column3">{{ $data_product->name_product }}</td>
-                    <td class="column100 column4" data-column="column4">{{ $data_product->satuan_product }}</td>
-                    <td class="column100 column5" data-column="column5">{{ $data_product->stock }}</td>
-                    <td class="column100 column6" data-column="column6">Rp. {{ number_format($data_product->buy_price) }}</td>
-                    <td class="column100 column7" data-column="column7">Rp. {{ number_format($data_product->selling_price) }}</td>
-                </tr>
-            @endforeach
+                @if($product->count() > 0)
+                @foreach($product as $data_product)
+                    <tr class="row100">
+                        <td class="column100 column1" data-column="column1">{{ $loop->iteration }}</td>
+                        <td class="column100 column2" data-column="column2">{{ $data_product->barcode }}</td>
+                        <td class="column100 column3" data-column="column3">{{ $data_product->name_product }}</td>
+                        <td class="column100 column4" data-column="column4">{{ $data_product->satuan_product }}</td>
+                        <td class="column100 column5" data-column="column5">{{ $data_product->stock }}</td>
+                        <td class="column100 column6" data-column="column6">Rp. {{ number_format($data_product->buy_price) }}</td>
+                        <td class="column100 column7" data-column="column7">Rp. {{ number_format($data_product->selling_price) }}</td>
+                    </tr>
+                @endforeach
+                @else
+                    <tr>
+                        <td colspan="10"><p class="text-center">Data produk kosong</p></td>
+                    </tr>
+                @endif
         </table>
-        <script>
-            // Mendapatkan tanggal hari ini
-            var today = new Date();
-        
-            // Mengisi nilai ke elemen dengan ID 'tanggalContainer'
-            document.getElementById('tanggalContainer').innerHTML = 'Laporan Data produk ini dicetak per tanggal : ' + formatDate(today);
-        
-            // Fungsi untuk memformat tanggal ke dalam bentuk "DD/MM/YYYY"
-            function formatDate(date) {
-                var day = date.getDate();
-                var month = date.getMonth() + 1; // January is 0!
-                var year = date.getFullYear();
-        
-                // Menambahkan "0" di depan hari atau bulan jika kurang dari 10
-                day = day < 10 ? '0' + day : day;
-                month = month < 10 ? '0' + month : month;
-        
-                return day + '/' + month + '/' + year;
-            }
-        </script>
+    <!-- bootsrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>

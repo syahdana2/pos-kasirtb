@@ -55,6 +55,12 @@
                 </div>
               </div>
               <div class="form-group row mb-3 mx-1">
+                <label for="minimal_stock" class="col-sm-2 col-form-label">Minimal Stok</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="minimal_stock" name="minimal_stock" value="{{ $product->minimal_stock }}" readonly>
+                </div>
+              </div>
+              <div class="form-group row mb-3 mx-1">
                 <label for="selling_price" class="col-sm-2 col-form-label">Harga Jual</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="selling_price" name="selling_price" value="{{ $product->selling_price }}" readonly>
@@ -73,7 +79,7 @@
                 </div>
               </div>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end mr-3">
-                <a href="javascript:window. history. back();" type="submit" class="btn btn-warning"><i class="fa-solid fa-arrow-left mr-2"></i>Kembali</a>
+                <a href="{{ route('product') }}" type="submit" class="btn btn-warning"><i class="fa-solid fa-arrow-left mr-2"></i>Kembali</a>
               </div>
             </div>
           </div>

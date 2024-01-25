@@ -24,7 +24,7 @@
             <div class="card-body">
               @if(isset($totalLowStock) && $totalLowStock > 0)
               <div class="alert alert-warning mt-2" role="alert">
-                Ada <a href="{{ route('product.restock') }}" class="alert-link">{{ $totalLowStock }} produk</a> memiliki stok kurang dari 5 atau perlu restock.
+                <i class="fa-solid fa-circle-exclamation mr-2"></i> Ada <a href="{{ route('product.restock') }}" class="alert-link">{{ $totalLowStock }} produk</a> memiliki stok kurang dari minimal stok atau habis
               </div>
               @endif
               @if(session('success'))
@@ -65,7 +65,8 @@
                           <td>
                             @if ($data_product->stock == 0)
                             <span class="badge text-bg-danger">Habis</span>
-                            @elseif ($data_product->stock < 5) <span class="badge text-bg-danger">{{ $data_product->stock }}</span>
+                            @elseif ($data_product->stock > 0 && $data_product->stock <= $data_product->minimal_stock)
+                              <span class="badge text-bg-danger">{{ $data_product->stock }}</span>
                               @else
                               <span class="badge text-bg-success">{{ $data_product->stock }}</span>
                               @endif
@@ -73,6 +74,7 @@
                           <td>Rp. {{ number_format($data_product->buy_price) }}</td>
                           <td>Rp. {{ number_format($data_product->selling_price) }}</td>
                           <td>
+                            @if ($data_product->stock > 0)
                             <form action="{{ route('cart.add', $data_product->id) }}" method="post">
                               @csrf
                               <input type="number" class="form-control" name="grosir" id="grosir" value="0">
@@ -84,6 +86,17 @@
                                 <button type="submit" class="btn btn-success text-white" title="Pilih"><i class="fa-solid fa-check"></i></button>
                               </div>
                               </form>
+                              @else
+                              @csrf
+                              <input type="number" class="form-control" name="grosir" id="grosir" value="0" readonly>
+                          </td>
+                          <td>
+                            <div class="d-flex gap-1">
+                              <div class="d-flex">
+                                <input type="number" class="form-control" name="quantity" id="quantity" value="0" readonly>
+                                <button type="submit" class="btn btn-success text-white" title="Pilih" disabled><i class="fa-solid fa-check"></i></button>
+                              </div>
+                              @endif
                               <a href="{{ route('product.show', $data_product->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></i></a>
                             </div>
                           </td>
@@ -120,9 +133,9 @@
             <div class="d-flex">
               <div class=" col-lg-3">
                 @if($cart['image'])
-                <img src="{{ asset('storage/' .$cart['image']) }}" alt="User Avatar" class="img-fluid shadow mb-3 bg-body-tertiary rounded">
+                <img src="{{ asset('storage/' .$cart['image']) }}" alt="Produk Image" class="img-fluid shadow mb-3 bg-body-tertiary rounded">
                 @else
-                <img src="https://cdn-icons-png.flaticon.com/128/5762/5762943.png" alt="User Avatar" class="img-fluid shadow mb-3 bg-body-tertiary rounded">
+                <img src="{{ asset('img/no_image.png') }}" alt="Produk Image" class="img-fluid shadow mb-3 bg-body-tertiary rounded">
                 @endif
               </div>
               <div class="col-lg-9">
@@ -188,4 +201,3 @@
 <!-- /.content-wrapper -->
 
 @endsection
-

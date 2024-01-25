@@ -19,24 +19,18 @@ class TransactionController extends Controller
 
         $outletId = session('outlet_id');
 
-        $lowStockSum = DB::table('products as P')
-            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+        $totalLowStock = Product::join('employees as E', 'products.employee_id', '=', 'E.id')
             ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
-            ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
             ->where('O.id', $outletId)
-            ->where('P.stock', '<', 5)
-            ->first();
-
-        // Mengakses hasil query
-        $totalLowStock = $lowStockSum->totalLowStock;
+            ->whereBetween('products.stock', [0, DB::raw('products.minimal_stock')])
+            ->count();
 
         $product = DB::table('products as P')
         ->join('units as U', 'P.unit_id', '=', 'U.id')
         ->join('employees as E', 'P.employee_id', '=', 'E.id')
         ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
-        ->select('P.id', 'P.barcode', 'P.name_product', 'P.stock', 'P.selling_price', 'P.buy_price', 'U.satuan as satuan_product', 'E.name_employee as employee_name', 'O.name_outlet as outlet_name')
+        ->select('P.id', 'P.barcode', 'P.name_product', 'P.stock', 'P.minimal_stock', 'P.selling_price', 'P.buy_price', 'U.satuan as satuan_product', 'E.name_employee as employee_name', 'O.name_outlet as outlet_name')
         ->where('O.id', $outletId)
-        ->where('P.stock', '>', 0)
         ->orderBy('P.created_at', 'desc')
         ->get();
 
@@ -164,6 +158,7 @@ class TransactionController extends Controller
         session()->forget('notes');
         session()->forget('pay');
         session()->forget('change');
+        session()->forget('today');
 
         return redirect()->route('transaction')->with('success', 'Berhasil reset list pembelian produk');
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\outlet;
 use App\Models\customer;
 use App\Models\Employee;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,18 +18,16 @@ class CrudCustomerController extends Controller
 
         $outletId = session('outlet_id');
 
-        $lowStockSum = DB::table('products as P')
-            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+        $totalLowStock = Product::join('employees as E', 'products.employee_id', '=', 'E.id')
             ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
-            ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
             ->where('O.id', $outletId)
-            ->where('P.stock', '<', 5)
-            ->first();
+            ->whereBetween('products.stock', [0, DB::raw('products.minimal_stock')])
+            ->count();
 
-        // Mengakses hasil query
-        $totalLowStock = $lowStockSum->totalLowStock;
-
-        $data = customer::all();
+        $data = customer::join('outlets as O', 'customers.outlet_id', '=', 'O.id')
+            ->where('O.id', $outletId)
+            ->orderBy('customers.created_at', 'desc')
+            ->get();
         // dd($data);
         return view('employee.customer', compact('data', 'emp', 'totalLowStock'), ["title" => "Pelanggan"]);
     }
@@ -46,7 +45,8 @@ class CrudCustomerController extends Controller
         $validator = $request->validate([
             'name' => ['required'],
             'phone' => ['nullable'],
-            'address' => ['nullable']
+            'address' => ['nullable'],
+            'note' => ['nullable']
 
         ]);
 
@@ -77,12 +77,15 @@ class CrudCustomerController extends Controller
         $code = $kodetokoName . '_' . $bulanTahun . '_' . str_pad($urutan, 2, '0', STR_PAD_LEFT);
 
         // dd($request->all());
+        $outletId = session('outlet_id');
 
         $data = [
+            "outlet_id" => $outletId,
             "code" => $code,
             "name" => $validator['name'],
             "phone" => $validator['phone'],
-            "address" => $validator['address']
+            "address" => $validator['address'],
+            "note" => $validator['note'],
         ];
 
         customer::create($data);
@@ -112,5 +115,12 @@ class CrudCustomerController extends Controller
         $data = customer::find($id);
         $data->delete();
         return redirect()->route('customer_page')->with('success', 'Data Berhasil Di Hapus');
+    }
+
+    public function show(string $id)
+    {
+        $customer = customer::findOrFail($id);
+        $emp = Employee::find(session()->get('auth_id'));
+        return view('employee.crud-customer.show', compact('customer', 'emp'), ["title" => "Detail Pelanggan"]);
     }
 }

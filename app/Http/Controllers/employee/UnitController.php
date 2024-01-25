@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Models\Product;
 
 class UnitController extends Controller
 {
@@ -17,19 +18,13 @@ class UnitController extends Controller
 
         $outletId = session('outlet_id');
 
-        $lowStockSum = DB::table('products as P')
-            ->join('employees as E', 'P.employee_id', '=', 'E.id')
+        $totalLowStock = Product::join('employees as E', 'products.employee_id', '=', 'E.id')
             ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
-            ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
             ->where('O.id', $outletId)
-            ->where('P.stock', '<', 5)
-            ->first();
-
-        // Mengakses hasil query
-        $totalLowStock = $lowStockSum->totalLowStock;
+            ->whereBetween('products.stock', [0, DB::raw('products.minimal_stock')])
+            ->count();
 
         $data = unit::all();
-        //dd('$data');
         return view('employee.unit', compact('data', 'emp', 'totalLowStock'), ["title" => "Satuan"]);
     }
 

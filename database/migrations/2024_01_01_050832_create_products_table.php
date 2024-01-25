@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('barcode')->nullable();
             $table->string('unit_id');
             $table->string('stock');
+            $table->string('minimal_stock');
             $table->string('selling_price');
             $table->string('buy_price');
             $table->string('image')->nullable();

@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class customer extends Model
 {
     use HasFactory;
-    // protected $table = 'customers';
+    protected $table = 'customers';
+    
     protected $guarded = ['id'];
 
-    protected $dates = ['created_at'];
+    public function outlet () {
+        return $this->belongsTo(outlet::class, 'outlet_id', 'id');
+    }
 }

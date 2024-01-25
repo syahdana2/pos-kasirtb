@@ -37,6 +37,7 @@
                                                     <th width="200px">Produk</th>
                                                     <th width="80px">Unit</th>
                                                     <th width="30px">Stok</th>
+                                                    <th width="30px">Minimal Stok</th>
                                                     <th width="130px">Restok</th>
                                                 </tr>
                                             </thead>
@@ -46,11 +47,15 @@
                                                     <td>{{ $product->name_product }}</td>
                                                     <td>{{ $product->unit->satuan }}</td>
                                                     <td>
-                                                        @if ($product->stock < 5) <span class="badge text-bg-danger">{{ $product->stock }}</span>
+                                                        @if ($product->stock == 0)
+                                                        <span class="badge text-bg-danger">Habis</span>
+                                                        @elseif ($product->stock > 0 && $product->stock <= $product->minimal_stock)
+                                                            <span class="badge text-bg-danger">{{ $product->stock }}</span>
                                                             @else
                                                             <span class="badge text-bg-success">{{ $product->stock }}</span>
                                                             @endif
                                                     </td>
+                                                    <td>{{ $product->minimal_stock }}</td>
                                                     <td>
                                                         <form action="{{ route('product.editstock', $product->id) }}" method="post">
                                                             @csrf
@@ -58,7 +63,7 @@
                                                                 <div class="col-md-6">
                                                                     <input type="number" class="form-control" name="restock" id="restock" value="0" min="0">
                                                                 </div>
-                                                                <button type="submit" class="btn btn-success text-white" title="Pilih"><i class="fa-solid fa-circle-plus"></i> Restock</button>
+                                                                <button type="submit" class="btn btn-success text-white" title="Pilih"><i class="fa-solid fa-circle-plus"></i></button>
                                                             </div>
                                                         </form>
                                                     </td>
@@ -66,7 +71,7 @@
                                             </tbody>
                                         </table>
                                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3 mr-3">
-                                            <a href="javascript:window. history. back();" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
+                                            <a href="{{ route('product') }}" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> Batal</a>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
