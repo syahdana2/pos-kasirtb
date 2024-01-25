@@ -34,7 +34,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12">
-                        <div class="card card-primary">
+                        <div class="card card-info">
                             <div class="card-header">
                               <h3 class="card-title">pengisian data pelanggan</h3>
                             </div>
@@ -55,15 +55,12 @@
                                   <label for="exampleInputPassword1">Alamat</label>
                                   <input type="text" name="address" class="form-control" id="exampleInputPassword1" placeholder="Masukan alamat">
                                 </div>
-                                <div class="form-check">
-                                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                  <label class="form-check-label" for="exampleCheck1">pelanggan reseller</label>
-                                </div>
                               </div>
                               <!-- /.card-body -->
               
                               <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
+                                <a href={{ route('customer_page') }} type="submit" class="btn bg-danger">Batal</a>
                               </div>
                             </form>
                           </div>
@@ -85,38 +82,4 @@
 </div>
 <!-- /.content-wrapper -->
 
-@endsection
-
-@section('script')
-<!-- DataTables  & Plugins -->
-<script src="{{asset('AdminLTE')}}/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/jszip/jszip.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-{{-- table search --}}
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": []
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 @endsection

@@ -28,12 +28,12 @@
               </div>
               @endif
               @if(session('success'))
-              <div class="alert alert-success" role="alert">
+              <div id="hide" class="alert alert-success" role="alert">
                 <i class="fa-regular fa-circle-check mr-2"></i> {{ session('success') }}
               </div>
               @endif
               @if(session('error'))
-              <div class="alert alert-danger" role="alert">
+              <div id="hide" class="alert alert-danger" role="alert">
                 <i class="fa-regular fa-circle-xmark mr-2"></i> {{ session('error') }}
               </div>
               @endif
@@ -156,7 +156,7 @@
             @endforeach
             @else
             <div class="d-flex justify-content-center">
-              <div class="alert alert-warning" role="alert">
+              <div id="hide" class="alert alert-warning" role="alert">
                 <i class="fa-solid fa-basket-shopping mr-2"></i>Kosong, Tidak ada produk yang dipilih
               </div>
             </div>

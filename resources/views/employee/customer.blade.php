@@ -25,16 +25,10 @@
             <div class="card-body">
               {{-- alert --}}
               @if ($message = Session::get('success'))
-              <div id=".alert" class="alert alert-success col-sm-12 border 0" role="alert" style="background-color: rgba(35, 184, 35, 0.5);">
+              <div id="hide" class="alert alert-success" role="alert">
                 <i class="fa-regular fa-circle-check mr-2"></i>
                 {{ $message }}
               </div>
-              <script>
-                function hideAlert() {
-                  $(".alert").fadeOut('fast');
-                }
-                setTimeout(hideAlert, 5000);
-              </script>
               @endif
               <div class="mb-3">
                   <a href="{{ route('add_customer') }}" class="btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-success text-light shadow-md"><i class="fa-solid fa-plus mr-2"></i> Tambah</a>
