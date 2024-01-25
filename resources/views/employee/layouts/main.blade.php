@@ -109,26 +109,22 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-          with font-awesome or any other icon font library -->
             <li class="nav-item ">
-              <a href="{{ route('employee.dashboard') }}" class="nav-link  ( $title === " Dashboard Employee" ? 'active' : '' ) }}">
+              <a href="{{ route('employee.dashboard') }}" class="nav-link {{ ( $title === " Dashboard Employee" ? 'active' : '' ) }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
                 </p>
               </a>
             </li>
-
             <li class="nav-item">
-              <a href="{{ route('transaction') }}" class="nav-link  ( $title === " Transaksi" ? 'active' : '' ) }}">
+              <a href="{{ route('transaction') }}" class="nav-link {{ ( $title === " Transaksi" ? 'active' : '' ) }}">
                 <i class="ml-1 mr-2 fa-solid fa-cart-shopping"></i>
                 <p>
                   Transaksi
                 </p>
               </a>
             </li>
-
             <li class="nav-item">
               <a href="{{ route('product') }}" class="nav-link {{ $title === "Data Produk" ? 'active' : '' }}">
                 <i class="ml-2 mr-2 fa-solid fa-database"></i>
@@ -140,16 +136,14 @@
                 </p>
               </a>
             </li>
-
             <li class="nav-item">
-              <a href="{{ route('customer_page') }}" class="nav-link {{ ( $title === "Pelanggan" ? 'active' : '' ) }}">
-                <i class="ml-2 mr-2 fa-solid fa-user"></i>
+              <a href="{{ route('unit_page') }}" class="nav-link {{ ( $title === "satuan" ? 'active' : '' ) }}">
+                <i class="ml-2 fa-solid fa-tag mr-2"></i>
                 <p>
-                  Pelanggan
+                  Unit
                 </p>
               </a>
             </li>
-
             <li class="nav-item">
               <a href="{{ route('history') }}" class="nav-link {{ ( $title === "Riwayat Penjualan" ? 'active' : '' ) }}">
                 <i class="ml-2 fa-solid fa-clock-rotate-left mr-2"></i>
@@ -159,12 +153,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('unit_page') }}" class="nav-link {{ ( $title === "satuan" ? 'active' : '' ) }}">
-                <i class="ml-2 fa-solid fa-tag mr-2"></i>
+              <a href="{{ route('customer_page') }}" class="nav-link {{ ( $title === "Pelanggan" ? 'active' : '' ) }}">
+                <i class="ml-2 mr-2 fa-solid fa-user"></i>
                 <p>
-                  Unit
+                  Pelanggan
                 </p>
               </a>
+            </li>
             <li class="nav-item">
               <a href="{{ route('employee.logout') }}" class="nav-link">
                 <div class="my-1">
