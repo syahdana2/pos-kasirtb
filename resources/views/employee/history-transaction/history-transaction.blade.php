@@ -70,9 +70,14 @@
                         @endphp
                         @endforeach
                         <tr>
-                          <td colspan="3"></td>
-                          <td class="bg-warning" colspan="2">Total Subtotal: <b>Rp {{ number_format($totalSubtotal,2) }}</b></td>
-                          <td class="bg-success" colspan="3">Total Profit: <b>Rp {{ number_format($totalProfit,2) }}</b></td>
+                          <td class="bg-warning"></td>
+                          <td class="bg-warning"></td>
+                          <td class="bg-warning"></td>
+                          <td class="bg-warning"><b>Rp {{ number_format($totalSubtotal) }}</b></td>
+                          <td class="bg-success"></td>
+                          <td class="bg-success"></td>
+                          <td class="bg-success"><b>Rp {{ number_format($totalProfit) }} </b></td>
+                          <td class="bg-success"></td>
                         </tr>
                         @else
                         <tr>

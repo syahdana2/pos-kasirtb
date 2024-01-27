@@ -117,7 +117,7 @@ Route::middleware(['employee.auth'])->group(function () {
             Route::get('/export-pdf', [productController::class, 'exportPDF'])->name('exportPDF-produk');
             Route::get('/export-excel', [productController::class, 'exportEXCEL'])->name('exportEXCEL-produk');
             Route::post('/import-excel', [ProductController::class, 'importData'])->name('import.products');
-            Route::get('/export-checkout', [ProductController::class, 'exportcheckout'])->name('exportPDF-checkout');
+            Route::get('/export-restock', [ProductController::class, 'exportrestock'])->name('exportPDF-restock');
         });
         //Route Satuan 
         Route::prefix('/satuan')->group(function () {
@@ -135,6 +135,7 @@ Route::middleware(['employee.auth'])->group(function () {
         Route::prefix('/riwayat-penjualan')->group(function () {
             Route::get('/', [HistoryController::class, 'history'])->name('history');
             Route::get('/show/{id}', [HistoryController::class, 'show'])->name('history.show');
+            Route::get('/export-pdf/{id}', [HistoryController::class, 'exportPDF'])->name('exportPDF-nota');
         });
     });
 });
