@@ -91,10 +91,10 @@ class UnitController extends Controller
         view()->share('today', $today);
         view()->share('outlet', $outlet);
         //return view('employee.crud-unit.unit-pdf');
-        $pdf = PDF::loadview('employee.crud-unit.unit-pdf', $details);
-        $fileName = 'data satuan unit toko'  . Str::slug($outlet->name_outlet) . ' ' . $today . '.pdf';
+        $fileName = 'data satuan unit toko '  . Str::slug($outlet->name_outlet) . ' ' . $today . '.pdf';
+        $pdf = PDF::loadview('employee.crud-unit.unit-pdf', $details)->setPaper('a4', 'potrait')->setWarnings(false)->save($fileName);
         return $pdf->download($fileName);
-        PDF::loadView($pdf)->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
+        //PDF::loadView($pdf)->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
     }
 
     public function exportEXCEL(){
@@ -109,11 +109,13 @@ class UnitController extends Controller
 		// validasi 
 
 		// menangkap file excel
-		$file = $request->file('file');
-        $nama_file = rand().$file->getClientOriginalName();
-        $file->move('file_unit',$nama_file);
-        Excel::import(new UnitImport, public_path('/file_unit/'.$nama_file));
-
+		$request->file('file');
+        // $nama_file = rand().$file->getClientOriginalName();
+        // $file->move('file_unit',$nama_file);
+        // Excel::import(new UnitImport, public_path('/file_unit/'.$nama_file));
+        //Excel::import(new UnitImport, 'units.xlsx');
+        //(new UnitImport)->import('units.xlsx', null, \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new UnitImport, $request->file('file'));
         //alihkan kembali halaman dan beri notifikasi sukses
         return redirect()->route('unit_page')->with('sukses','Data Siswa Berhasil Diimport!');
 	}

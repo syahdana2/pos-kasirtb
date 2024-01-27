@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detail_transaction;
-use App\Models\Employee;
+use Carbon\Carbon;
 use App\Models\outlet;
 use App\Models\product;
+use App\Models\Employee;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\PDF;
+use App\Models\detail_transaction;
 use Illuminate\Support\Facades\DB;
 
 class HistoryController extends Controller
@@ -153,4 +156,25 @@ class HistoryController extends Controller
         return view('employee.transaction');
     }
 
+
+    public function exportPDF($id)
+    {
+        $transactionData = Transaction::with('employee')->find($id);
+        $detailTransactionData = detail_transaction::with('product')->where('transaction_id', $id)->get();
+        $outlet = outlet::find(session('outlet_id'));
+        $today = Carbon::now();
+        $details = ['title' => 'Nota-PDF'];
+// dd($emp->name_employee);
+        
+        //return view ('employee.transaction.export-pdf', compact('data'));
+        //dd($data['emp']['name_employee']);
+        view()->share('detailTransactionData', $detailTransactionData);
+        view()->share('transactionData', $transactionData);
+        view()->share('outlet', $outlet);
+        view()->share('today', $today);
+        //return view('employee.history-transaction.export-pdf' );
+        $fileName = 'struk ref -' . Str::slug($transactionData->kode_invoice) . ' - ' . $today->format('d M Y') . '.pdf';
+        $pdf = PDF::loadview('employee.history-transaction.export-pdf', $details)->setPaper([0, 0, 226.77, 1000], 'potrait')->setWarnings(false)->save($fileName);;
+        return $pdf->download($fileName);
+    }
 }

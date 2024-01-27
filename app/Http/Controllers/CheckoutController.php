@@ -6,9 +6,10 @@ use Carbon\Carbon;
 use App\Models\outlet;
 use App\Models\Product;
 use App\Models\Employee;
-use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Transaction;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\detail_transaction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -200,19 +201,16 @@ class CheckoutController extends Controller
     {
         $outlet = outlet::find(session('outlet_id'));
     	$emp = Employee::find(session()->get('auth_id'));
-        $details = ['title' => 'checkoutPDF'];
-
-        $data = [
-            'outlet' => $outlet,
-            'emp' => $emp,
-        ];
-        
-        //return view ('employee.transaction.export-pdf', compact('data'));
+        $details = ['title' => 'checkoutPDF']; 
         //dd($data['emp']['name_employee']);
-        view()->share(['data'=>$data]);
-        $pdf = PDF::loadview('employee.transaction.export-pdf', $details);
-        return $pdf->download('checkout.pdf');
-        PDF::loadView($pdf)->setPaper([0, 0, 75, 65], 'mm')->setWarnings(false)->save('checkout.pdf');
+        view()->share('outlet', $outlet);
+        view()->share(['today'=>$today]);
+        view()->share(['emp'=>$emp]);
+        view()->share(['details'=>$details]);   
+        // return view ('employee.transaction.export-pdf');
+        $fileName = 'checkout ref -' . Str::slug(session('no_ref')) . ' - ' . $today->format('d M Y') . '.pdf';
+        $pdf = PDF::loadview('employee.transaction.export-pdf', $details)->setPaper([0, 0, 226.77, 1000], 'portrait')->setWarnings(false)->save($fileName);
+        return $pdf->download($fileName);
     }
 
     public function finish()

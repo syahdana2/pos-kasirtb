@@ -120,8 +120,6 @@
         </div><!-- /.container-fluid -->
       </div>
     </div>
-</div>
-</div>
-</div>
+  </section>
 
 @endsection

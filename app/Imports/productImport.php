@@ -39,10 +39,11 @@ class productImport implements ToModel
            'barcode' => $row[3],
            'unit_id' => $row[4],
            'stock' => $row[5],
-           'selling_price' => $row[6],
+           'minimal_stock' => $row[6],
            'buy_price' => $row[7],
-           'image' => $row[8] ?? null,
-           'desc' => $row[9] ?? null,
+           'selling_price' => $row[8],
+           'image' => $row[9] ?? null,
+           'desc' => $row[10] ?? null,
         ]);
 
         return $productInstance;

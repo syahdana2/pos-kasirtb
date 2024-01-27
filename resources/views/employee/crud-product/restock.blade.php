@@ -30,7 +30,7 @@
                             </div>
                             @endif
                             <a href="{{ route('product') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-warning shadow-md text-light"><i class="fa-solid fa-arrow-left mr-2"></i></i>Kembali</a>
-                            <a href="{{ route('exportPDF-checkout') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-primary shadow-md text-light"><i class="fa-solid fa-file-pdf mr-2 "></i></i>Cetak PDF</a>
+                            <a href="{{ route('exportPDF-restock') }}" class=" btn border border-white rounded-lg px-3 py-2 flex justify-center items-center text-sm bg-primary shadow-md text-light"><i class="fa-solid fa-file-pdf mr-2 "></i></i>Cetak PDF</a>
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -41,8 +41,8 @@
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Kode</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="200px">Produk</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Unit</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Stok</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Min Stok</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Stok Tersisa</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Minim Stok</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Harga Beli</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Harga Jual</th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="150px">Restok</th>

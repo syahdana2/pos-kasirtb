@@ -28,7 +28,7 @@
                         <!-- form start -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-center p-4">
                             <a href="{{ route('history') }}" type="submit" class="btn btn-warning"><i class="fa-solid fa-arrow-left mr-2"></i>Kembali</a>
-                            <a href="#" class="btn btn-primary"><i class="fa-solid fa-print mr-2"></i>Cetak Nota</a>
+                            <a href="{{ route('exportPDF-nota', $transactionData->id ) }}" class="btn btn-primary"><i class="fa-solid fa-print mr-2"></i>Cetak Nota</a>
                         </div>
                         <div class="d-flex card-body">
                             <div class="col-md-12 shadow-lg p-4 bg-body-tertiary rounded">

@@ -253,10 +253,17 @@ class productController extends Controller
     {
         // $product = Product::all();
         $outlet = outlet::find(session('outlet_id'));
+
+        $totalLowStock = Product::join('employees as E', 'products.employee_id', '=', 'E.id')
+            ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
+            ->where('O.id', $outlet->id)
+            ->whereBetween('products.stock', [0, DB::raw('products.minimal_stock')])
+            ->count();
+        
         $product = Product::join('units as U', 'products.unit_id', '=', 'U.id')
             ->join('employees as E', 'products.employee_id', '=', 'E.id')
             ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
-            ->select('products.id', 'products.barcode', 'products.name_product', 'products.stock', 'products.selling_price', 'products.buy_price', 'U.satuan as satuan_product', 'E.name_employee as employee_name', 'O.name_outlet as outlet_name')
+            ->select('products.id', 'products.barcode', 'products.name_product', 'products.stock', 'products.minimal_stock', 'products.image', 'products.selling_price', 'products.buy_price', 'U.satuan as satuan_product', 'E.name_employee as employee_name', 'O.name_outlet as outlet_name')
             ->where('O.id', $outlet->id)
             ->orderBy('products.created_at', 'desc')
             ->get();
@@ -272,10 +279,12 @@ class productController extends Controller
         view()->share('outlet', $outlet);
         view()->share('today', $today);
         view()->share('total', $total->totalProduct);
-        $pdf = PDF::loadview('employee.export.export-pdf', ['title' => 'printPDF']);
+        view()->share('totalLowStock', $totalLowStock);
+        //return view('employee.crud-product.produk-pdf');
         $fileName = 'data toko ' . Str::slug($outlet->name_outlet) . ' ' . $today->format('d M Y') . '.pdf';
+        $pdf = PDF::loadview('employee.crud-product.produk-pdf', ['title' => 'printPDF'])->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
         return $pdf->download($fileName);
-        PDF::loadView($pdf)->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
+        //$pdf = PDF::loadView()->setPaper('a1', 'landscape')->setWarnings(false)->save($fileName);
     }
 
     public function exportEXCEL(){
@@ -302,7 +311,7 @@ class productController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diImport');
     }
 
-    public function exportcheckout()
+    public function exportrestock()
     {
         $outlet = outlet::find(session('outlet_id'));
 
@@ -310,18 +319,18 @@ class productController extends Controller
             ->join('units as U', 'P.unit_id', '=', 'U.id')
             ->join('employees as E', 'P.employee_id', '=', 'E.id')
             ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
-            ->select('P.id', 'P.barcode', 'P.name_product', 'P.stock', 'U.satuan as satuan_product' , 'P.buy_price', 'P.selling_price')
+            ->select('P.id', 'P.barcode', 'P.name_product', 'P.stock', 'P.minimal_stock', 'U.satuan as satuan_product', 'P.buy_price', 'P.selling_price', 'P.desc')
             ->where('O.id', $outlet->id)
-            ->where('P.stock', '<', 5)
-            ->orderBy('P.stock', 'desc')
+            ->whereBetween('P.stock', [0, DB::raw('P.minimal_stock')])
+            // ->orderBy('P.stock', 'desc')
             ->get();
 
-            $lowStockSum = DB::table('products as P')
+        $lowStockSum = DB::table('products as P')
             ->join('employees as E', 'P.employee_id', '=', 'E.id')
             ->join('outlets as O', 'E.outlet_id', '=', 'O.id')
             ->select(DB::raw('COUNT(P.stock) as totalLowStock'))
             ->where('O.id', $outlet->id)
-            ->where('P.stock', '<', 5)
+            ->whereBetween('P.stock', [0, DB::raw('P.minimal_stock')])
             ->first();
 
         // Mengakses hasil query
@@ -333,9 +342,8 @@ class productController extends Controller
         view()->share('today', $today);
         view()->share('total', $total);
         //return view ('employee.crud-product.restock-pdf');
-         $pdf = PDF::loadview('employee.crud-product.restock-pdf', ['title' => 'printPDF']);
-         $fileName = 'Data restock produk ' . Str::slug($outlet->name_outlet) . ' ' . $today . '.pdf';
-         return $pdf->download($fileName);
-         PDF::loadView($pdf)->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
+        $fileName = 'Data restock produk ' . Str::slug($outlet->name_outlet) . ' ' . $today . '.pdf';
+        $pdf = PDF::loadview('employee.crud-product.restock-pdf', ['title' => 'printPDF'])->setPaper('a4', 'landscape')->setWarnings(false)->save($fileName);
+        return $pdf->download($fileName);
     }
 }
