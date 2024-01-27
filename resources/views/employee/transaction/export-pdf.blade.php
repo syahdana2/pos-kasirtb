@@ -20,7 +20,7 @@
         <div class="col-md-3">
             <div class="row text-center mt-2">
                 <h2 class="card-title"><b>{{ $data['outlet']['name_outlet'] }}</b></h2>
-                <span>{{ $data['outlet']['address'] }}</span>
+                <span>{{ $data['outlet']['address'] }}</span><br>
                 <span>Telp: {{ $data['outlet']['phone'] }}</span>
             </div>
             <div class="d-flex justify-content-between mt-2">
@@ -28,9 +28,9 @@
             </div>
             <div class="d-flex justify-content-between">
                 <span>Kasir : {{ $data['emp']['name_employee'] }}</span>
-                <span>{{ $data['today'] }}</span>
+                <span>{{ session('today') }}</span>
             </div>
-            <div class="line2 my-2"></div>
+            <div class="line2 my-2">----------------------------------------------------</div>
             @if(session('cart'))
             @foreach(session('cart') as $cartItem)
             <div class="row">

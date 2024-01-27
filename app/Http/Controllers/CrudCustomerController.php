@@ -24,11 +24,9 @@ class CrudCustomerController extends Controller
             ->whereBetween('products.stock', [0, DB::raw('products.minimal_stock')])
             ->count();
 
-        $data = customer::join('outlets as O', 'customers.outlet_id', '=', 'O.id')
-            ->where('O.id', $outletId)
-            ->orderBy('customers.created_at', 'desc')
+        $data = customer::where('outlet_id', $outletId)
+            ->orderBy('created_at', 'desc')
             ->get();
-        // dd($data);
         return view('employee.customer', compact('data', 'emp', 'totalLowStock'), ["title" => "Pelanggan"]);
     }
 

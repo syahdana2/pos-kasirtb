@@ -21,13 +21,12 @@
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-lg-3 col-5">
+        <div class="col-lg-6 col-5">
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>{{ $outletCount }}</h3>
-
-              <p>Jumlah Unit Toko</p>
+              <h3 class="ml-3">{{ $outletCount }}</h3>
+              <p>Jumlah Outlet Atau Toko Yang Dimiliki</p>
             </div>
             <div class="icon">
               <i class="ion fa-solid fa-store"></i>
@@ -36,31 +35,15 @@
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-5">
+        <div class="col-lg-6 col-5">
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>{{ $employeeCount }}</h3>
-
-              <p>Jumlah Kasir Toko</p>
+              <h3 class="ml-3">{{ $employeeCount }}</h3>
+              <p>Jumlah Employee Atau Kasir Toko Saat Ini</p>
             </div>
             <div class="icon">
               <i class="ion fa-solid fa-user-large"></i>
-            </div>
-            <!-- <a href="#" class="small-box-footer">Jumlah kasir toko<i class="fas fa-arrow-circle-right"></i></a> -->
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-6 col-5">
-          <!-- small box -->
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>Rp. {{ number_format($totalProfit) }}</h3>
-
-              <p>Jumlah Laba Keseluruhan Toko</p>
-            </div>
-            <div class="icon">
-              <i class="ion fa-solid fa-money-bill-trend-up"></i>
             </div>
             <!-- <a href="#" class="small-box-footer">Jumlah kasir toko<i class="fas fa-arrow-circle-right"></i></a> -->
           </div>
@@ -115,7 +98,7 @@
                           <td>{{ $data_outlet->created_at->format('Y-m-d') }}</td>
                           <td>
                             <div class="d-flex gap-1">
-                              <a href="#" class="btn btn-primary text-white"><i class="fa-solid fa-pen-to-square mr-2"></i> Detail</a>
+                              <a href="{{ route('outlet.show', $data_outlet->id ) }}" class="btn btn-primary text-white"><i class="fa-solid fa-chart-simple mr-2"></i> Detail</a>
                             </div>
                           </td>
                         </tr>

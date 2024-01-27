@@ -30,12 +30,12 @@
                                 </a>
                             </div>
                             @if(session('success'))
-                            <div class="alert alert-success" role="alert">
+                            <div id="hide" class="alert alert-success" role="alert">
                                 <i class="fa-regular fa-circle-check mr-2"></i> {{ session('success') }}
                             </div>
                             @endif
                             @if(session('error'))
-                            <div class="alert alert-danger" role="alert">
+                            <div id="hide" class="alert alert-danger" role="alert">
                                 <i class="fa-regular fa-circle-xmark mr-2"></i>{{ session('error') }}
                             </div>
                             @endif

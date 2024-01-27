@@ -108,7 +108,7 @@
             <div class="info-box-content">
               <div class="d-flex justify-content-between">
                 <span class="info-box-text">Pemasukan Minggu Ini</span>
-                <span class="info-box-number">{{ $totalTransaksi['mingguIni'] }} Penjualan</span>
+                <span class="info-box-text"><b>{{ $totalTransaksi['mingguIni'] }} Penjualan</b></span>
               </div>
               <div class="d-flex justify-content-between">
                 <span class="info-box-number">Rp {{ number_format($subtotalTransaksi['mingguIni']) }}</span>
@@ -123,7 +123,7 @@
             <div class="info-box-content">
               <div class="d-flex justify-content-between">
                 <span class="info-box-text">Pemasukan Bulan Ini</span>
-                <span class="info-box-number">{{ $totalTransaksi['bulanIni'] }} Penjualan</span>
+                <span class="info-box-text"><b>{{ $totalTransaksi['bulanIni'] }} Penjualan</b></span>
               </div>
               <div class="d-flex justify-content-between">
                 <span class="info-box-number">Rp {{ number_format($subtotalTransaksi['bulanIni']) }}</span>
@@ -138,7 +138,7 @@
             <div class="info-box-content">
               <div class="d-flex justify-content-between">
                 <span class="info-box-text">Pemasukan Tahun Ini</span>
-                <span class="info-box-number">{{ $totalTransaksi['tahunIni'] }} Penjualan</span>
+                <span class="info-box-text"><b>{{ $totalTransaksi['tahunIni'] }} Penjualan</b></span>
               </div>
               <div class="d-flex justify-content-between">
                 <span class="info-box-number">Rp {{ number_format($subtotalTransaksi['tahunIni']) }}</span>
