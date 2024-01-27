@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\unit;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -13,6 +14,8 @@ class UnitImport implements ToModel
     /**
     * @param Collection $collection
     */
+
+    // use Importable;
 
     // public function collection(Collection $rows)
     // {
@@ -38,14 +41,10 @@ class UnitImport implements ToModel
     
     public function model(array $row)
     {
-        // $existingUnit = Unit::where('satuan', $row[2])->first();
-        // if ($existingUnit) {
-        //     // Satuan sudah terdaftar, beri pesan error dan hentikan proses
-        //     return redirect()->route('unit_page')->with('gagal','Satuan "' . $row[2] . '" sudah terdaftar.');
-        // }
-
+        //dd($row)
         return new unit([
             'satuan' => $row[1],
+            //'satuan'  => $row['satuan'],
         ]);
     }
 }

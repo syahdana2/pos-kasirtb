@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('unit_id');
             $table->string('stock');
             $table->string('minimal_stock');
-            $table->string('selling_price');
             $table->string('buy_price');
+            $table->string('selling_price');
             $table->string('image')->nullable();
             $table->string('desc')->nullable();
             $table->timestamps();

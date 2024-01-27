@@ -2,44 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>HTML5 Starter Template</title>
-  <meta name="description" content="Starter Template">
-  <meta name="author" content="Gregry Pike">
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        #customers {
-          font-family: Arial, Helvetica, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-        
-        #customers td, #customers th {
-          border: 1px solid #ddd;
-          padding: 8px;
-        }
-        
-        #customers tr:nth-child(even){background-color: #f2f2f2;}
-        
-        #customers tr:hover {background-color: #ddd;}
-        
-        #customers th {
-          padding-top: 12px;
-          padding-bottom: 12px;
-          text-align: left;
-          background-color: #000000;
-          color: white;
-        }
-        </style>
 </head>
 <body>
-    <div class="container">
+  <div class="container-md">
+    <div class="row text-center mt-4">
+        <div class="col-sm-9 mx-auto">
+          <h2>Data restock produk toko {{ $outlet->name_outlet }}</h2>
+          <p>Data ini dicetak pertanggal : {{ date('d/m/Y h:i', strtotime ($today)) }}</p>
+        </div>
+      </div>
+      <div class="">
+        <div class="row justify-content-center">
+          <hr>
+          <div class="col-sm-9 mx-auto">
+              <p><b>Total Produk perlu direstock : </b><mark>{{ $total }} produk</mark></p>              
+            </div>
+          <hr>
+            <div>
+                <div class="">
+                    <div class="">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th width="15px">NO</th>
+                                    <th>Produk</th>
+                                    <th width="80px">Kode</th>
+                                    <th width="50px">Unit</th>
+                                    <th width="50px">Stok Tersisa</th>
+                                    <th width="50px">Minimal Stok</th>
+                                    <th width="90px">Harga Beli</th>
+                                    <th width="90px">Harga Jual</th>
+                                    <th width="200px">Deskripsi</th>
+                                </tr>
+                            </thead>
+                            @if($product->count() > 0)
+                            @foreach($product as $data_product)
+                            <tbody>
+                                <tr class="">
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $data_product->name_product }}</td>
+                                    <td>{{ $data_product->barcode }}</td>
+                                    <td>{{ $data_product->satuan_product }}</td>
+                                    <td>{{ $data_product->stock }}</td>
+                                    <td>{{ $data_product->minimal_stock }}</td>
+                                    <td>Rp. {{ number_format($data_product->buy_price) }}</td>
+                                    <td>Rp. {{ number_format($data_product->selling_price) }}</td>
+                                    <td>{{ $data_product->desc }}</td>
+                                </tr>
+                                @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="10"><p class="text-center">Data produk yang perlu direstock kosong</p></td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {{-- <div class="container">
       <center>
-        <h2>Data produk toko {{ $outlet->name_outlet }}</h2>
+        <h2>Data restok produk toko {{ $outlet->name_outlet }}</h2>
         <p id="tanggalContainer"></p>
       </center>
       <hr>
-      <p>Total produk : {{ $total }}</p>
+      <p>Total produk perlu direstock : {{ $total }}</p>
       <table class='table table-bordered mt-3'>
         <thead>
           <tr>
@@ -69,33 +100,11 @@
         </tbody>
       </table>
    
-    </div>
-   
-  <script src="js/scripts.js"></script>
-  <script>
-    // Mendapatkan tanggal hari ini
-    var today = new Date();
-
-    // Mengisi nilai ke elemen dengan ID 'tanggalContainer'
-    document.getElementById('tanggalContainer').innerHTML = 'data ini dicetak per tanggal : ' + formatDate(today);
-
-    // Fungsi untuk memformat tanggal ke dalam bentuk "DD/MM/YYYY"
-    function formatDate(date) {
-        var day = date.getDate();
-        var month = date.getMonth() + 1; // January is 0!
-        var year = date.getFullYear();
-
-        // Menambahkan "0" di depan hari atau bulan jika kurang dari 10
-        day = day < 10 ? '0' + day : day;
-        month = month < 10 ? '0' + month : month;
-
-        return day + '/' + month + '/' + year;
-    }
-</script>
+    </div> --}}
 </body>
 </html>
 
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html>
     <head>
     <!-- bootsrap -->
@@ -176,8 +185,8 @@
                     </tr>
                 @endif
         </table>
-    <!-- bootsrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/7c21a511e6.js" crossorigin="anonymous"></script>
+        <!-- bootsrap -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     </body>
-</html>
+</html> --}}
