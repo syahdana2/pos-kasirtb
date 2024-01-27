@@ -160,18 +160,24 @@ class CheckoutController extends Controller
 
         if (count($cart) > 0) {
             foreach (session('cart') as $cartItem) {
+                $product = Product::find($cartItem['id']);
+                $sellingPrice = ( $cartItem['price_sales']) ?  $cartItem['price_sales'] : $product->selling_price;
+                $buyingPrice = $product->buy_price;
+                $quantity = $cartItem['qty'];
+                $profit = ($sellingPrice - $buyingPrice) * $quantity;
+
                 $dt_transaction_list = [
                     'transaction_id' => $transaction_id,
                     'product_id' => $cartItem['id'],
                     'qty' => $cartItem['qty'],
                     'price_sales' => $cartItem['price_sales'],
                     'discount' => $cartItem['discount'] * $cartItem['qty'],
+                    'profit' => $profit,
                     'total_price' => $cartItem['total_price'],
                 ];
 
                 Detail_Transaction::create($dt_transaction_list);
                 
-                $product = Product::find($cartItem['id']);
                 $product->stock -= $cartItem['qty'];
                 $product->save();
             }
@@ -194,10 +200,8 @@ class CheckoutController extends Controller
     public function cetak_pdf()
     {
         $outlet = outlet::find(session('outlet_id'));
-        $today = Carbon::now();
     	$emp = Employee::find(session()->get('auth_id'));
         $details = ['title' => 'checkoutPDF']; 
-
         //dd($data['emp']['name_employee']);
         view()->share('outlet', $outlet);
         view()->share(['today'=>$today]);

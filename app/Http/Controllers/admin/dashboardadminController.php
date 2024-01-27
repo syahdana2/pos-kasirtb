@@ -79,23 +79,9 @@ class dashboardadminController extends Controller
             'bulanIni' => $subtotalTransaksiBulanIni,
             'tahunIni' => $subtotalTransaksiTahunIni,
         ];
-        $detailTransactions = detail_transaction::all();
-
-        $totalProfit = 0;
-
-        foreach ($detailTransactions as $detailTransaction) {
-            $sellingPrice = ($detailTransaction->price_sales) ? $detailTransaction->price_sales : $detailTransaction->product->selling_price;
-            $buyingPrice = $detailTransaction->product->buy_price;
-
-            $quantity = $detailTransaction->qty;
-
-            $profit = ($sellingPrice - $buyingPrice) * $quantity;
-
-            $totalProfit += $profit;
-        }
         
         $dt_outlet = Outlet::orderBy('created_at', 'DESC')->get();
 
-        return view('admin.dashboard', compact('admin', 'outletCount', 'employeeCount', 'totalProfit', 'dt_outlet'));
+        return view('admin.dashboard', compact('admin', 'outletCount', 'employeeCount', 'dt_outlet'));
     }
 }

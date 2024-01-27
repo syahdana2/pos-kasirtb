@@ -87,11 +87,9 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-            with font-awesome or any other icon font library -->
             <li class="nav-item">
               <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
-                <i class="ion fa-solid fa-chart-line"></i>
+                <i class="ion fa-solid fa-chart-line mr-2"></i>
                 <p>
                   Data Transaksi
                 </p>
@@ -99,7 +97,7 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('outlet') }}" class="nav-link {{ request()->is('admin/outlet') ? 'active' : '' }}">
-                <i class="ion fa-solid fa-shop"></i>
+                <i class="ion fa-solid fa-shop mr-2"></i>
                 <p>
                   Data Toko
                 </p>
@@ -107,7 +105,7 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('employee') }}" class="nav-link {{ request()->is('admin/employee') ? 'active' : ''}}">
-                <i class="ion fa-solid fa-users"></i>
+                <i class="ion fa-solid fa-users mr-2"></i>
                 <p>
                   Data Kasir
                 </p>
@@ -115,7 +113,7 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('admin.logout') }}" class="nav-link">
-                <i class="ion fa-solid fa-right-from-bracket"></i>
+                <i class="ion fa-solid fa-right-from-bracket mr-2"></i>
                 <p>
                   Logout
                 </p>
@@ -203,28 +201,28 @@
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": []
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
+      $("#example2").DataTable({
         "responsive": true,
-      });
+        "lengthChange": false,
+        "autoWidth": false,
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $("#example3").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
   </script>
   <!-- Include Bootstrap JS in your layout if not included -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Display Bootstrap Toast using JS -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var toast = new bootstrap.Toast(document.querySelector('.toast'))
-      toast.show()
-    });
+    function hideAlert(alertId) {
+      $(alertId).fadeOut('fast');
+    }
+    setTimeout(function() {
+      hideAlert("#hide")
+    }, 5000);
   </script>
 </body>
 

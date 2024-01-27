@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('qty');
             $table->string('price_sales');
             $table->string('discount');
+            $table->string('profit');
             $table->string('total_price');
             $table->timestamps();
         });
