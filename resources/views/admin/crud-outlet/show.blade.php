@@ -251,12 +251,66 @@
     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4 p-2">
       <div class="row">
         <div class="col-sm-12">
+          <div class="card card-info">
+            <div class="d-flex card-header justify-content-center">
+              <h3 class="card-title mt-2">Riwayat penjualan hari ini</h3>
+            </div>
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                <thead>
+                  <tr class="bg-navy">
+                    <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="20px">No</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="180px">Kode Invoice</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Kasir</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Subtotal</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Bayar</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Kembali</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Laba Profit</th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="20px">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if($totalProfit['history']->count() > 0)
+                  @foreach($totalProfit['history'] as $historyDetail)
+                  <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{ $loop->iteration }}</td>
+                    <td>{{ $historyDetail->kode_invoice }}</td>
+                    <td>{{ $historyDetail->employee_name }}</td>
+                    <td>Rp {{ number_format($historyDetail->subtotal) }}</td>
+                    <td>Rp {{ number_format($historyDetail->pay) }}</td>
+                    <td>Rp {{ number_format($historyDetail->change) }}</td>
+                    <td>Rp {{ number_format($historyDetail->labaProfit) }}</td>
+                    <td>
+                      <div class="d-flex gap-1">
+                        <a href="{{ route('detail.show', $historyDetail->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  @endforeach
+                  @else
+                  <tr>
+                    <td class="text-center" colspan="8">Data transaksi kosong</td>
+                  </tr>
+                  @endif
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>    
+
+    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4 p-2">
+      <div class="row">
+        <div class="col-sm-12">
           <div class="card card-danger">
             <div class="d-flex card-header justify-content-center">
               <h3 class="card-title mt-2">Data stok produk kurang dari minimal stock, atau stok produk habis</h3>
             </div>
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+              <table id="example3" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                 <thead>
                   <tr class="bg-navy">
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="20px">No</th>
@@ -302,60 +356,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4 p-2">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="card card-info">
-            <div class="d-flex card-header justify-content-center">
-              <h3 class="card-title mt-2">Riwayat penjualan hari ini</h3>
-            </div>
-            <div class="card-body">
-              <table id="example3" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
-                <thead>
-                  <tr class="bg-navy">
-                    <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="20px">No</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="180px">Kode Invoice</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="80px">Kasir</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="50px">Subtotal</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Bayar</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Kembali</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="85px">Laba Profit</th>
-                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" width="20px">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @if($totalProfit['history']->count() > 0)
-                  @foreach($totalProfit['history'] as $historyDetail)
-                  <tr class="odd">
-                    <td class="dtr-control sorting_1" tabindex="0">{{ $loop->iteration }}</td>
-                    <td>{{ $historyDetail->kode_invoice }}</td>
-                    <td>{{ $historyDetail->employee_name }}</td>
-                    <td>Rp {{ number_format($historyDetail->subtotal) }}</td>
-                    <td>Rp {{ number_format($historyDetail->pay) }}</td>
-                    <td>Rp {{ number_format($historyDetail->change) }}</td>
-                    <td>Rp {{ number_format($historyDetail->labaProfit) }}</td>
-                    <td>
-                      <div class="d-flex gap-1">
-                        <a href="{{ route('detail.show', $historyDetail->id) }}" class="btn btn-primary text-white" title="Detail"><i class="fa-solid fa-eye"></i></a>
-                      </div>
-                    </td>
-                  </tr>
-                  @endforeach
-                  @else
-                  <tr>
-                    <td class="text-center" colspan="8">Data transaksi kosong</td>
-                  </tr>
-                  @endif
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
     </div>
 
     <div class="row p-2">

@@ -202,6 +202,7 @@ class CheckoutController extends Controller
         $outlet = outlet::find(session('outlet_id'));
     	$emp = Employee::find(session()->get('auth_id'));
         $details = ['title' => 'checkoutPDF']; 
+        $today = session('today');
         //dd($data['emp']['name_employee']);
         view()->share('outlet', $outlet);
         view()->share(['today'=>$today]);
